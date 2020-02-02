@@ -17,7 +17,7 @@ def main():
         subprocess.call(["apt", "install", "--reinstall", debianpackage, "-yq"])
         
     def remove(packagename):
-        subprocess.call(["apt", "remove", packagename, "-yq"])
+        subprocess.call(["apt", "purge", packagename, "-yq"])
         
     def downgrade(packagename):
         subprocess.call(["apt", "install", "--allow-downgrades", packagename, "-yq"])
