@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=PDebi Package Installer
+Name[tr]=PDebi Paket Kurucu
+GenericName=Pardus Package Installer
+GenericName[tr]=Pardus Paket Kurucu
+Comment=Install and view software packages
+Comment[tr]=Yazılım paketlerini kur ve izle
+Exec=pdebi %f
+Icon=gnome-mime-application-x-deb
+Terminal=false
+Type=Application
+Categories=System;
+MimeType=application/vnd.debian.binary-package;
+StartupNotify=true
+Keywords=package;apt;dpkg;install
