@@ -298,10 +298,12 @@ def main():
         if retval == 0:
             textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  "Operation was successfully completed ! \n \n")
             textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
+            progress.set_text("Completed !")
+        else:
+            progress.set_text("Not Completed !")
         status = cacheControl()
         packageMain(True,status)
         getInstalledVersion(status)
-        progress.set_text("Completed")
     
     def on_stdout_data(sender, line):
         textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  line)
