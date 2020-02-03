@@ -318,6 +318,7 @@
             <property name="halign">center</property>
             <property name="margin_top">13</property>
             <property name="margin_bottom">13</property>
+            <property name="wrap">True</property>
           </object>
           <packing>
             <property name="left_attach">0</property>
