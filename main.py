@@ -272,19 +272,23 @@ def main():
             if status == 0:
                 button1.set_sensitive(True)
                 button1.set_label("Install")
+                button1.set_image(installicon)
                 button2.set_sensitive(False)
             elif status == 1:
                 button1.set_sensitive(True)
                 button1.set_label("Downgrade")
                 button1.set_image(downgradeicon)
+                button2.set_sensitive(True)
             elif status == 2:
                 button1.set_sensitive(True)
                 button1.set_label("Reinstall")
                 button1.set_image(reinstallicon)
+                button2.set_sensitive(True)
             elif status == 3:
                 button1.set_sensitive(True)
                 button1.set_label("Upgrade")
                 button1.set_image(upgradeicon)
+                button2.set_sensitive(True)
     
 
     def on_process_done(sender, retval):
