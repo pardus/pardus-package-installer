@@ -111,7 +111,8 @@ def main():
             
             button1.set_sensitive(False)
             button2.set_sensitive(False)
-            
+
+
             command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "install", debianpackage]
             
             pid = spawn.run(command)
@@ -210,7 +211,10 @@ def main():
             filechooser.hide()
             fromFile(filename)
             print("Active Button Clicked")  
-        
+
+        def onQuitClicked(self, quitbutton):
+            Gtk.main_quit()
+
     
     builder = Gtk.Builder()
     builder.add_from_file("/home/pardus/Masaüstü/pdebi/main.glade")
@@ -223,7 +227,7 @@ def main():
     openbutton = builder.get_object("openbutton")
     filechooser = builder.get_object("filechooser")
     selectbutton = builder.get_object("selectbutton")
-
+    quitbutton = builder.get_object("quitbutton")
 
     label1 = builder.get_object("label1")
     label2 = builder.get_object("label2")
@@ -398,17 +402,10 @@ def main():
             installed_version.set_text("Not installed")
             
         packageMain(False,firststatus)
-        
-        
-    
-
-
-    
     
     window.show_all()
     
     Gtk.main()
-
 
 
 if __name__ == "__main__":
