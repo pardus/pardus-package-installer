@@ -111,7 +111,8 @@ def main():
             
             button1.set_sensitive(False)
             button2.set_sensitive(False)
-
+            openbutton.set_sensitive(False)
+            quitbutton.set_sensitive(False)
 
             command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "install", debianpackage]
             
@@ -129,7 +130,9 @@ def main():
             
             button1.set_sensitive(False)
             button2.set_sensitive(False)
-            
+            openbutton.set_sensitive(False)
+            quitbutton.set_sensitive(False)
+
             command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "remove", packagename]
             
             pid = spawn.run(command)
@@ -143,7 +146,9 @@ def main():
         
         button1.set_sensitive(False)
         button2.set_sensitive(False)
-        
+        openbutton.set_sensitive(False)
+        quitbutton.set_sensitive(False)
+
         command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "reinstall", debianpackage]
         
         pid = spawn.run(command)
@@ -157,7 +162,9 @@ def main():
         
         button1.set_sensitive(False)
         button2.set_sensitive(False)
-        
+        openbutton.set_sensitive(False)
+        quitbutton.set_sensitive(False)
+
         command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "downgrade", debianpackage]
         
         pid = spawn.run(command)
