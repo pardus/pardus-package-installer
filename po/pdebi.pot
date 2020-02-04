@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-04 19:31+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:116
+msgid "Installing.."
+msgstr ""
+
+#: main.py:135
+msgid "Uninstalling.."
+msgstr ""
+
+#: main.py:151
+msgid "Reinstalling.."
+msgstr ""
+
+#: main.py:167
+msgid "Downgrading.."
+msgstr ""
+
+#: main.py:268 main.py:291 main.py:381 main.glade:57
+msgid "Install"
+msgstr ""
+
+#: main.py:273 main.py:296
+msgid "Downgrade"
+msgstr ""
+
+#: main.py:278 main.py:301
+msgid "Reinstall"
+msgstr ""
+
+#: main.py:283 main.py:306
+msgid "Upgrade"
+msgstr ""
+
+#: main.py:318
+msgid "Completed !"
+msgstr ""
+
+#: main.py:320
+msgid "Not Completed !"
+msgstr ""
+
+#: main.py:350 main.py:415 main.glade:261
+msgid "Not installed"
+msgstr ""
+
+#: main.py:382 main.glade:139
+msgid "Uninstall"
+msgstr ""
+
+#: main.py:411 main.py:414 main.glade:248
+msgid "Installed Version : "
+msgstr ""
+
+#: main.glade:36
+msgid "Pardus Package Installer"
+msgstr ""
+
+#: main.glade:228
+msgid "Package Progress"
+msgstr ""
+
+#: main.glade:335
+msgid "Package Name"
+msgstr ""
+
+#: main.glade:354
+msgid "_File"
+msgstr ""
+
+#: main.glade:394
+msgid "_Help"
+msgstr ""
+
+#: main.glade:442
+msgid "Select"
+msgstr ""
