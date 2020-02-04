@@ -313,7 +313,7 @@ def main():
         textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
         print("Done. exit code: %s" % (retval))
         if retval == 0:
-            textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  "Operation was successfully completed ! \n \n")
+            textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (_("Operation was successfully completed ! \n \n")))
             textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
             progress.set_text(_("Completed !"))
         else:
@@ -412,7 +412,7 @@ def main():
             installed_version.set_text(systemversion)
         else:
             installed_version_title.set_text(_("Installed Version : "))
-            installed_version.set_text8(_("Not installed"))
+            installed_version.set_text(_("Not installed"))
             
         packageMain(False,firststatus)
     
