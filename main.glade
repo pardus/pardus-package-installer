@@ -419,6 +419,38 @@
       </object>
     </child>
   </object>
+  <object class="GtkMessageDialog" id="cannotclose_dialog">
+    <property name="can_focus">False</property>
+    <property name="window_position">center</property>
+    <property name="icon_name">dialog-information</property>
+    <property name="type_hint">dialog</property>
+    <property name="transient_for">mainwindow</property>
+    <property name="buttons">ok</property>
+    <property name="text" translatable="yes">Info</property>
+    <property name="secondary_text" translatable="yes">You cannot close the application while the process is continuing</property>
+    <child>
+      <placeholder/>
+    </child>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="homogeneous">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkFileChooserDialog" id="filechooser">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>

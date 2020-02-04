@@ -30,6 +30,7 @@ from locale import gettext as _
 locale.bindtextdomain('pdebi', '/usr/share/locale')
 locale.textdomain('pdebi')
 
+closestatus = False
 
 def main():
 
@@ -109,6 +110,7 @@ def main():
         return aptdeb.DebPackage(debianpackage).compare_to_version_in_cache()
     
     def installPackage():
+        global closestatus
         
         if installable:
     
@@ -120,6 +122,8 @@ def main():
             openbutton.set_sensitive(False)
             quitbutton.set_sensitive(False)
 
+            closestatus = True
+
             command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "install", debianpackage]
             
             pid = spawn.run(command)
@@ -127,6 +131,7 @@ def main():
             print(pid)
     
     def removePackage():
+        global closestatus
         cache = apt.Cache()
         cache.open()
         if cache[packagename].is_installed:
@@ -139,6 +144,8 @@ def main():
             openbutton.set_sensitive(False)
             quitbutton.set_sensitive(False)
 
+            closestatus = True
+
             command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "remove", packagename]
             
             pid = spawn.run(command)
@@ -146,7 +153,7 @@ def main():
             print(pid)
             
     def reinstallPackage():
-    
+        global closestatus
         spinner.start()
         progress.set_text(_("Reinstalling.."))
         
@@ -155,6 +162,8 @@ def main():
         openbutton.set_sensitive(False)
         quitbutton.set_sensitive(False)
 
+        closestatus = True
+
         command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "reinstall", debianpackage]
         
         pid = spawn.run(command)
@@ -162,7 +171,7 @@ def main():
         print(pid)
             
     def downgradePackage():
-        
+        global closestatus
         spinner.start()
         progress.set_text(_("Downgrading.."))
         
@@ -170,6 +179,8 @@ def main():
         button2.set_sensitive(False)
         openbutton.set_sensitive(False)
         quitbutton.set_sensitive(False)
+
+        closestatus = True
 
         command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "downgrade", debianpackage]
         
@@ -258,7 +269,7 @@ def main():
     installed_version = builder.get_object("installed_version")
     installed_version_title = builder.get_object("installed_version_title")
     
-    
+    cannotclose_dialog = builder.get_object("cannotclose_dialog")
     
     def packageMain(actioned,status):
         if actioned is True:
@@ -309,6 +320,7 @@ def main():
     
 
     def on_process_done(sender, retval):
+        global closestatus
         spinner.stop()
         textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
         print("Done. exit code: %s" % (retval))
@@ -323,6 +335,7 @@ def main():
         getInstalledVersion(status)
         openbutton.set_sensitive(True)
         quitbutton.set_sensitive(True)
+        closestatus = False
     
     def on_stdout_data(sender, line):
         textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  line)
@@ -417,6 +430,16 @@ def main():
             installed_version.set_text(_("Not installed"))
             
         packageMain(False,firststatus)
+
+
+    def close(self, *args):
+        if closestatus:
+            cannotclose_dialog.run()
+            cannotclose_dialog.hide()
+            return True
+        return closestatus
+
+    window.connect('delete_event', close)
     
     window.show_all()
     
