@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-04 19:31+0300\n"
+"POT-Creation-Date: 2020-02-04 22:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,12 @@ msgstr ""
 
 #: main.py:283 main.py:306
 msgid "Upgrade"
+msgstr ""
+
+#: main.py:316
+msgid ""
+"Operation was successfully completed ! \n"
+" \n"
 msgstr ""
 
 #: main.py:318

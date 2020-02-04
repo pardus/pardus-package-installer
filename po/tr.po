@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-04 19:31+0300\n"
-"PO-Revision-Date: 2020-02-04 19:43+0300\n"
+"POT-Creation-Date: 2020-02-04 22:20+0300\n"
+"PO-Revision-Date: 2020-02-04 22:26+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
 "Language: tr\n"
@@ -50,6 +50,14 @@ msgstr "Tekrar Yükle"
 #: main.py:283 main.py:306
 msgid "Upgrade"
 msgstr "Versiyon Yükselt"
+
+#: main.py:316
+msgid ""
+"Operation was successfully completed ! \n"
+" \n"
+msgstr ""
+"İşlem Başarıyla Tamamlandı ! \n"
+" \n"
 
 #: main.py:318
 msgid "Completed !"
