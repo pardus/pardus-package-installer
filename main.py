@@ -24,6 +24,12 @@ from gi.repository import GObject
 from gi.repository import GLib
 import apt.debfile as aptdeb
 
+import locale
+from locale import gettext as _
+
+locale.bindtextdomain('pdebi', '/usr/share/locale')
+locale.textdomain('pdebi')
+
 
 def main():
 
@@ -107,7 +113,7 @@ def main():
         if installable:
     
             spinner.start()
-            progress.set_text("Installing..")
+            progress.set_text(_("Installing.."))
             
             button1.set_sensitive(False)
             button2.set_sensitive(False)
@@ -126,7 +132,7 @@ def main():
         if cache[packagename].is_installed:
             
             spinner.start()
-            progress.set_text("Uninstalling..")
+            progress.set_text(_("Uninstalling.."))
             
             button1.set_sensitive(False)
             button2.set_sensitive(False)
@@ -142,7 +148,7 @@ def main():
     def reinstallPackage():
     
         spinner.start()
-        progress.set_text("Reinstalling..")
+        progress.set_text(_("Reinstalling.."))
         
         button1.set_sensitive(False)
         button2.set_sensitive(False)
@@ -158,7 +164,7 @@ def main():
     def downgradePackage():
         
         spinner.start()
-        progress.set_text("Downgrading..")
+        progress.set_text(_("Downgrading.."))
         
         button1.set_sensitive(False)
         button2.set_sensitive(False)
@@ -259,22 +265,22 @@ def main():
             
             if status == 0:
                 button1.set_sensitive(True)
-                button1.set_label("Install")
+                button1.set_label(_("Install"))
                 button1.set_image(installicon)
                 button2.set_sensitive(False)
             elif status == 1:
                 button1.set_sensitive(True)
-                button1.set_label("Downgrade")
+                button1.set_label(_("Downgrade"))
                 button1.set_image(downgradeicon)
                 button2.set_sensitive(True)
             elif status == 2:
                 button1.set_sensitive(True)
-                button1.set_label("Reinstall")
+                button1.set_label(_("Reinstall"))
                 button1.set_image(reinstallicon)
                 button2.set_sensitive(True)
             elif status == 3:
                 button1.set_sensitive(True)
-                button1.set_label("Upgrade")
+                button1.set_label(_("Upgrade"))
                 button1.set_image(upgradeicon)
                 button2.set_sensitive(True)
         
@@ -282,22 +288,22 @@ def main():
             
             if status == 0:
                 button1.set_sensitive(True)
-                button1.set_label("Install")
+                button1.set_label(_("Install"))
                 button1.set_image(installicon)
                 button2.set_sensitive(False)
             elif status == 1:
                 button1.set_sensitive(True)
-                button1.set_label("Downgrade")
+                button1.set_label(_("Downgrade"))
                 button1.set_image(downgradeicon)
                 button2.set_sensitive(True)
             elif status == 2:
                 button1.set_sensitive(True)
-                button1.set_label("Reinstall")
+                button1.set_label(_("Reinstall"))
                 button1.set_image(reinstallicon)
                 button2.set_sensitive(True)
             elif status == 3:
                 button1.set_sensitive(True)
-                button1.set_label("Upgrade")
+                button1.set_label(_("Upgrade"))
                 button1.set_image(upgradeicon)
                 button2.set_sensitive(True)
     
@@ -309,9 +315,9 @@ def main():
         if retval == 0:
             textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  "Operation was successfully completed ! \n \n")
             textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
-            progress.set_text("Completed !")
+            progress.set_text(_("Completed !"))
         else:
-            progress.set_text("Not Completed !")
+            progress.set_text(_("Not Completed !"))
         status = cacheControl()
         packageMain(True,status)
         getInstalledVersion(status)
@@ -341,7 +347,7 @@ def main():
             installed_version.set_text(systemversion)
             
         else:
-            installed_version.set_text("Not installed")
+            installed_version.set_text(_("Not installed"))
 
     
 
@@ -372,8 +378,8 @@ def main():
         
         button1.set_sensitive(False)
         button2.set_sensitive(False)
-        button1.set_label("Install")
-        button2.set_label("Uninstall")
+        button1.set_label(_("Install"))
+        button2.set_label(_("Uninstall"))
         label1.set_text("")
         installed_version_title.set_text("")
         installed_version.set_text("")
@@ -402,11 +408,11 @@ def main():
             cache = apt.Cache()
             pkg = cache[packagename]
             systemversion = pkg.versions[0].version
-            installed_version_title.set_text("Installed Version : ")
+            installed_version_title.set_text(_("Installed Version : "))
             installed_version.set_text(systemversion)
         else:
-            installed_version_title.set_text("Installed Version : ")
-            installed_version.set_text("Not installed")
+            installed_version_title.set_text(_("Installed Version : "))
+            installed_version.set_text8(_("Not installed"))
             
         packageMain(False,firststatus)
     
