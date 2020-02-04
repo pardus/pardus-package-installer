@@ -321,6 +321,8 @@ def main():
         status = cacheControl()
         packageMain(True,status)
         getInstalledVersion(status)
+        openbutton.set_sensitive(True)
+        quitbutton.set_sensitive(True)
     
     def on_stdout_data(sender, line):
         textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  line)
