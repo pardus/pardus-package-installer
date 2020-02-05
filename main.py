@@ -87,6 +87,8 @@ def main():
     installable = False
     
     packagename = ""
+
+    packagefailure = ""
         
     def start(debpackage):
     
@@ -100,8 +102,10 @@ def main():
         
         packageversion = package._sections["Version"]
         packagedescription = package._sections["Description"]
+
+        packagefailure = package._failure_string
         
-        return package,packagename,firststatus,installable,packageversion,packagedescription
+        return package,packagename,firststatus,installable,packageversion,packagedescription,packagefailure
     
     
     def cacheControl():
@@ -109,6 +113,9 @@ def main():
         cache.open()
         return aptdeb.DebPackage(debianpackage).compare_to_version_in_cache()
     
+    def failureControl():
+        return aptdeb.DebPackage(debianpackage)._failure_string
+
     def installPackage():
         global closestatus
         
@@ -271,52 +278,53 @@ def main():
     
     cannotclose_dialog = builder.get_object("cannotclose_dialog")
     
-    def packageMain(actioned,status):
-        if actioned is True:
-            
-            if status == 0:
-                button1.set_sensitive(True)
-                button1.set_label(_("Install"))
-                button1.set_image(installicon)
-                button2.set_sensitive(False)
-            elif status == 1:
-                button1.set_sensitive(True)
-                button1.set_label(_("Downgrade"))
-                button1.set_image(downgradeicon)
-                button2.set_sensitive(True)
-            elif status == 2:
-                button1.set_sensitive(True)
-                button1.set_label(_("Reinstall"))
-                button1.set_image(reinstallicon)
-                button2.set_sensitive(True)
-            elif status == 3:
-                button1.set_sensitive(True)
-                button1.set_label(_("Upgrade"))
-                button1.set_image(upgradeicon)
-                button2.set_sensitive(True)
-        
+    def packageMain(actioned,status,packagefailure):
+
+        if not "satisfiable" in packagefailure:
+
+                if status == 0:
+                    button1.set_sensitive(True)
+                    button1.set_label(_("Install"))
+                    button1.set_image(installicon)
+                    button2.set_sensitive(False)
+                elif status == 1:
+                    button1.set_sensitive(True)
+                    button1.set_label(_("Downgrade"))
+                    button1.set_image(downgradeicon)
+                    button2.set_sensitive(True)
+                elif status == 2:
+                    button1.set_sensitive(True)
+                    button1.set_label(_("Reinstall"))
+                    button1.set_image(reinstallicon)
+                    button2.set_sensitive(True)
+                elif status == 3:
+                    button1.set_sensitive(True)
+                    button1.set_label(_("Upgrade"))
+                    button1.set_image(upgradeicon)
+                    button2.set_sensitive(True)
+
         else:
-            
+            progress.set_markup(_("<b><span color='red'>Error ! </span></b>") + packagefailure)
             if status == 0:
-                button1.set_sensitive(True)
+                button1.set_sensitive(False)
                 button1.set_label(_("Install"))
                 button1.set_image(installicon)
                 button2.set_sensitive(False)
             elif status == 1:
-                button1.set_sensitive(True)
+                button1.set_sensitive(False)
                 button1.set_label(_("Downgrade"))
                 button1.set_image(downgradeicon)
-                button2.set_sensitive(True)
+                button2.set_sensitive(False)
             elif status == 2:
-                button1.set_sensitive(True)
+                button1.set_sensitive(False)
                 button1.set_label(_("Reinstall"))
                 button1.set_image(reinstallicon)
-                button2.set_sensitive(True)
+                button2.set_sensitive(False)
             elif status == 3:
-                button1.set_sensitive(True)
+                button1.set_sensitive(False)
                 button1.set_label(_("Upgrade"))
                 button1.set_image(upgradeicon)
-                button2.set_sensitive(True)
+                button2.set_sensitive(False)
     
 
     def on_process_done(sender, retval):
@@ -331,7 +339,8 @@ def main():
         else:
             progress.set_text(_("Not Completed !"))
         status = cacheControl()
-        packageMain(True,status)
+        packagefailure = failureControl()
+        packageMain(True,status,packagefailure)
         getInstalledVersion(status)
         openbutton.set_sensitive(True)
         quitbutton.set_sensitive(True)
@@ -376,6 +385,7 @@ def main():
         installable = aa[3]
         packageversion =  aa[4]
         packagedescription = aa[5]
+        packagefailure = aa[6]
     
 
         label1.set_text(packagename + " ( " + packageversion + " )")
@@ -387,7 +397,7 @@ def main():
             systemversion = pkg.versions[0].version
             installed_version.set_text(systemversion)
             
-        packageMain(False,firststatus)
+        packageMain(False,firststatus,packagefailure)
         
     else:
         
@@ -402,7 +412,7 @@ def main():
         
     def fromFile(path):
         
-        nonlocal debianpackage,packagename,installable,packageversion,packagedescription,firststatus
+        nonlocal debianpackage,packagename,installable,packageversion,packagedescription,firststatus,packagefailure
         
         debianpackage = path
 
@@ -413,7 +423,7 @@ def main():
         installable = aa[3]
         packageversion =  aa[4]
         packagedescription = aa[5]
-    
+        packagefailure = aa[6]
 
         label1.set_text(packagename + " ( " + packageversion + " )")
         label2.set_text(packagedescription )
@@ -429,7 +439,7 @@ def main():
             installed_version_title.set_text(_("Installed Version : "))
             installed_version.set_text(_("Not installed"))
             
-        packageMain(False,firststatus)
+        packageMain(False,firststatus,packagefailure)
 
 
     def close(self, *args):
