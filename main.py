@@ -251,7 +251,7 @@ def main():
 
     
     builder = Gtk.Builder()
-    builder.add_from_file("main.glade")
+    builder.add_from_file("/usr/share/pdebi/main.glade")
     builder.connect_signals(Handler())
     
     window = builder.get_object("mainwindow")
