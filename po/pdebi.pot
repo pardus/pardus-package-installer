@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-04 22:20+0300\n"
+"POT-Creation-Date: 2020-02-09 01:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,84 +17,132 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: main.py:116
+#: main.py:128
 msgid "Installing.."
 msgstr ""
 
-#: main.py:135
+#: main.py:150
 msgid "Uninstalling.."
 msgstr ""
 
-#: main.py:151
+#: main.py:168
 msgid "Reinstalling.."
 msgstr ""
 
-#: main.py:167
+#: main.py:186
 msgid "Downgrading.."
 msgstr ""
 
-#: main.py:268 main.py:291 main.py:381 main.glade:57
+#: main.py:297 main.py:320 main.py:427 main.glade:67
 msgid "Install"
 msgstr ""
 
-#: main.py:273 main.py:296
+#: main.py:302 main.py:325
 msgid "Downgrade"
 msgstr ""
 
-#: main.py:278 main.py:301
+#: main.py:307 main.py:330
 msgid "Reinstall"
 msgstr ""
 
-#: main.py:283 main.py:306
+#: main.py:312 main.py:335
 msgid "Upgrade"
 msgstr ""
 
-#: main.py:316
+#: main.py:317
+msgid "<b><span color='red'>Error ! </span></b>"
+msgstr ""
+
+#: main.py:346
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
 msgstr ""
 
-#: main.py:318
+#: main.py:348
 msgid "Completed !"
 msgstr ""
 
-#: main.py:320
+#: main.py:350
 msgid "Not Completed !"
 msgstr ""
 
-#: main.py:350 main.py:415 main.glade:261
+#: main.py:384 main.py:473 main.glade:379
 msgid "Not installed"
 msgstr ""
 
-#: main.py:382 main.glade:139
+#: main.py:428 main.glade:149
 msgid "Uninstall"
 msgstr ""
 
-#: main.py:411 main.py:414 main.glade:248
+#: main.py:469 main.py:472 main.glade:363
 msgid "Installed Version : "
 msgstr ""
 
-#: main.glade:36
+#: main.glade:45
 msgid "Pardus Package Installer"
 msgstr ""
 
-#: main.glade:228
-msgid "Package Progress"
-msgstr ""
-
-#: main.glade:335
+#: main.glade:209
 msgid "Package Name"
 msgstr ""
 
-#: main.glade:354
+#: main.glade:228
 msgid "_File"
 msgstr ""
 
-#: main.glade:394
+#: main.glade:268
 msgid "_Help"
 msgstr ""
 
-#: main.glade:442
+#: main.glade:335
+msgid "Description : "
+msgstr ""
+
+#: main.glade:431
+msgid "Processing Details"
+msgstr ""
+
+#: main.glade:520
+msgid "Architecture :"
+msgstr ""
+
+#: main.glade:539
+msgid "Size :"
+msgstr ""
+
+#: main.glade:558
+msgid "Section :"
+msgstr ""
+
+#: main.glade:577
+msgid "Priority :"
+msgstr ""
+
+#: main.glade:595
+msgid "Maintainer :"
+msgstr ""
+
+#: main.glade:614
+msgid "Package Details"
+msgstr ""
+
+#: main.glade:651
+msgid "Package Depends"
+msgstr ""
+
+#: main.glade:680
+msgid "Info"
+msgstr ""
+
+#: main.glade:681
+msgid "You cannot close the application while the process is continuing"
+msgstr ""
+
+#: main.glade:707
+msgid "Select Software Package"
+msgstr ""
+
+#: main.glade:726
 msgid "Select"
 msgstr ""
