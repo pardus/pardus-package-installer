@@ -78,10 +78,8 @@ def main():
         def _on_stderr(self, fobj, cond):
             self._emit_std("stderr", fobj.readline())
             return True
-        
-    
-    # debianpackage = "/home/pardus/Masaüstü/pdebi/black.deb"
-        
+
+
     debianpackage = ""
     
     installable = False
@@ -91,23 +89,28 @@ def main():
     packagefailure = ""
         
     def start(debpackage):
-    
+
         package = aptdeb.DebPackage(debpackage)
-        
+
         packagename = package.pkgname
-        
+
         firststatus = package.compare_to_version_in_cache()
-        
+
         installable = package.check()
-        
+
         packageversion = package._sections["Version"]
         packagedescription = package._sections["Description"]
+        packagemaintainer = package._sections["Maintainer"]
+        packagepriority= package._sections["Priority"]
+        packagesection = package._sections["Section"]
+        packagesize = package._sections["Installed-Size"]
+        packagearchitecture = package._sections["Architecture"]
+        packagedepends = package._sections["Depends"]
 
         packagefailure = package._failure_string
         
-        return package,packagename,firststatus,installable,packageversion,packagedescription,packagefailure
-    
-    
+        return package,packagename,firststatus,installable,packageversion,packagedescription,packagefailure,packagemaintainer,packagepriority,packagesection,packagesize,packagearchitecture,packagedepends
+
     def cacheControl():
         cache = apt.Cache()
         cache.open()
@@ -248,7 +251,7 @@ def main():
 
     
     builder = Gtk.Builder()
-    builder.add_from_file("/home/pardus/Masaüstü/pdebi/main.glade")
+    builder.add_from_file("main.glade")
     builder.connect_signals(Handler())
     
     window = builder.get_object("mainwindow")
@@ -262,6 +265,13 @@ def main():
 
     label1 = builder.get_object("label1")
     label2 = builder.get_object("label2")
+
+    maintainer = builder.get_object("maintainer")
+    priority = builder.get_object("priority")
+    section = builder.get_object("section")
+    size = builder.get_object("size")
+    architecture = builder.get_object("architecture")
+    depends = builder.get_object("depends")
     
     spinner = builder.get_object("spinner")
     progress = builder.get_object("progress")
@@ -386,11 +396,22 @@ def main():
         packageversion =  aa[4]
         packagedescription = aa[5]
         packagefailure = aa[6]
-    
+        packagemaintainer = aa[7]
+        packagepriority = aa[8]
+        packagesection = aa[9]
+        packagesize = aa[10]
+        packagearchitecture = aa[11]
+        packagedepends = aa[12]
 
         label1.set_text(packagename + " ( " + packageversion + " )")
-        label2.set_text(packagedescription )
-        
+        label2.set_text(packagedescription)
+        maintainer.set_text(packagemaintainer)
+        priority.set_text(packagepriority)
+        section.set_text(packagesection)
+        size.set_text(packagesize + " KiB")
+        architecture.set_text(packagearchitecture)
+        depends.set_text(packagedepends)
+
         if firststatus != 0:
             cache = apt.Cache()
             pkg = cache[packagename]
@@ -412,7 +433,7 @@ def main():
         
     def fromFile(path):
         
-        nonlocal debianpackage,packagename,installable,packageversion,packagedescription,firststatus,packagefailure
+        nonlocal debianpackage,packagename,installable,packageversion,packagedescription,firststatus,packagefailure,packagemaintainer,packagepriority,packagesection,packagesize,packagearchitecture
         
         debianpackage = path
 
@@ -424,10 +445,22 @@ def main():
         packageversion =  aa[4]
         packagedescription = aa[5]
         packagefailure = aa[6]
+        packagemaintainer = aa[7]
+        packagepriority = aa[8]
+        packagesection = aa[9]
+        packagesize = aa[10]
+        packagearchitecture = aa[11]
+        packagedepends = aa[12]
 
         label1.set_text(packagename + " ( " + packageversion + " )")
         label2.set_text(packagedescription )
         progress.set_text("")
+        maintainer.set_text(packagemaintainer)
+        priority.set_text(packagepriority)
+        section.set_text(packagesection)
+        size.set_text(packagesize + " KiB")
+        architecture.set_text(packagearchitecture)
+        depends.set_text(packagedepends)
         
         if firststatus != 0:
             cache = apt.Cache()
