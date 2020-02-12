@@ -134,7 +134,7 @@ def main():
 
             closestatus = True
 
-            command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "install", debianpackage]
+            command = ["/usr/bin/pkexec", "/usr/bin/pdebi-action", "install", debianpackage]
             
             pid = spawn.run(command)
             
@@ -156,7 +156,7 @@ def main():
 
             closestatus = True
 
-            command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "remove", packagename]
+            command = ["/usr/bin/pkexec", "/usr/bin/pdebi-action", "remove", packagename]
             
             pid = spawn.run(command)
             
@@ -174,7 +174,7 @@ def main():
 
         closestatus = True
 
-        command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "reinstall", debianpackage]
+        command = ["/usr/bin/pkexec", "/usr/bin/pdebi-action", "reinstall", debianpackage]
         
         pid = spawn.run(command)
         
@@ -192,7 +192,7 @@ def main():
 
         closestatus = True
 
-        command = ["/usr/bin/pkexec", "/usr/bin/pdebi-gtk", "downgrade", debianpackage]
+        command = ["/usr/bin/pkexec", "/usr/bin/pdebi-action", "downgrade", debianpackage]
         
         pid = spawn.run(command)
         
