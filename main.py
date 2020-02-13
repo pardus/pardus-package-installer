@@ -249,7 +249,11 @@ def main():
         def onQuitClicked(self, quitbutton):
             Gtk.main_quit()
 
-    
+        def onAboutClicked(self, quitbutton):
+            about_dialog.run()
+            about_dialog.hide()
+
+
     builder = Gtk.Builder()
     builder.add_from_file("/usr/share/pdebi/main.glade")
     builder.connect_signals(Handler())
@@ -262,6 +266,7 @@ def main():
     filechooser = builder.get_object("filechooser")
     selectbutton = builder.get_object("selectbutton")
     quitbutton = builder.get_object("quitbutton")
+    aboutbutton = builder.get_object("aboutbutton")
 
     label1 = builder.get_object("label1")
     label2 = builder.get_object("label2")
@@ -287,6 +292,7 @@ def main():
     installed_version_title = builder.get_object("installed_version_title")
     
     cannotclose_dialog = builder.get_object("cannotclose_dialog")
+    about_dialog = builder.get_object("about_dialog")
     
     def packageMain(actioned,status,packagefailure):
 

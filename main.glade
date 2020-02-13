@@ -2,13 +2,42 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkWindow">
+  <object class="GtkAboutDialog" id="about_dialog">
     <property name="can_focus">False</property>
+    <property name="icon_name">dialog-information</property>
+    <property name="type_hint">dialog</property>
+    <property name="program_name">PDebi</property>
+    <property name="version">0.1~beta1</property>
+    <property name="copyright" translatable="yes">© 2020 Pardus</property>
+    <property name="comments" translatable="yes">Manage and view .deb packages</property>
+    <property name="website">https://www.pardus.org.tr</property>
+    <property name="website_label" translatable="yes">Website</property>
+    <property name="authors">Fatih Altun</property>
+    <property name="logo_icon_name">applications-development</property>
+    <property name="license_type">gpl-3-0</property>
     <child>
       <placeholder/>
     </child>
-    <child>
-      <placeholder/>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
     </child>
   </object>
   <object class="GtkImage" id="downgrade_icon">
@@ -272,12 +301,13 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem">
+                      <object class="GtkImageMenuItem" id="aboutbutton">
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="onAboutClicked" swapped="no"/>
                       </object>
                     </child>
                   </object>
