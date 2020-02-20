@@ -1,2 +1,2 @@
 #!/bin/sh
-/usr/bin/python3 /usr/share/pdebi/actions.py "$@"
+/usr/bin/python3 /usr/share/pardus/pdebi/actions.py "$@"
