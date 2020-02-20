@@ -31,4 +31,4 @@ pdebi (0.1.0~Beta1) unstable; urgency=medium
   * Improve code
   * Add apt actions
 
- -- Fatih Altun <fatih.altun@pardus.org.tr>  Thu, 20 Feb 2020 17:46:16 +0300
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Thu, 20 Feb 2020 18:03:58 +0300
