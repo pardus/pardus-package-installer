@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-09 01:12+0300\n"
-"PO-Revision-Date: 2020-02-09 01:13+0300\n"
+"POT-Creation-Date: 2020-02-20 16:51+0300\n"
+"PO-Revision-Date: 2020-02-20 16:56+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
 "Language: tr\n"
@@ -35,27 +35,27 @@ msgstr "Tekrar Yükleniyor.."
 msgid "Downgrading.."
 msgstr "Versiyon düşürülüyor.."
 
-#: main.py:297 main.py:320 main.py:427 main.glade:67
+#: main.py:303 main.py:326 main.py:433 main.glade:96
 msgid "Install"
 msgstr "Yükle"
 
-#: main.py:302 main.py:325
+#: main.py:308 main.py:331
 msgid "Downgrade"
 msgstr "Versiyon Düşür"
 
-#: main.py:307 main.py:330
+#: main.py:313 main.py:336
 msgid "Reinstall"
 msgstr "Tekrar Yükle"
 
-#: main.py:312 main.py:335
+#: main.py:318 main.py:341
 msgid "Upgrade"
 msgstr "Versiyon Yükselt"
 
-#: main.py:317
+#: main.py:323
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr "<b><span color='red'>Hata ! </span></b>"
 
-#: main.py:346
+#: main.py:352
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
@@ -63,91 +63,103 @@ msgstr ""
 "İşlem Başarıyla Tamamlandı ! \n"
 " \n"
 
-#: main.py:348
+#: main.py:354
 msgid "Completed !"
 msgstr "Tamamlandı !"
 
-#: main.py:350
+#: main.py:356
 msgid "Not Completed !"
 msgstr "Tamamlanamadı !"
 
-#: main.py:384 main.py:473 main.glade:379
+#: main.py:390 main.py:479 main.glade:409
 msgid "Not installed"
 msgstr "Yüklü değil"
 
-#: main.py:428 main.glade:149
+#: main.py:434 main.glade:178
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: main.py:469 main.py:472 main.glade:363
+#: main.py:475 main.py:478 main.glade:393
 msgid "Installed Version : "
 msgstr "Yüklü Versiyon : "
 
-#: main.glade:45
+#: main.glade:11
+msgid "© 2020 Pardus"
+msgstr ""
+
+#: main.glade:12
+msgid "Manage and view .deb packages"
+msgstr "Deb paketlerini yönetin ve görüntüleyin"
+
+#: main.glade:14
+msgid "Website"
+msgstr "Web sitesi"
+
+#: main.glade:74
 msgid "Pardus Package Installer"
 msgstr "Pardus Paket Yükleyici"
 
-#: main.glade:209
+#: main.glade:238
 msgid "Package Name"
 msgstr "Paket Adı"
 
-#: main.glade:228
+#: main.glade:257
 msgid "_File"
 msgstr "_Dosya"
 
-#: main.glade:268
+#: main.glade:297
 msgid "_Help"
 msgstr "_Yardım"
 
-#: main.glade:335
+#: main.glade:365
 msgid "Description : "
 msgstr "Açıklama : "
 
-#: main.glade:431
+#: main.glade:461
 msgid "Processing Details"
 msgstr "İşleme Detayları"
 
-#: main.glade:520
+#: main.glade:550
 msgid "Architecture :"
 msgstr "Mimari :"
 
-#: main.glade:539
+#: main.glade:569
 msgid "Size :"
 msgstr "Boyut :"
 
-#: main.glade:558
+#: main.glade:588
 msgid "Section :"
 msgstr "Bölüm :"
 
-#: main.glade:577
+#: main.glade:607
 msgid "Priority :"
 msgstr "Öncelik :"
 
-#: main.glade:595
+#: main.glade:625
 msgid "Maintainer :"
 msgstr "Bakımcı :"
 
-#: main.glade:614
+#: main.glade:644
 msgid "Package Details"
 msgstr "Paket Ayrıntıları"
 
-#: main.glade:651
+#: main.glade:681
 msgid "Package Depends"
 msgstr "Paket Bağımlılıkları"
 
-#: main.glade:680
+#: main.glade:710
 msgid "Info"
 msgstr "Bilgi"
 
-#: main.glade:681
+#: main.glade:711
 msgid "You cannot close the application while the process is continuing"
 msgstr "İşlem devam ederken uygulamayı kapatamazsınız"
 
-#: main.glade:707
+#: main.glade:737
 msgid "Select Software Package"
 msgstr "Bir Yazılım Paketi Seçiniz"
 
-#: main.glade:726
+#: main.glade:756
 msgid "Select"
 msgstr "Seç"
 
