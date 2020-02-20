@@ -105,7 +105,10 @@ def main():
         packagesection = package._sections["Section"]
         packagesize = package._sections["Installed-Size"]
         packagearchitecture = package._sections["Architecture"]
-        packagedepends = package._sections["Depends"]
+        try:
+            packagedepends = package._sections["Depends"]
+        except:
+            packagedepends = ""
 
         packagefailure = package._failure_string
         
