@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-20 16:51+0300\n"
-"PO-Revision-Date: 2020-02-20 16:56+0300\n"
+"POT-Creation-Date: 2020-02-23 00:06+0300\n"
+"PO-Revision-Date: 2020-02-23 00:11+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
 "Language: tr\n"
@@ -19,43 +19,43 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: main.py:128
-msgid "Installing.."
-msgstr "Yükleniyor.."
+#: main.py:131
+msgid "Installing ..."
+msgstr "Yükleniyor ..."
 
-#: main.py:150
-msgid "Uninstalling.."
-msgstr "Kaldırılıyor.."
+#: main.py:153
+msgid "Uninstalling ..."
+msgstr "Kaldırılıyor ..."
 
-#: main.py:168
-msgid "Reinstalling.."
-msgstr "Tekrar Yükleniyor.."
+#: main.py:171
+msgid "Reinstalling ..."
+msgstr "Tekrar Yükleniyor ..."
 
-#: main.py:186
-msgid "Downgrading.."
-msgstr "Versiyon düşürülüyor.."
+#: main.py:189
+msgid "Downgrading ..."
+msgstr "Versiyon düşürülüyor ..."
 
-#: main.py:303 main.py:326 main.py:433 main.glade:96
+#: main.py:306 main.py:329 main.py:436 main.glade:96
 msgid "Install"
 msgstr "Yükle"
 
-#: main.py:308 main.py:331
+#: main.py:311 main.py:334
 msgid "Downgrade"
 msgstr "Versiyon Düşür"
 
-#: main.py:313 main.py:336
+#: main.py:316 main.py:339
 msgid "Reinstall"
 msgstr "Tekrar Yükle"
 
-#: main.py:318 main.py:341
+#: main.py:321 main.py:344
 msgid "Upgrade"
 msgstr "Versiyon Yükselt"
 
-#: main.py:323
+#: main.py:326
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr "<b><span color='red'>Hata ! </span></b>"
 
-#: main.py:352
+#: main.py:355
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
@@ -63,29 +63,29 @@ msgstr ""
 "İşlem Başarıyla Tamamlandı ! \n"
 " \n"
 
-#: main.py:354
-msgid "Completed !"
-msgstr "Tamamlandı !"
+#: main.py:357
+msgid "<b>Completed !</b>"
+msgstr "<b>Tamamlandı !</b>"
 
-#: main.py:356
-msgid "Not Completed !"
-msgstr "Tamamlanamadı !"
+#: main.py:359
+msgid "<b>Not Completed !</b>"
+msgstr "<b>Tamamlanamadı !</b>"
 
-#: main.py:390 main.py:479 main.glade:409
+#: main.py:393 main.py:482 main.glade:409
 msgid "Not installed"
 msgstr "Yüklü değil"
 
-#: main.py:434 main.glade:178
+#: main.py:437 main.glade:178
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: main.py:475 main.py:478 main.glade:393
+#: main.py:478 main.py:481 main.glade:393
 msgid "Installed Version : "
 msgstr "Yüklü Versiyon : "
 
 #: main.glade:11
 msgid "© 2020 Pardus"
-msgstr ""
+msgstr "© 2020 Pardus"
 
 #: main.glade:12
 msgid "Manage and view .deb packages"
@@ -143,23 +143,23 @@ msgstr "Bakımcı :"
 msgid "Package Details"
 msgstr "Paket Ayrıntıları"
 
-#: main.glade:681
+#: main.glade:682
 msgid "Package Depends"
 msgstr "Paket Bağımlılıkları"
 
-#: main.glade:710
+#: main.glade:711
 msgid "Info"
 msgstr "Bilgi"
 
-#: main.glade:711
+#: main.glade:712
 msgid "You cannot close the application while the process is continuing"
 msgstr "İşlem devam ederken uygulamayı kapatamazsınız"
 
-#: main.glade:737
+#: main.glade:738
 msgid "Select Software Package"
 msgstr "Bir Yazılım Paketi Seçiniz"
 
-#: main.glade:756
+#: main.glade:757
 msgid "Select"
 msgstr "Seç"
 
