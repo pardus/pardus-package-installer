@@ -665,6 +665,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="wrap">True</property>
+                        <property name="selectable">True</property>
                       </object>
                     </child>
                   </object>
