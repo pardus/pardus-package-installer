@@ -128,7 +128,7 @@ def main():
         if installable:
     
             spinner.start()
-            progress.set_text(_("Installing.."))
+            progress.set_text(_("Installing ..."))
             
             button1.set_sensitive(False)
             button2.set_sensitive(False)
@@ -150,7 +150,7 @@ def main():
         if cache[packagename].is_installed:
             
             spinner.start()
-            progress.set_text(_("Uninstalling.."))
+            progress.set_text(_("Uninstalling ..."))
             
             button1.set_sensitive(False)
             button2.set_sensitive(False)
@@ -168,7 +168,7 @@ def main():
     def reinstallPackage():
         global closestatus
         spinner.start()
-        progress.set_text(_("Reinstalling.."))
+        progress.set_text(_("Reinstalling ..."))
         
         button1.set_sensitive(False)
         button2.set_sensitive(False)
@@ -186,7 +186,7 @@ def main():
     def downgradePackage():
         global closestatus
         spinner.start()
-        progress.set_text(_("Downgrading.."))
+        progress.set_text(_("Downgrading ..."))
         
         button1.set_sensitive(False)
         button2.set_sensitive(False)
@@ -354,9 +354,9 @@ def main():
         if retval == 0:
             textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (_("Operation was successfully completed ! \n \n")))
             textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
-            progress.set_text(_("Completed !"))
+            progress.set_markup(_("<b>Completed !</b>"))
         else:
-            progress.set_text(_("Not Completed !"))
+            progress.set_markup(_("<b>Not Completed !</b>"))
         status = cacheControl()
         packagefailure = failureControl()
         packageMain(True,status,packagefailure)
