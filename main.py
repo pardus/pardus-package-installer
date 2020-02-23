@@ -32,6 +32,8 @@ locale.textdomain('pdebi')
 
 closestatus = False
 
+error = False
+
 def main():
 
     class GAsyncSpawn(GObject.GObject):
@@ -347,16 +349,20 @@ def main():
     
 
     def on_process_done(sender, retval):
-        global closestatus
+        global closestatus,error
         spinner.stop()
         textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
         print("Done. exit code: %s" % (retval))
-        if retval == 0:
-            textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (_("Operation was successfully completed ! \n \n")))
-            textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
-            progress.set_markup(_("<b>Completed !</b>"))
+        if error is False:
+            if retval == 0:
+                textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (_("Operation was successfully completed ! \n \n")))
+                textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
+                progress.set_markup(_("<b>Completed !</b>"))
+            else:
+                progress.set_markup(_("<b>Not Completed !</b>"))
         else:
-            progress.set_markup(_("<b>Not Completed !</b>"))
+            progress.set_markup(_("<b><span color='red'>Connection Error !</span></b>"))
+            error = False
         status = cacheControl()
         packagefailure = failureControl()
         packageMain(True,status,packagefailure)
@@ -370,8 +376,15 @@ def main():
         textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
     
     def on_stderr_data(sender, line):
+        global error
         if line is not None:
             print("Error : " +line)
+            if "E:" in line and ".deb" in line:
+                print("connection error")
+                error = True
+                textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (line))
+                textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
+
         
 
     spawn = GAsyncSpawn()
