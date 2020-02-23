@@ -107,6 +107,7 @@ def main():
         packagesection = package._sections["Section"]
         packagesize = package._sections["Installed-Size"]
         packagearchitecture = package._sections["Architecture"]
+        packagemissingdeps = package.missing_deps
         try:
             packagedepends = package._sections["Depends"]
         except:
@@ -114,7 +115,7 @@ def main():
 
         packagefailure = package._failure_string
         
-        return package,packagename,firststatus,installable,packageversion,packagedescription,packagefailure,packagemaintainer,packagepriority,packagesection,packagesize,packagearchitecture,packagedepends
+        return package,packagename,firststatus,installable,packageversion,packagedescription,packagefailure,packagemaintainer,packagepriority,packagesection,packagesize,packagearchitecture,packagedepends,packagemissingdeps
 
     def cacheControl():
         cache = apt.Cache()
@@ -282,12 +283,13 @@ def main():
     size = builder.get_object("size")
     architecture = builder.get_object("architecture")
     depends = builder.get_object("depends")
+    missingdeps = builder.get_object("missingdeps")
     
     spinner = builder.get_object("spinner")
     progress = builder.get_object("progress")
     
     textview = builder.get_object("textview")
-    
+
     installicon = builder.get_object("install_icon")
     upgradeicon = builder.get_object("upgrade_icon")
     downgradeicon = builder.get_object("downgrade_icon")
@@ -424,6 +426,7 @@ def main():
         packagesize = aa[10]
         packagearchitecture = aa[11]
         packagedepends = aa[12]
+        packagemissingdeps = aa[13]
 
         label1.set_text(packagename + " ( " + packageversion + " )")
         label2.set_text(packagedescription)
@@ -432,7 +435,15 @@ def main():
         section.set_text(packagesection)
         size.set_text(packagesize + " KiB")
         architecture.set_text(packagearchitecture)
-        depends.set_text(packagedepends)
+
+        if packagedepends != "":
+            pd = packagedepends.split(", ")
+            for p in pd:
+                depends.get_buffer().insert(depends.get_buffer().get_end_iter(),  p+"\n")
+
+        if packagemissingdeps:
+            for pmd in packagemissingdeps:
+                missingdeps.get_buffer().insert(missingdeps.get_buffer().get_end_iter(),  pmd+"\n")
 
         if firststatus != 0:
             cache = apt.Cache()
@@ -455,7 +466,7 @@ def main():
         
     def fromFile(path):
         
-        nonlocal debianpackage,packagename,installable,packageversion,packagedescription,firststatus,packagefailure,packagemaintainer,packagepriority,packagesection,packagesize,packagearchitecture
+        nonlocal debianpackage,packagename,installable,packageversion,packagedescription,firststatus,packagefailure,packagemaintainer,packagepriority,packagesection,packagesize,packagearchitecture,packagemissingdeps
         
         debianpackage = path
 
@@ -473,6 +484,19 @@ def main():
         packagesize = aa[10]
         packagearchitecture = aa[11]
         packagedepends = aa[12]
+        packagemissingdeps = aa[13]
+
+        depends.get_buffer().delete(depends.get_buffer().get_start_iter(), depends.get_buffer().get_end_iter())
+        missingdeps.get_buffer().delete(missingdeps.get_buffer().get_start_iter(), missingdeps.get_buffer().get_end_iter())
+
+        if packagedepends != "":
+            pd = packagedepends.split(", ")
+            for p in pd:
+                depends.get_buffer().insert(depends.get_buffer().get_end_iter(),  p+"\n")
+
+        if packagemissingdeps:
+            for pmd in packagemissingdeps:
+                missingdeps.get_buffer().insert(missingdeps.get_buffer().get_end_iter(),  pmd+"\n")
 
         label1.set_text(packagename + " ( " + packageversion + " )")
         label2.set_text(packagedescription )
@@ -482,7 +506,6 @@ def main():
         section.set_text(packagesection)
         size.set_text(packagesize + " KiB")
         architecture.set_text(packagearchitecture)
-        depends.set_text(packagedepends)
         
         if firststatus != 0:
             cache = apt.Cache()
