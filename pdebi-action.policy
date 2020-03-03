@@ -7,8 +7,8 @@
 
   <action id="org.freedesktop.policykit.pkexec.run-pdebi-action">
     <description>Run FlashTool</description>
-    <message>Authentication is required to run Pdebi</message>
-    <message xml:lang="tr">Pdebi Uygulamasını çalıştırmak için yetkilendirme gerekiyor</message>
+    <message>Authentication is required to run Pardus Package Installer</message>
+    <message xml:lang="tr">Pardus Paket Kurucu uygulamasını çalıştırmak için yetkilendirme gerekiyor</message>
     <defaults>
       <allow_any>auth_admin</allow_any>
       <allow_inactive>auth_admin</allow_inactive>
