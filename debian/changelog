@@ -1,3 +1,25 @@
+pdebi (0.1.0~Beta2) unstable; urgency=medium
+
+  * Change file permission as executable
+  * Fix unnecessary argument
+  * Update package depends list as selectable
+  * Fix typo and make progress text bold
+  * Update translations
+  * Update window icons as gnome-mime-application-x-deb
+  * Add connection control
+  * Add missing deps information and Improve Package Depends tab
+  * Update translations
+  * Update desktop file
+  * Update policy file
+  * Add application icon
+  * Update about window
+  * Resize application icon
+  * Update translations
+  * Update Makefile
+  * Update debian/control
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Tue, 03 Mar 2020 12:01:58 +0300
+
 pdebi (0.1.0~Beta1) unstable; urgency=medium
 
   * Fix get deb package depends error
