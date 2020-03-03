@@ -7,6 +7,6 @@ Standards-Version: 4.3.0
 Homepage: http://pardus.org.tr
 
 Package: pdebi
-Architecture: all
+Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Pardus Deb Package Manager
