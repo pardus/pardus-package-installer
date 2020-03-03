@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 17:22+0300\n"
+"POT-Creation-Date: 2020-03-03 11:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Downgrading ..."
 msgstr ""
 
-#: main.py:310 main.py:333 main.py:460 main.glade:96
+#: main.py:310 main.py:333 main.py:460 main.glade:97
 msgid "Install"
 msgstr ""
 
@@ -71,16 +71,20 @@ msgstr ""
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr ""
 
-#: main.py:408 main.py:518 main.glade:409
+#: main.py:408 main.py:518 main.glade:410
 msgid "Not installed"
 msgstr ""
 
-#: main.py:461 main.glade:178
+#: main.py:461 main.glade:179
 msgid "Uninstall"
 msgstr ""
 
-#: main.py:514 main.py:517 main.glade:393
+#: main.py:514 main.py:517 main.glade:394
 msgid "Installed Version : "
+msgstr ""
+
+#: main.glade:9 main.glade:75
+msgid "Pardus Package Installer"
 msgstr ""
 
 #: main.glade:11
@@ -95,78 +99,78 @@ msgstr ""
 msgid "Website"
 msgstr ""
 
-#: main.glade:74
-msgid "Pardus Package Installer"
+#: main.glade:16
+msgid "Fatih Altun"
 msgstr ""
 
-#: main.glade:238
+#: main.glade:239
 msgid "Package Name"
 msgstr ""
 
-#: main.glade:257
+#: main.glade:258
 msgid "_File"
 msgstr ""
 
-#: main.glade:297
+#: main.glade:298
 msgid "_Help"
 msgstr ""
 
-#: main.glade:365
+#: main.glade:366
 msgid "Description : "
 msgstr ""
 
-#: main.glade:461
+#: main.glade:462
 msgid "Processing Details"
 msgstr ""
 
-#: main.glade:550
+#: main.glade:551
 msgid "Architecture :"
 msgstr ""
 
-#: main.glade:569
+#: main.glade:570
 msgid "Size :"
 msgstr ""
 
-#: main.glade:588
+#: main.glade:589
 msgid "Section :"
 msgstr ""
 
-#: main.glade:607
+#: main.glade:608
 msgid "Priority :"
 msgstr ""
 
-#: main.glade:625
+#: main.glade:626
 msgid "Maintainer :"
 msgstr ""
 
-#: main.glade:644
+#: main.glade:645
 msgid "Package Details"
 msgstr ""
 
-#: main.glade:673
+#: main.glade:674
 msgid "Dependency List"
 msgstr ""
 
-#: main.glade:690
+#: main.glade:691
 msgid "Packages to install"
 msgstr ""
 
-#: main.glade:792
+#: main.glade:793
 msgid "Package Depends"
 msgstr ""
 
-#: main.glade:821
+#: main.glade:822
 msgid "Info"
 msgstr ""
 
-#: main.glade:822
+#: main.glade:823
 msgid "You cannot close the application while the process is continuing"
 msgstr ""
 
-#: main.glade:848
+#: main.glade:849
 msgid "Select Software Package"
 msgstr ""
 
-#: main.glade:868
+#: main.glade:869
 msgid "Select"
 msgstr ""
