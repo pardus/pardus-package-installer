@@ -5,6 +5,7 @@ install:
 	@cp -fr main.py $(DESTDIR)/usr/share/pardus/pdebi/main.py
 	@cp -fr actions.py $(DESTDIR)/usr/share/pardus/pdebi/actions.py
 	@cp -fr main.glade $(DESTDIR)/usr/share/pardus/pdebi/main.glade
+	@cp -fr icon.svg $(DESTDIR)/usr/share/pardus/pdebi/icon.svg
 
 	mkdir -p $(DESTDIR)/usr/bin
 	@cp -fr pdebi $(DESTDIR)/usr/bin/pdebi
