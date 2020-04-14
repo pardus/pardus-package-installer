@@ -326,7 +326,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkScrolledWindow">
+              <object class="GtkScrolledWindow" id="descriptionscrolledwindow">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_bottom">23</property>

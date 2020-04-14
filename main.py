@@ -22,6 +22,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.repository import GLib
+from gi.repository import Gdk
 import apt.debfile as aptdeb
 
 import locale
@@ -289,6 +290,7 @@ def main():
     progress = builder.get_object("progress")
     
     textview = builder.get_object("textview")
+    descriptionscrolledwindow = builder.get_object("descriptionscrolledwindow")
 
     installicon = builder.get_object("install_icon")
     upgradeicon = builder.get_object("upgrade_icon")
@@ -526,6 +528,17 @@ def main():
             cannotclose_dialog.hide()
             return True
         return closestatus
+
+    display = Gdk.Display.get_default()
+    monitor = display.get_primary_monitor()
+    geometry = monitor.get_geometry()
+    scale_factor = monitor.get_scale_factor()
+    width = scale_factor * geometry.width
+    height = scale_factor * geometry.height
+
+    if width <= 800 and height <= 600:
+        descriptionscrolledwindow.set_min_content_height(50)
+        windows.resize(500,500)
 
     window.connect('delete_event', close)
     
