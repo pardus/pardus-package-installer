@@ -567,7 +567,11 @@ def main():
 
     if width <= 800 and height <= 600:
         descriptionscrolledwindow.set_min_content_height(50)
-        window.resize(500,500)
+        window.resize(450,450)
+        progress.set_margin_top(0)
+        progress.set_margin_bottom(13)
+        label1.set_margin_top(13)
+        label1.set_margin_bottom(5)
 
     window.connect('delete_event', close)
     
