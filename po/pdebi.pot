@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-03 11:42+0300\n"
+"POT-Creation-Date: 2020-04-17 14:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,69 +17,97 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: main.py:134
+#: main.py:107
+msgid "Version is not avaible"
+msgstr ""
+
+#: main.py:112
+msgid "Description is not avaible"
+msgstr ""
+
+#: main.py:117
+msgid "Maintainer is not avaible"
+msgstr ""
+
+#: main.py:122
+msgid "Priority is not avaible"
+msgstr ""
+
+#: main.py:127
+msgid "Section is not avaible"
+msgstr ""
+
+#: main.py:132
+msgid "Size is not avaible"
+msgstr ""
+
+#: main.py:137
+msgid "Architecture is not avaible"
+msgstr ""
+
+#: main.py:164
 msgid "Installing ..."
 msgstr ""
 
-#: main.py:156
+#: main.py:186
 msgid "Uninstalling ..."
 msgstr ""
 
-#: main.py:174
+#: main.py:204
 msgid "Reinstalling ..."
 msgstr ""
 
-#: main.py:192
+#: main.py:222
 msgid "Downgrading ..."
 msgstr ""
 
-#: main.py:310 main.py:333 main.py:460 main.glade:97
+#: main.py:341 main.py:364 main.py:491 main.glade:97
 msgid "Install"
 msgstr ""
 
-#: main.py:315 main.py:338
+#: main.py:346 main.py:369
 msgid "Downgrade"
 msgstr ""
 
-#: main.py:320 main.py:343
+#: main.py:351 main.py:374
 msgid "Reinstall"
 msgstr ""
 
-#: main.py:325 main.py:348
+#: main.py:356 main.py:379
 msgid "Upgrade"
 msgstr ""
 
-#: main.py:330
+#: main.py:361
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr ""
 
-#: main.py:360
+#: main.py:391
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
 msgstr ""
 
-#: main.py:362
+#: main.py:393
 msgid "<b>Completed !</b>"
 msgstr ""
 
-#: main.py:364
+#: main.py:395
 msgid "<b>Not Completed !</b>"
 msgstr ""
 
-#: main.py:366
+#: main.py:397
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr ""
 
-#: main.py:408 main.py:518 main.glade:410
+#: main.py:439 main.py:549 main.glade:410
 msgid "Not installed"
 msgstr ""
 
-#: main.py:461 main.glade:179
+#: main.py:492 main.glade:179
 msgid "Uninstall"
 msgstr ""
 
-#: main.py:514 main.py:517 main.glade:394
+#: main.py:545 main.py:548 main.glade:394
 msgid "Installed Version : "
 msgstr ""
 
