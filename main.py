@@ -567,7 +567,7 @@ def main():
 
     if width <= 800 and height <= 600:
         descriptionscrolledwindow.set_min_content_height(50)
-        windows.resize(500,500)
+        window.resize(500,500)
 
     window.connect('delete_event', close)
     
