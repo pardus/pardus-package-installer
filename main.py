@@ -442,7 +442,7 @@ def main():
 
     if len(sys.argv) > 1:
         
-        debianpackage = sys.argv[1]
+        debianpackage = os.path.abspath(sys.argv[1])
         aa = start(debianpackage)
         
         firststatus = aa[2]
