@@ -101,18 +101,47 @@ def main():
 
         installable = package.check()
 
-        packageversion = package._sections["Version"]
-        packagedescription = package._sections["Description"]
-        packagemaintainer = package._sections["Maintainer"]
-        packagepriority= package._sections["Priority"]
-        packagesection = package._sections["Section"]
-        packagesize = package._sections["Installed-Size"]
-        packagearchitecture = package._sections["Architecture"]
-        packagemissingdeps = package.missing_deps
+        try:
+            packageversion = package._sections["Version"]
+        except:
+            packageversion = _("Version is not avaible")
+
+        try:
+            packagedescription = package._sections["Description"]
+        except:
+            packagedescription = _("Description is not avaible")
+
+        try:
+            packagemaintainer = package._sections["Maintainer"]
+        except:
+            packagemaintainer = _("Maintainer is not avaible")
+
+        try:
+            packagepriority = package._sections["Priority"]
+        except:
+            packagepriority = _("Priority is not avaible")
+
+        try:
+            packagesection = package._sections["Section"]
+        except:
+            packagesection = _("Section is not avaible")
+
+        try:
+            packagesize = package._sections["Installed-Size"]
+        except:
+            packagesize = _("Size is not avaible")
+
+        try:
+            packagearchitecture = package._sections["Architecture"]
+        except:
+            packagearchitecture = _("Architecture is not avaible")
+
         try:
             packagedepends = package._sections["Depends"]
         except:
             packagedepends = ""
+
+        packagemissingdeps = package.missing_deps
 
         packagefailure = package._failure_string
         
