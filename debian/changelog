@@ -1,3 +1,16 @@
+pdebi (0.1.0~Beta3) unstable; urgency=medium
+
+  * Fix overflow problem for small resolutions
+  * Update version for new release
+  * Fix get sections errors
+  * Update translations
+  * Update debian/rules
+  * Fix typo
+  * Fix path as abspath
+  * Update small resolution settings
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Fri, 17 Apr 2020 22:16:54 +0300
+
 pdebi (0.1.0~Beta2) unstable; urgency=medium
 
   * Change file permission as executable
