@@ -159,6 +159,9 @@ def main():
         global closestatus
         
         if installable:
+
+            progressbar.set_show_text(False)
+            progressbar.set_fraction(0)
     
             spinner.start()
             progress.set_text(_("Installing ..."))
@@ -181,6 +184,9 @@ def main():
         cache = apt.Cache()
         cache.open()
         if cache[packagename].is_installed:
+
+            progressbar.set_show_text(False)
+            progressbar.set_fraction(0)
             
             spinner.start()
             progress.set_text(_("Uninstalling ..."))
@@ -200,6 +206,8 @@ def main():
             
     def reinstallPackage():
         global closestatus
+        progressbar.set_show_text(False)
+        progressbar.set_fraction(0)
         spinner.start()
         progress.set_text(_("Reinstalling ..."))
         
@@ -218,6 +226,8 @@ def main():
             
     def downgradePackage():
         global closestatus
+        progressbar.set_show_text(False)
+        progressbar.set_fraction(0)
         spinner.start()
         progress.set_text(_("Downgrading ..."))
         
@@ -306,6 +316,11 @@ def main():
 
     label1 = builder.get_object("label1")
     label2 = builder.get_object("label2")
+    versionlabel = builder.get_object("versionlabel")
+    namegrid = builder.get_object("namegrid")
+    installedversiongrid = builder.get_object("installedversiongrid")
+    bottomseparator = builder.get_object("bottomseparator")
+    bottomlabel = builder.get_object("bottomlabel")
 
     maintainer = builder.get_object("maintainer")
     priority = builder.get_object("priority")
@@ -317,6 +332,7 @@ def main():
     
     spinner = builder.get_object("spinner")
     progress = builder.get_object("progress")
+    progressbar = builder.get_object("progressbar")
     
     textview = builder.get_object("textview")
     descriptionscrolledwindow = builder.get_object("descriptionscrolledwindow")
@@ -391,10 +407,16 @@ def main():
                 textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (_("Operation was successfully completed ! \n \n")))
                 textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
                 progress.set_markup(_("<b>Completed !</b>"))
+                if progressbar.get_show_text():
+                    progressbar.set_text("100 %")
+                    progressbar.set_fraction(1)
             else:
                 progress.set_markup(_("<b>Not Completed !</b>"))
         else:
             progress.set_markup(_("<b><span color='red'>Connection Error !</span></b>"))
+            if progressbar.get_show_text():
+                progressbar.set_show_text(False)
+                progressbar.set_fraction(0)
             error = False
         status = cacheControl()
         packagefailure = failureControl()
@@ -412,6 +434,18 @@ def main():
         global error
         if line is not None:
             print("Error : " +line)
+            if "dlstatus" in line:
+                percent = line.split(":")[2].split(".")[0]
+                print("Downloading dependencies : " +  percent )
+                progressbar.set_show_text(True)
+                progressbar.set_text(_("Downloading dependencies : ") + percent + " %")
+                progressbar.set_fraction(int(percent)/100)
+            if "pmstatus" in line:
+                percent = line.split(":")[2].split(".")[0]
+                print( "Processing : " +  percent )
+                progressbar.set_show_text(True)
+                progressbar.set_text( (progress.get_text()).split("...")[0] + ": " + percent + " %")
+                progressbar.set_fraction(int(percent)/100)
             if "E:" in line and ".deb" in line:
                 print("connection error")
                 error = True
@@ -459,7 +493,8 @@ def main():
         packagedepends = aa[12]
         packagemissingdeps = aa[13]
 
-        label1.set_text(packagename + " ( " + packageversion + " )")
+        label1.set_text(packagename)
+        versionlabel.set_text(" | " + packageversion)
         label2.set_text(packagedescription)
         maintainer.set_text(packagemaintainer)
         priority.set_text(packagepriority)
@@ -491,6 +526,7 @@ def main():
         button1.set_label(_("Install"))
         button2.set_label(_("Uninstall"))
         label1.set_text("")
+        versionlabel.set_text("")
         installed_version_title.set_text("")
         installed_version.set_text("")
         
@@ -529,7 +565,8 @@ def main():
             for pmd in packagemissingdeps:
                 missingdeps.get_buffer().insert(missingdeps.get_buffer().get_end_iter(),  pmd+"\n")
 
-        label1.set_text(packagename + " ( " + packageversion + " )")
+        label1.set_text(packagename)
+        versionlabel.set_text(" | " + packageversion)
         label2.set_text(packagedescription )
         progress.set_text("")
         maintainer.set_text(packagemaintainer)
@@ -547,6 +584,9 @@ def main():
         else:
             installed_version_title.set_text(_("Installed Version : "))
             installed_version.set_text(_("Not installed"))
+
+        progressbar.set_show_text(False)
+        progressbar.set_fraction(0)
             
         packageMain(False,firststatus,packagefailure)
 
@@ -567,11 +607,14 @@ def main():
 
     if width <= 800 and height <= 600:
         descriptionscrolledwindow.set_min_content_height(50)
-        window.resize(450,450)
-        progress.set_margin_top(0)
-        progress.set_margin_bottom(13)
-        label1.set_margin_top(13)
-        label1.set_margin_bottom(5)
+        namegrid.set_margin_top(9)
+        namegrid.set_margin_bottom(9)
+        progress.set_margin_top(9)
+        progress.set_margin_bottom(9)
+        installedversiongrid.set_margin_top(9)
+        bottomseparator.set_margin_top(9)
+        bottomlabel.set_margin_top(5)
+        bottomlabel.set_margin_bottom(5)
 
     window.connect('delete_event', close)
     
