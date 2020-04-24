@@ -606,6 +606,7 @@ def main():
     height = scale_factor * geometry.height
 
     if width <= 800 and height <= 600:
+        window.resize(400,400)
         descriptionscrolledwindow.set_min_content_height(50)
         namegrid.set_margin_top(9)
         namegrid.set_margin_bottom(9)
