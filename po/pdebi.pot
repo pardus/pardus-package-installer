@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-17 14:59+0300\n"
+"POT-Creation-Date: 2020-04-24 17:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,74 +45,74 @@ msgstr ""
 msgid "Architecture is not avaible"
 msgstr ""
 
-#: main.py:164
+#: main.py:167
 msgid "Installing ..."
 msgstr ""
 
-#: main.py:186
+#: main.py:192
 msgid "Uninstalling ..."
 msgstr ""
 
-#: main.py:204
+#: main.py:212
 msgid "Reinstalling ..."
 msgstr ""
 
-#: main.py:222
+#: main.py:232
 msgid "Downgrading ..."
 msgstr ""
 
-#: main.py:341 main.py:364 main.py:491 main.glade:97
+#: main.py:357 main.py:380 main.py:526 main.glade:608
 msgid "Install"
 msgstr ""
 
-#: main.py:346 main.py:369
+#: main.py:362 main.py:385
 msgid "Downgrade"
 msgstr ""
 
-#: main.py:351 main.py:374
+#: main.py:367 main.py:390
 msgid "Reinstall"
 msgstr ""
 
-#: main.py:356 main.py:379
+#: main.py:372 main.py:395
 msgid "Upgrade"
 msgstr ""
 
-#: main.py:361
+#: main.py:377
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr ""
 
-#: main.py:391
+#: main.py:407
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
 msgstr ""
 
-#: main.py:393
+#: main.py:409
 msgid "<b>Completed !</b>"
 msgstr ""
 
-#: main.py:395
+#: main.py:414
 msgid "<b>Not Completed !</b>"
 msgstr ""
 
-#: main.py:397
+#: main.py:416
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr ""
 
-#: main.py:439 main.py:549 main.glade:410
+#: main.py:441
+msgid "Downloading dependencies : "
+msgstr ""
+
+#: main.py:473 main.py:586 main.glade:705
 msgid "Not installed"
 msgstr ""
 
-#: main.py:492 main.glade:179
+#: main.py:527 main.glade:635
 msgid "Uninstall"
 msgstr ""
 
-#: main.py:545 main.py:548 main.glade:394
+#: main.py:582 main.py:585 main.glade:689
 msgid "Installed Version : "
-msgstr ""
-
-#: main.glade:9 main.glade:75
-msgid "Pardus Package Installer"
 msgstr ""
 
 #: main.glade:11
@@ -131,74 +131,82 @@ msgstr ""
 msgid "Fatih Altun"
 msgstr ""
 
-#: main.glade:239
-msgid "Package Name"
+#: main.glade:75
+msgid "Pardus Package Installer"
 msgstr ""
 
-#: main.glade:258
+#: main.glade:96
 msgid "_File"
 msgstr ""
 
-#: main.glade:298
+#: main.glade:136
 msgid "_Help"
 msgstr ""
 
-#: main.glade:366
-msgid "Description : "
-msgstr ""
-
-#: main.glade:462
+#: main.glade:244
 msgid "Processing Details"
 msgstr ""
 
-#: main.glade:551
+#: main.glade:333
 msgid "Architecture :"
 msgstr ""
 
-#: main.glade:570
+#: main.glade:352
 msgid "Size :"
 msgstr ""
 
-#: main.glade:589
+#: main.glade:371
 msgid "Section :"
 msgstr ""
 
-#: main.glade:608
+#: main.glade:390
 msgid "Priority :"
 msgstr ""
 
-#: main.glade:626
+#: main.glade:408
 msgid "Maintainer :"
 msgstr ""
 
-#: main.glade:645
+#: main.glade:427
 msgid "Package Details"
 msgstr ""
 
-#: main.glade:674
+#: main.glade:456
 msgid "Dependency List"
 msgstr ""
 
-#: main.glade:691
+#: main.glade:473
 msgid "Packages to install"
 msgstr ""
 
-#: main.glade:793
+#: main.glade:575
 msgid "Package Depends"
 msgstr ""
 
-#: main.glade:822
+#: main.glade:748
+msgid "TÜBİTAK ULAKBİM | 2020"
+msgstr ""
+
+#: main.glade:771
+msgid "Package Name"
+msgstr ""
+
+#: main.glade:788
+msgid "version"
+msgstr ""
+
+#: main.glade:814
 msgid "Info"
 msgstr ""
 
-#: main.glade:823
+#: main.glade:815
 msgid "You cannot close the application while the process is continuing"
 msgstr ""
 
-#: main.glade:849
+#: main.glade:841
 msgid "Select Software Package"
 msgstr ""
 
-#: main.glade:869
+#: main.glade:861
 msgid "Select"
 msgstr ""
