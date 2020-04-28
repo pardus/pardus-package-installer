@@ -436,17 +436,21 @@ def main():
             print("Error : " +line)
             if "dlstatus" in line:
                 percent = line.split(":")[2].split(".")[0]
-                print("Downloading dependencies : " +  percent )
                 progressbar.set_show_text(True)
-                progressbar.set_text(_("Downloading dependencies : ") + percent + " %")
+                if packagemissingdeps:
+                    print("Downloading dependencies " + percent + " %")
+                    progressbar.set_text(_("Downloading dependencies : ") + percent + " %")
+                else:
+                    print("Controlling dependencies : " +  percent + " %")
+                    progressbar.set_text(_("Controlling dependencies : ") + percent + " %")
                 progressbar.set_fraction(int(percent)/100)
-            if "pmstatus" in line:
+            elif "pmstatus" in line:
                 percent = line.split(":")[2].split(".")[0]
                 print( "Processing : " +  percent )
                 progressbar.set_show_text(True)
                 progressbar.set_text( (progress.get_text()).split("...")[0] + ": " + percent + " %")
                 progressbar.set_fraction(int(percent)/100)
-            if "E:" in line and ".deb" in line:
+            elif "E:" in line and ".deb" in line:
                 print("connection error")
                 error = True
                 textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (line))
