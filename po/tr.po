@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 17:41+0300\n"
-"PO-Revision-Date: 2020-04-24 17:42+0300\n"
+"POT-Creation-Date: 2020-04-28 17:45+0300\n"
+"PO-Revision-Date: 2020-04-28 17:46+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
 "Language: tr\n"
@@ -63,7 +63,7 @@ msgstr "Tekrar Yükleniyor ..."
 msgid "Downgrading ..."
 msgstr "Versiyon düşürülüyor ..."
 
-#: main.py:357 main.py:380 main.py:526 main.glade:608
+#: main.py:357 main.py:380 main.py:530 main.glade:608
 msgid "Install"
 msgstr "Yükle"
 
@@ -103,21 +103,29 @@ msgstr "<b>Tamamlanamadı !</b>"
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr "<b><span color='red'>Bağlantı Hatası !</span></b>"
 
-#: main.py:441
+#: main.py:442
 msgid "Downloading dependencies : "
 msgstr "Bağımlılıklar indiriliyor : "
 
-#: main.py:473 main.py:586 main.glade:705
+#: main.py:445
+msgid "Controlling dependencies : "
+msgstr "Bağımlılıklar kontrol ediliyor : "
+
+#: main.py:477 main.py:590 main.glade:705
 msgid "Not installed"
 msgstr "Yüklü değil"
 
-#: main.py:527 main.glade:635
+#: main.py:531 main.glade:635
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: main.py:582 main.py:585 main.glade:689
+#: main.py:586 main.py:589 main.glade:689
 msgid "Installed Version : "
 msgstr "Yüklü Versiyon : "
+
+#: main.glade:9 main.glade:75
+msgid "Pardus Package Installer"
+msgstr "Pardus Paket Kurucu"
 
 #: main.glade:11
 msgid "© 2020 Pardus"
@@ -134,10 +142,6 @@ msgstr "Web sitesi"
 #: main.glade:16
 msgid "Fatih Altun"
 msgstr "Fatih Altun"
-
-#: main.glade:75
-msgid "Pardus Package Installer"
-msgstr "Pardus Paket Kurucu"
 
 #: main.glade:96
 msgid "_File"

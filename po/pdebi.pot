@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 17:41+0300\n"
+"POT-Creation-Date: 2020-04-28 17:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Downgrading ..."
 msgstr ""
 
-#: main.py:357 main.py:380 main.py:526 main.glade:608
+#: main.py:357 main.py:380 main.py:530 main.glade:608
 msgid "Install"
 msgstr ""
 
@@ -99,20 +99,28 @@ msgstr ""
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr ""
 
-#: main.py:441
+#: main.py:442
 msgid "Downloading dependencies : "
 msgstr ""
 
-#: main.py:473 main.py:586 main.glade:705
+#: main.py:445
+msgid "Controlling dependencies : "
+msgstr ""
+
+#: main.py:477 main.py:590 main.glade:705
 msgid "Not installed"
 msgstr ""
 
-#: main.py:527 main.glade:635
+#: main.py:531 main.glade:635
 msgid "Uninstall"
 msgstr ""
 
-#: main.py:582 main.py:585 main.glade:689
+#: main.py:586 main.py:589 main.glade:689
 msgid "Installed Version : "
+msgstr ""
+
+#: main.glade:9 main.glade:75
+msgid "Pardus Package Installer"
 msgstr ""
 
 #: main.glade:11
@@ -129,10 +137,6 @@ msgstr ""
 
 #: main.glade:16
 msgid "Fatih Altun"
-msgstr ""
-
-#: main.glade:75
-msgid "Pardus Package Installer"
 msgstr ""
 
 #: main.glade:96
