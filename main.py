@@ -17,7 +17,8 @@ VERSION_OUTDATED = 1
 VERSION_SAME = 2
 
 """
-import gi,apt,os,sys
+import gi, apt, os, sys
+
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import GObject
@@ -35,8 +36,8 @@ closestatus = False
 
 error = False
 
-def main():
 
+def main():
     class GAsyncSpawn(GObject.GObject):
         """ GObject class to wrap GLib.spawn_async().
         
@@ -47,50 +48,51 @@ def main():
                 #command: list of strings
         """
         __gsignals__ = {
-            'process-done' : (GObject.SignalFlags.RUN_LAST, GObject.TYPE_NONE,
-                                (GObject.TYPE_INT, )),
-            'stdout-data'  : (GObject.SignalFlags.RUN_LAST, GObject.TYPE_NONE,
-                                (GObject.TYPE_STRING, )),
-            'stderr-data'  : (GObject.SignalFlags.RUN_LAST, GObject.TYPE_NONE,
-                                (GObject.TYPE_STRING, )),
+            'process-done': (GObject.SignalFlags.RUN_LAST, GObject.TYPE_NONE,
+                             (GObject.TYPE_INT,)),
+            'stdout-data': (GObject.SignalFlags.RUN_LAST, GObject.TYPE_NONE,
+                            (GObject.TYPE_STRING,)),
+            'stderr-data': (GObject.SignalFlags.RUN_LAST, GObject.TYPE_NONE,
+                            (GObject.TYPE_STRING,)),
         }
+
         def __init__(self):
             GObject.GObject.__init__(self)
-    
+
         def run(self, cmd):
-            r  = GLib.spawn_async(cmd,flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD, standard_output=True, standard_error=True)
-            self.pid, idin, idout, iderr = r        
+            r = GLib.spawn_async(cmd, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD, standard_output=True,
+                                 standard_error=True)
+            self.pid, idin, idout, iderr = r
             fout = os.fdopen(idout, "r")
             ferr = os.fdopen(iderr, "r")
-    
-            GLib.child_watch_add(self.pid,self._on_done)
+
+            GLib.child_watch_add(self.pid, self._on_done)
             GLib.io_add_watch(fout, GLib.IO_IN, self._on_stdout)
             GLib.io_add_watch(ferr, GLib.IO_IN, self._on_stderr)
             return self.pid
-    
+
         def _on_done(self, pid, retval, *argv):
             self.emit("process-done", retval)
-    
+
         def _emit_std(self, name, value):
-            self.emit(name+"-data", value)
-        
+            self.emit(name + "-data", value)
+
         def _on_stdout(self, fobj, cond):
             self._emit_std("stdout", fobj.readline())
             return True
-    
+
         def _on_stderr(self, fobj, cond):
             self._emit_std("stderr", fobj.readline())
             return True
 
-
     debianpackage = ""
-    
+
     installable = False
-    
+
     packagename = ""
 
     packagefailure = ""
-        
+
     def start(debpackage):
 
         package = aptdeb.DebPackage(debpackage)
@@ -144,28 +146,29 @@ def main():
         packagemissingdeps = package.missing_deps
 
         packagefailure = package._failure_string
-        
-        return package,packagename,firststatus,installable,packageversion,packagedescription,packagefailure,packagemaintainer,packagepriority,packagesection,packagesize,packagearchitecture,packagedepends,packagemissingdeps
+
+        return package, packagename, firststatus, installable, packageversion, packagedescription, \
+               packagefailure, packagemaintainer, packagepriority, packagesection, packagesize, \
+               packagearchitecture, packagedepends, packagemissingdeps
 
     def cacheControl():
         cache = apt.Cache()
         cache.open()
         return aptdeb.DebPackage(debianpackage).compare_to_version_in_cache()
-    
+
     def failureControl():
         return aptdeb.DebPackage(debianpackage)._failure_string
 
     def installPackage():
         global closestatus
-        
-        if installable:
 
+        if installable:
             progressbar.set_show_text(False)
             progressbar.set_fraction(0)
-    
+
             spinner.start()
             progress.set_text(_("Installing ..."))
-            
+
             button1.set_sensitive(False)
             button2.set_sensitive(False)
             openbutton.set_sensitive(False)
@@ -174,23 +177,22 @@ def main():
             closestatus = True
 
             command = ["/usr/bin/pkexec", "/usr/bin/pdebi-action", "install", debianpackage]
-            
+
             pid = spawn.run(command)
-            
+
             print(pid)
-    
+
     def removePackage():
         global closestatus
         cache = apt.Cache()
         cache.open()
         if cache[packagename].is_installed:
-
             progressbar.set_show_text(False)
             progressbar.set_fraction(0)
-            
+
             spinner.start()
             progress.set_text(_("Uninstalling ..."))
-            
+
             button1.set_sensitive(False)
             button2.set_sensitive(False)
             openbutton.set_sensitive(False)
@@ -199,18 +201,18 @@ def main():
             closestatus = True
 
             command = ["/usr/bin/pkexec", "/usr/bin/pdebi-action", "remove", packagename]
-            
+
             pid = spawn.run(command)
-            
+
             print(pid)
-            
+
     def reinstallPackage():
         global closestatus
         progressbar.set_show_text(False)
         progressbar.set_fraction(0)
         spinner.start()
         progress.set_text(_("Reinstalling ..."))
-        
+
         button1.set_sensitive(False)
         button2.set_sensitive(False)
         openbutton.set_sensitive(False)
@@ -219,18 +221,18 @@ def main():
         closestatus = True
 
         command = ["/usr/bin/pkexec", "/usr/bin/pdebi-action", "reinstall", debianpackage]
-        
+
         pid = spawn.run(command)
-        
+
         print(pid)
-            
+
     def downgradePackage():
         global closestatus
         progressbar.set_show_text(False)
         progressbar.set_fraction(0)
         spinner.start()
         progress.set_text(_("Downgrading ..."))
-        
+
         button1.set_sensitive(False)
         button2.set_sensitive(False)
         openbutton.set_sensitive(False)
@@ -239,58 +241,57 @@ def main():
         closestatus = True
 
         command = ["/usr/bin/pkexec", "/usr/bin/pdebi-action", "downgrade", debianpackage]
-        
+
         pid = spawn.run(command)
-        
+
         print(pid)
-    
-    
+
     class Handler:
         def onDestroy(self, window):
             Gtk.main_quit()
-    
+
         def onButton1Clicked(self, button1):
-            
+
             print("debianpackage = " + debianpackage)
-            
+
             packagestatus = cacheControl()
-            
+
             if packagestatus == 0:
                 print("Installing Button Clicked")
                 installPackage()
-    
+
             elif packagestatus == 1:
                 print("Downgrading Button Clicked")
                 downgradePackage()
-    
+
             elif packagestatus == 2:
                 print("Reinstalling Button Clicked")
                 reinstallPackage()
-    
+
             elif packagestatus == 3:
                 print("Upgrading Button Clicked")
                 installPackage()
-    
+
         def onButton2Clicked(self, button2):
-                print("Uninstalling Button Clicked")
-                removePackage()
+            print("Uninstalling Button Clicked")
+            removePackage()
 
         def onOpenClicked(self, openbutton):
             filechooser.run()
             filechooser.hide()
             print("Open Button Clicked")
-            
+
         def onSelectClicked(self, openbutton):
             filename = filechooser.get_filename()
             filechooser.hide()
             fromFile(filename)
-            print("Select Button Clicked")    
-            
+            print("Select Button Clicked")
+
         def onActivated(self, openbutton):
             filename = filechooser.get_filename()
             filechooser.hide()
             fromFile(filename)
-            print("Active Button Clicked")  
+            print("Active Button Clicked")
 
         def onQuitClicked(self, quitbutton):
             Gtk.main_quit()
@@ -299,13 +300,12 @@ def main():
             about_dialog.run()
             about_dialog.hide()
 
-
     builder = Gtk.Builder()
     builder.add_from_file("/usr/share/pardus/pdebi/main.glade")
     builder.connect_signals(Handler())
-    
+
     window = builder.get_object("mainwindow")
-    
+
     button1 = builder.get_object("button1")
     button2 = builder.get_object("button2")
     openbutton = builder.get_object("openbutton")
@@ -329,11 +329,11 @@ def main():
     architecture = builder.get_object("architecture")
     depends = builder.get_object("depends")
     missingdeps = builder.get_object("missingdeps")
-    
+
     spinner = builder.get_object("spinner")
     progress = builder.get_object("progress")
     progressbar = builder.get_object("progressbar")
-    
+
     textview = builder.get_object("textview")
     descriptionscrolledwindow = builder.get_object("descriptionscrolledwindow")
 
@@ -341,37 +341,37 @@ def main():
     upgradeicon = builder.get_object("upgrade_icon")
     downgradeicon = builder.get_object("downgrade_icon")
     reinstallicon = builder.get_object("reinstall_icon")
-    
+
     installed_version = builder.get_object("installed_version")
     installed_version_title = builder.get_object("installed_version_title")
-    
+
     cannotclose_dialog = builder.get_object("cannotclose_dialog")
     about_dialog = builder.get_object("about_dialog")
-    
-    def packageMain(actioned,status,packagefailure):
+
+    def packageMain(actioned, status, packagefailure):
 
         if not "satisfiable" in packagefailure:
 
-                if status == 0:
-                    button1.set_sensitive(True)
-                    button1.set_label(_("Install"))
-                    button1.set_image(installicon)
-                    button2.set_sensitive(False)
-                elif status == 1:
-                    button1.set_sensitive(True)
-                    button1.set_label(_("Downgrade"))
-                    button1.set_image(downgradeicon)
-                    button2.set_sensitive(True)
-                elif status == 2:
-                    button1.set_sensitive(True)
-                    button1.set_label(_("Reinstall"))
-                    button1.set_image(reinstallicon)
-                    button2.set_sensitive(True)
-                elif status == 3:
-                    button1.set_sensitive(True)
-                    button1.set_label(_("Upgrade"))
-                    button1.set_image(upgradeicon)
-                    button2.set_sensitive(True)
+            if status == 0:
+                button1.set_sensitive(True)
+                button1.set_label(_("Install"))
+                button1.set_image(installicon)
+                button2.set_sensitive(False)
+            elif status == 1:
+                button1.set_sensitive(True)
+                button1.set_label(_("Downgrade"))
+                button1.set_image(downgradeicon)
+                button2.set_sensitive(True)
+            elif status == 2:
+                button1.set_sensitive(True)
+                button1.set_label(_("Reinstall"))
+                button1.set_image(reinstallicon)
+                button2.set_sensitive(True)
+            elif status == 3:
+                button1.set_sensitive(True)
+                button1.set_label(_("Upgrade"))
+                button1.set_image(upgradeicon)
+                button2.set_sensitive(True)
 
         else:
             progress.set_markup(_("<b><span color='red'>Error ! </span></b>") + packagefailure)
@@ -395,17 +395,17 @@ def main():
                 button1.set_label(_("Upgrade"))
                 button1.set_image(upgradeicon)
                 button2.set_sensitive(False)
-    
 
     def on_process_done(sender, retval):
-        global closestatus,error
+        global closestatus, error
         spinner.stop()
-        textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
+        textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
         print("Done. exit code: %s" % (retval))
         if error is False:
             if retval == 0:
-                textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (_("Operation was successfully completed ! \n \n")))
-                textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
+                textview.get_buffer().insert(textview.get_buffer().get_end_iter(),
+                                             (_("Operation was successfully completed ! \n \n")))
+                textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
                 progress.set_markup(_("<b>Completed !</b>"))
                 if progressbar.get_show_text():
                     progressbar.set_text("100 %")
@@ -420,20 +420,20 @@ def main():
             error = False
         status = cacheControl()
         packagefailure = failureControl()
-        packageMain(True,status,packagefailure)
+        packageMain(True, status, packagefailure)
         getInstalledVersion(status)
         openbutton.set_sensitive(True)
         quitbutton.set_sensitive(True)
         closestatus = False
-    
+
     def on_stdout_data(sender, line):
-        textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  line)
-        textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
-    
+        textview.get_buffer().insert(textview.get_buffer().get_end_iter(), line)
+        textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
+
     def on_stderr_data(sender, line):
         global error
         if line is not None:
-            print("Error : " +line)
+            print("Error : " + line)
             if "dlstatus" in line:
                 percent = line.split(":")[2].split(".")[0]
                 progressbar.set_show_text(True)
@@ -441,52 +441,47 @@ def main():
                     print("Downloading dependencies " + percent + " %")
                     progressbar.set_text(_("Downloading dependencies : ") + percent + " %")
                 else:
-                    print("Controlling dependencies : " +  percent + " %")
+                    print("Controlling dependencies : " + percent + " %")
                     progressbar.set_text(_("Controlling dependencies : ") + percent + " %")
-                progressbar.set_fraction(int(percent)/100)
+                progressbar.set_fraction(int(percent) / 100)
             elif "pmstatus" in line:
                 percent = line.split(":")[2].split(".")[0]
-                print( "Processing : " +  percent )
+                print("Processing : " + percent)
                 progressbar.set_show_text(True)
-                progressbar.set_text( (progress.get_text()).split("...")[0] + ": " + percent + " %")
-                progressbar.set_fraction(int(percent)/100)
+                progressbar.set_text((progress.get_text()).split("...")[0] + ": " + percent + " %")
+                progressbar.set_fraction(int(percent) / 100)
             elif "E:" in line and ".deb" in line:
                 print("connection error")
                 error = True
-                textview.get_buffer().insert(textview.get_buffer().get_end_iter(),  (line))
-                textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0,0.0)
-
-        
+                textview.get_buffer().insert(textview.get_buffer().get_end_iter(), (line))
+                textview.scroll_to_iter(textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
     spawn = GAsyncSpawn()
     spawn.connect("process-done", on_process_done)
     spawn.connect("stdout-data", on_stdout_data)
     spawn.connect("stderr-data", on_stderr_data)
-    
-    
+
     def getInstalledVersion(status):
-        
+
         if status != 0:
 
             cache = apt.Cache()
             pkg = cache[packagename]
             systemversion = pkg.versions[0].version
             installed_version.set_text(systemversion)
-            
+
         else:
             installed_version.set_text(_("Not installed"))
 
-    
-
     if len(sys.argv) > 1:
-        
+
         debianpackage = os.path.abspath(sys.argv[1])
         aa = start(debianpackage)
-        
+
         firststatus = aa[2]
         packagename = aa[1]
         installable = aa[3]
-        packageversion =  aa[4]
+        packageversion = aa[4]
         packagedescription = aa[5]
         packagefailure = aa[6]
         packagemaintainer = aa[7]
@@ -509,22 +504,22 @@ def main():
         if packagedepends != "":
             pd = packagedepends.split(", ")
             for p in pd:
-                depends.get_buffer().insert(depends.get_buffer().get_end_iter(),  p+"\n")
+                depends.get_buffer().insert(depends.get_buffer().get_end_iter(), p + "\n")
 
         if packagemissingdeps:
             for pmd in packagemissingdeps:
-                missingdeps.get_buffer().insert(missingdeps.get_buffer().get_end_iter(),  pmd+"\n")
+                missingdeps.get_buffer().insert(missingdeps.get_buffer().get_end_iter(), pmd + "\n")
 
         if firststatus != 0:
             cache = apt.Cache()
             pkg = cache[packagename]
             systemversion = pkg.versions[0].version
             installed_version.set_text(systemversion)
-            
-        packageMain(False,firststatus,packagefailure)
-        
+
+        packageMain(False, firststatus, packagefailure)
+
     else:
-        
+
         button1.set_sensitive(False)
         button2.set_sensitive(False)
         button1.set_label(_("Install"))
@@ -533,20 +528,21 @@ def main():
         versionlabel.set_text("")
         installed_version_title.set_text("")
         installed_version.set_text("")
-        
-        
+
     def fromFile(path):
-        
-        nonlocal debianpackage,packagename,installable,packageversion,packagedescription,firststatus,packagefailure,packagemaintainer,packagepriority,packagesection,packagesize,packagearchitecture,packagemissingdeps
-        
+
+        nonlocal debianpackage, packagename, installable, packageversion, packagedescription, \
+            firststatus, packagefailure, packagemaintainer, packagepriority, packagesection, \
+            packagesize, packagearchitecture, packagemissingdeps
+
         debianpackage = path
 
         aa = start(debianpackage)
-        
+
         firststatus = aa[2]
         packagename = aa[1]
         installable = aa[3]
-        packageversion =  aa[4]
+        packageversion = aa[4]
         packagedescription = aa[5]
         packagefailure = aa[6]
         packagemaintainer = aa[7]
@@ -558,27 +554,28 @@ def main():
         packagemissingdeps = aa[13]
 
         depends.get_buffer().delete(depends.get_buffer().get_start_iter(), depends.get_buffer().get_end_iter())
-        missingdeps.get_buffer().delete(missingdeps.get_buffer().get_start_iter(), missingdeps.get_buffer().get_end_iter())
+        missingdeps.get_buffer().delete(missingdeps.get_buffer().get_start_iter(),
+                                        missingdeps.get_buffer().get_end_iter())
 
         if packagedepends != "":
             pd = packagedepends.split(", ")
             for p in pd:
-                depends.get_buffer().insert(depends.get_buffer().get_end_iter(),  p+"\n")
+                depends.get_buffer().insert(depends.get_buffer().get_end_iter(), p + "\n")
 
         if packagemissingdeps:
             for pmd in packagemissingdeps:
-                missingdeps.get_buffer().insert(missingdeps.get_buffer().get_end_iter(),  pmd+"\n")
+                missingdeps.get_buffer().insert(missingdeps.get_buffer().get_end_iter(), pmd + "\n")
 
         label1.set_text(packagename)
         versionlabel.set_text(" | " + packageversion)
-        label2.set_text(packagedescription )
+        label2.set_text(packagedescription)
         progress.set_text("")
         maintainer.set_text(packagemaintainer)
         priority.set_text(packagepriority)
         section.set_text(packagesection)
         size.set_text(packagesize + " KiB")
         architecture.set_text(packagearchitecture)
-        
+
         if firststatus != 0:
             cache = apt.Cache()
             pkg = cache[packagename]
@@ -591,9 +588,8 @@ def main():
 
         progressbar.set_show_text(False)
         progressbar.set_fraction(0)
-            
-        packageMain(False,firststatus,packagefailure)
 
+        packageMain(False, firststatus, packagefailure)
 
     def close(self, *args):
         if closestatus:
@@ -610,7 +606,7 @@ def main():
     height = scale_factor * geometry.height
 
     if width <= 800 and height <= 600:
-        window.resize(400,400)
+        window.resize(400, 400)
         descriptionscrolledwindow.set_min_content_height(50)
         namegrid.set_margin_top(9)
         namegrid.set_margin_bottom(9)
@@ -622,9 +618,9 @@ def main():
         bottomlabel.set_margin_bottom(5)
 
     window.connect('delete_event', close)
-    
+
     window.show_all()
-    
+
     Gtk.main()
 
 
