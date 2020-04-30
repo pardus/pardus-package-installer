@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-28 17:45+0300\n"
+"POT-Creation-Date: 2020-04-30 11:25+0300\n"
 "PO-Revision-Date: 2020-04-28 17:46+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
@@ -19,51 +19,51 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: main.py:107
+#: main.py:109
 msgid "Version is not avaible"
 msgstr "Versiyon bilgisi eksik"
 
-#: main.py:112
+#: main.py:114
 msgid "Description is not avaible"
 msgstr "Açıklama bilgisi eksik"
 
-#: main.py:117
+#: main.py:119
 msgid "Maintainer is not avaible"
 msgstr "Bakımcı bilgisi eksik"
 
-#: main.py:122
+#: main.py:124
 msgid "Priority is not avaible"
 msgstr "Öncelik bilgisi eksik"
 
-#: main.py:127
+#: main.py:129
 msgid "Section is not avaible"
 msgstr "Bölüm bilgisi eksik"
 
-#: main.py:132
+#: main.py:134
 msgid "Size is not avaible"
 msgstr "Boyut bilgisi eksik"
 
-#: main.py:137
+#: main.py:139
 msgid "Architecture is not avaible"
 msgstr "Mimari bilgisi eksik"
 
-#: main.py:167
+#: main.py:170
 msgid "Installing ..."
 msgstr "Yükleniyor ..."
 
-#: main.py:192
+#: main.py:194
 msgid "Uninstalling ..."
 msgstr "Kaldırılıyor ..."
 
-#: main.py:212
+#: main.py:214
 msgid "Reinstalling ..."
 msgstr "Tekrar Yükleniyor ..."
 
-#: main.py:232
+#: main.py:234
 msgid "Downgrading ..."
 msgstr "Versiyon düşürülüyor ..."
 
-#: main.py:357 main.py:380 main.py:530 main.glade:608
+#: main.py:357 main.py:380 main.py:525 main.glade:608
 msgid "Install"
 msgstr "Yükle"
 
@@ -111,15 +111,15 @@ msgstr "Bağımlılıklar indiriliyor : "
 msgid "Controlling dependencies : "
 msgstr "Bağımlılıklar kontrol ediliyor : "
 
-#: main.py:477 main.py:590 main.glade:705
+#: main.py:474 main.py:587 main.glade:705
 msgid "Not installed"
 msgstr "Yüklü değil"
 
-#: main.py:531 main.glade:635
+#: main.py:526 main.glade:635
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: main.py:586 main.py:589 main.glade:689
+#: main.py:583 main.py:586 main.glade:689
 msgid "Installed Version : "
 msgstr "Yüklü Versiyon : "
 
