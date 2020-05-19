@@ -1,2 +1,2 @@
-main.py
-main.glade
+ui/MainWindow.glade
+parduspackageinstaller/MainWindow.py

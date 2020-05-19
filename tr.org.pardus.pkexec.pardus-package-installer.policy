@@ -5,7 +5,10 @@
 
 <policyconfig>
 
-  <action id="org.freedesktop.policykit.pkexec.run-pdebi-action">
+  <vendor>Pardus Developers</vendor>
+  <vendor_url>http://www.pardus.org.tr/</vendor_url>
+
+  <action id="tr.org.pardus.pkexec.pardus-package-installer">
     <description>Run FlashTool</description>
     <message>Authentication is required to run Pardus Package Installer</message>
     <message xml:lang="tr">Pardus Paket Kurucu uygulamasını çalıştırmak için yetkilendirme gerekiyor</message>
@@ -14,7 +17,7 @@
       <allow_inactive>auth_admin</allow_inactive>
       <allow_active>auth_admin</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/pdebi-action</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/pardus-package-installer-action</annotate>
     <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
   </action>
 

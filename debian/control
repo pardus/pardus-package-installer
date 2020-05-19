@@ -1,12 +1,20 @@
-Source: pdebi
+Source: pardus-package-installer
 Section: admin
 Priority: optional
 Maintainer: Fatih Altun <fatih.altun@pardus.org.tr>
-Build-Depends: debhelper (>= 10), python3, gettext
+Build-Depends: debhelper (>= 10), dh-python, python3-all, python3-setuptools
 Standards-Version: 4.3.0
 Homepage: http://pardus.org.tr
 
-Package: pdebi
+Package: pardus-package-installer
 Architecture: amd64
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends},
+         ${python3:Depends},
+         gir1.2-glib-2.0,
+         gir1.2-gtk-3.0,
+         python3-apt
 Description: Pardus Deb Package Manager
+ Simple tool to view and install local deb files
+Provides: pdebi
+Conflicts: pdebi
+Replaces: pdebi

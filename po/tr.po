@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-30 11:25+0300\n"
+"POT-Creation-Date: 2020-05-19 12:38+0300\n"
 "PO-Revision-Date: 2020-04-28 17:46+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
@@ -19,71 +19,194 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: main.py:109
-msgid "Version is not avaible"
-msgstr "Versiyon bilgisi eksik"
+#: ui/MainWindow.glade:9 ui/MainWindow.glade:75
+msgid "Pardus Package Installer"
+msgstr "Pardus Paket Kurucu"
 
-#: main.py:114
-msgid "Description is not avaible"
-msgstr "Açıklama bilgisi eksik"
+#: ui/MainWindow.glade:11
+msgid "© 2020 Pardus"
+msgstr "© 2020 Pardus"
 
-#: main.py:119
-msgid "Maintainer is not avaible"
-msgstr "Bakımcı bilgisi eksik"
+#: ui/MainWindow.glade:12
+msgid "Manage and view .deb packages"
+msgstr "Deb paketlerini yönetin ve görüntüleyin"
 
-#: main.py:124
-msgid "Priority is not avaible"
-msgstr "Öncelik bilgisi eksik"
+#: ui/MainWindow.glade:14
+msgid "Website"
+msgstr "Web sitesi"
 
-#: main.py:129
-msgid "Section is not avaible"
-msgstr "Bölüm bilgisi eksik"
+#: ui/MainWindow.glade:16
+msgid "Fatih Altun"
+msgstr "Fatih Altun"
 
-#: main.py:134
-msgid "Size is not avaible"
-msgstr "Boyut bilgisi eksik"
+#: ui/MainWindow.glade:96
+msgid "_File"
+msgstr "_Dosya"
 
-#: main.py:139
-msgid "Architecture is not avaible"
-msgstr "Mimari bilgisi eksik"
+#: ui/MainWindow.glade:136
+msgid "_Help"
+msgstr "_Yardım"
 
-#: main.py:170
-msgid "Installing ..."
-msgstr "Yükleniyor ..."
+#: ui/MainWindow.glade:244
+msgid "Processing Details"
+msgstr "İşleme Detayları"
 
-#: main.py:194
-msgid "Uninstalling ..."
-msgstr "Kaldırılıyor ..."
+#: ui/MainWindow.glade:333
+msgid "Architecture :"
+msgstr "Mimari :"
 
-#: main.py:214
-msgid "Reinstalling ..."
-msgstr "Tekrar Yükleniyor ..."
+#: ui/MainWindow.glade:352
+msgid "Size :"
+msgstr "Boyut :"
 
-#: main.py:234
-msgid "Downgrading ..."
-msgstr "Versiyon düşürülüyor ..."
+#: ui/MainWindow.glade:371
+msgid "Section :"
+msgstr "Bölüm :"
 
-#: main.py:357 main.py:380 main.py:525 main.glade:608
+#: ui/MainWindow.glade:390
+msgid "Priority :"
+msgstr "Öncelik :"
+
+#: ui/MainWindow.glade:408
+msgid "Maintainer :"
+msgstr "Bakımcı :"
+
+#: ui/MainWindow.glade:427
+msgid "Package Details"
+msgstr "Paket Ayrıntıları"
+
+#: ui/MainWindow.glade:456
+msgid "Dependency List"
+msgstr "Bağımlılık Listesi"
+
+#: ui/MainWindow.glade:473
+msgid "Packages to install"
+msgstr "Yüklenecek Bağımlılıklar"
+
+#: ui/MainWindow.glade:575
+msgid "Package Depends"
+msgstr "Paket Bağımlılıkları"
+
+#: ui/MainWindow.glade:608 parduspackageinstaller/MainWindow.py:89
+#: parduspackageinstaller/MainWindow.py:345
+#: parduspackageinstaller/MainWindow.py:368
 msgid "Install"
 msgstr "Yükle"
 
-#: main.py:362 main.py:385
+#: ui/MainWindow.glade:635 parduspackageinstaller/MainWindow.py:90
+msgid "Uninstall"
+msgstr "Kaldır"
+
+#: ui/MainWindow.glade:689 parduspackageinstaller/MainWindow.py:427
+#: parduspackageinstaller/MainWindow.py:430
+msgid "Installed Version : "
+msgstr "Yüklü Versiyon : "
+
+#: ui/MainWindow.glade:705 parduspackageinstaller/MainWindow.py:394
+#: parduspackageinstaller/MainWindow.py:431
+msgid "Not installed"
+msgstr "Yüklü değil"
+
+#: ui/MainWindow.glade:748
+msgid "TÜBİTAK ULAKBİM | 2020"
+msgstr "TÜBİTAK ULAKBİM | 2020"
+
+#: ui/MainWindow.glade:771
+msgid "Package Name"
+msgstr "Paket Adı"
+
+#: ui/MainWindow.glade:788
+msgid "version"
+msgstr "versiyon"
+
+#: ui/MainWindow.glade:814
+msgid "Info"
+msgstr "Bilgi"
+
+#: ui/MainWindow.glade:815
+msgid "You cannot close the application while the process is continuing"
+msgstr "İşlem devam ederken uygulamayı kapatamazsınız"
+
+#: ui/MainWindow.glade:841
+msgid "Select Software Package"
+msgstr "Bir Yazılım Paketi Seçiniz"
+
+#: ui/MainWindow.glade:861
+msgid "Select"
+msgstr "Seç"
+
+#: parduspackageinstaller/MainWindow.py:174
+msgid "Version is not avaible"
+msgstr "Versiyon bilgisi eksik"
+
+#: parduspackageinstaller/MainWindow.py:179
+msgid "Description is not avaible"
+msgstr "Açıklama bilgisi eksik"
+
+#: parduspackageinstaller/MainWindow.py:184
+msgid "Maintainer is not avaible"
+msgstr "Bakımcı bilgisi eksik"
+
+#: parduspackageinstaller/MainWindow.py:189
+msgid "Priority is not avaible"
+msgstr "Öncelik bilgisi eksik"
+
+#: parduspackageinstaller/MainWindow.py:194
+msgid "Section is not avaible"
+msgstr "Bölüm bilgisi eksik"
+
+#: parduspackageinstaller/MainWindow.py:199
+msgid "Size is not avaible"
+msgstr "Boyut bilgisi eksik"
+
+#: parduspackageinstaller/MainWindow.py:204
+msgid "Architecture is not avaible"
+msgstr "Mimari bilgisi eksik"
+
+#: parduspackageinstaller/MainWindow.py:234
+msgid "Installing ..."
+msgstr "Yükleniyor ..."
+
+#: parduspackageinstaller/MainWindow.py:250
+msgid "Uninstalling ..."
+msgstr "Kaldırılıyor ..."
+
+#: parduspackageinstaller/MainWindow.py:264
+msgid "Reinstalling ..."
+msgstr "Tekrar Yükleniyor ..."
+
+#: parduspackageinstaller/MainWindow.py:278
+msgid "Downgrading ..."
+msgstr "Versiyon düşürülüyor ..."
+
+#: parduspackageinstaller/MainWindow.py:350
+#: parduspackageinstaller/MainWindow.py:373
 msgid "Downgrade"
 msgstr "Versiyon Düşür"
 
-#: main.py:367 main.py:390
+#: parduspackageinstaller/MainWindow.py:355
+#: parduspackageinstaller/MainWindow.py:378
 msgid "Reinstall"
 msgstr "Tekrar Yükle"
 
-#: main.py:372 main.py:395
+#: parduspackageinstaller/MainWindow.py:360
+#: parduspackageinstaller/MainWindow.py:383
 msgid "Upgrade"
 msgstr "Versiyon Yükselt"
 
-#: main.py:377
+#: parduspackageinstaller/MainWindow.py:365
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr "<b><span color='red'>Hata ! </span></b>"
 
-#: main.py:407
+#: parduspackageinstaller/MainWindow.py:466
+msgid "Downloading dependencies : "
+msgstr "Bağımlılıklar indiriliyor : "
+
+#: parduspackageinstaller/MainWindow.py:469
+msgid "Controlling dependencies : "
+msgstr "Bağımlılıklar kontrol ediliyor : "
+
+#: parduspackageinstaller/MainWindow.py:492
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
@@ -91,133 +214,17 @@ msgstr ""
 "İşlem Başarıyla Tamamlandı ! \n"
 " \n"
 
-#: main.py:409
+#: parduspackageinstaller/MainWindow.py:494
 msgid "<b>Completed !</b>"
 msgstr "<b>Tamamlandı !</b>"
 
-#: main.py:414
+#: parduspackageinstaller/MainWindow.py:499
 msgid "<b>Not Completed !</b>"
 msgstr "<b>Tamamlanamadı !</b>"
 
-#: main.py:416
+#: parduspackageinstaller/MainWindow.py:501
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr "<b><span color='red'>Bağlantı Hatası !</span></b>"
-
-#: main.py:442
-msgid "Downloading dependencies : "
-msgstr "Bağımlılıklar indiriliyor : "
-
-#: main.py:445
-msgid "Controlling dependencies : "
-msgstr "Bağımlılıklar kontrol ediliyor : "
-
-#: main.py:474 main.py:587 main.glade:705
-msgid "Not installed"
-msgstr "Yüklü değil"
-
-#: main.py:526 main.glade:635
-msgid "Uninstall"
-msgstr "Kaldır"
-
-#: main.py:583 main.py:586 main.glade:689
-msgid "Installed Version : "
-msgstr "Yüklü Versiyon : "
-
-#: main.glade:9 main.glade:75
-msgid "Pardus Package Installer"
-msgstr "Pardus Paket Kurucu"
-
-#: main.glade:11
-msgid "© 2020 Pardus"
-msgstr "© 2020 Pardus"
-
-#: main.glade:12
-msgid "Manage and view .deb packages"
-msgstr "Deb paketlerini yönetin ve görüntüleyin"
-
-#: main.glade:14
-msgid "Website"
-msgstr "Web sitesi"
-
-#: main.glade:16
-msgid "Fatih Altun"
-msgstr "Fatih Altun"
-
-#: main.glade:96
-msgid "_File"
-msgstr "_Dosya"
-
-#: main.glade:136
-msgid "_Help"
-msgstr "_Yardım"
-
-#: main.glade:244
-msgid "Processing Details"
-msgstr "İşleme Detayları"
-
-#: main.glade:333
-msgid "Architecture :"
-msgstr "Mimari :"
-
-#: main.glade:352
-msgid "Size :"
-msgstr "Boyut :"
-
-#: main.glade:371
-msgid "Section :"
-msgstr "Bölüm :"
-
-#: main.glade:390
-msgid "Priority :"
-msgstr "Öncelik :"
-
-#: main.glade:408
-msgid "Maintainer :"
-msgstr "Bakımcı :"
-
-#: main.glade:427
-msgid "Package Details"
-msgstr "Paket Ayrıntıları"
-
-#: main.glade:456
-msgid "Dependency List"
-msgstr "Bağımlılık Listesi"
-
-#: main.glade:473
-msgid "Packages to install"
-msgstr "Yüklenecek Bağımlılıklar"
-
-#: main.glade:575
-msgid "Package Depends"
-msgstr "Paket Bağımlılıkları"
-
-#: main.glade:748
-msgid "TÜBİTAK ULAKBİM | 2020"
-msgstr "TÜBİTAK ULAKBİM | 2020"
-
-#: main.glade:771
-msgid "Package Name"
-msgstr "Paket Adı"
-
-#: main.glade:788
-msgid "version"
-msgstr "versiyon"
-
-#: main.glade:814
-msgid "Info"
-msgstr "Bilgi"
-
-#: main.glade:815
-msgid "You cannot close the application while the process is continuing"
-msgstr "İşlem devam ederken uygulamayı kapatamazsınız"
-
-#: main.glade:841
-msgid "Select Software Package"
-msgstr "Bir Yazılım Paketi Seçiniz"
-
-#: main.glade:861
-msgid "Select"
-msgstr "Seç"
 
 #~ msgid "Description : "
 #~ msgstr "Açıklama : "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-30 11:25+0300\n"
+"POT-Creation-Date: 2020-05-19 12:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,200 +17,207 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: main.py:109
-msgid "Version is not avaible"
+#: ui/MainWindow.glade:9 ui/MainWindow.glade:75
+msgid "Pardus Package Installer"
 msgstr ""
 
-#: main.py:114
-msgid "Description is not avaible"
+#: ui/MainWindow.glade:11
+msgid "© 2020 Pardus"
 msgstr ""
 
-#: main.py:119
-msgid "Maintainer is not avaible"
+#: ui/MainWindow.glade:12
+msgid "Manage and view .deb packages"
 msgstr ""
 
-#: main.py:124
-msgid "Priority is not avaible"
+#: ui/MainWindow.glade:14
+msgid "Website"
 msgstr ""
 
-#: main.py:129
-msgid "Section is not avaible"
+#: ui/MainWindow.glade:16
+msgid "Fatih Altun"
 msgstr ""
 
-#: main.py:134
-msgid "Size is not avaible"
+#: ui/MainWindow.glade:96
+msgid "_File"
 msgstr ""
 
-#: main.py:139
-msgid "Architecture is not avaible"
+#: ui/MainWindow.glade:136
+msgid "_Help"
 msgstr ""
 
-#: main.py:170
-msgid "Installing ..."
+#: ui/MainWindow.glade:244
+msgid "Processing Details"
 msgstr ""
 
-#: main.py:194
-msgid "Uninstalling ..."
+#: ui/MainWindow.glade:333
+msgid "Architecture :"
 msgstr ""
 
-#: main.py:214
-msgid "Reinstalling ..."
+#: ui/MainWindow.glade:352
+msgid "Size :"
 msgstr ""
 
-#: main.py:234
-msgid "Downgrading ..."
+#: ui/MainWindow.glade:371
+msgid "Section :"
 msgstr ""
 
-#: main.py:357 main.py:380 main.py:525 main.glade:608
+#: ui/MainWindow.glade:390
+msgid "Priority :"
+msgstr ""
+
+#: ui/MainWindow.glade:408
+msgid "Maintainer :"
+msgstr ""
+
+#: ui/MainWindow.glade:427
+msgid "Package Details"
+msgstr ""
+
+#: ui/MainWindow.glade:456
+msgid "Dependency List"
+msgstr ""
+
+#: ui/MainWindow.glade:473
+msgid "Packages to install"
+msgstr ""
+
+#: ui/MainWindow.glade:575
+msgid "Package Depends"
+msgstr ""
+
+#: ui/MainWindow.glade:608 parduspackageinstaller/MainWindow.py:89
+#: parduspackageinstaller/MainWindow.py:345
+#: parduspackageinstaller/MainWindow.py:368
 msgid "Install"
 msgstr ""
 
-#: main.py:362 main.py:385
+#: ui/MainWindow.glade:635 parduspackageinstaller/MainWindow.py:90
+msgid "Uninstall"
+msgstr ""
+
+#: ui/MainWindow.glade:689 parduspackageinstaller/MainWindow.py:427
+#: parduspackageinstaller/MainWindow.py:430
+msgid "Installed Version : "
+msgstr ""
+
+#: ui/MainWindow.glade:705 parduspackageinstaller/MainWindow.py:394
+#: parduspackageinstaller/MainWindow.py:431
+msgid "Not installed"
+msgstr ""
+
+#: ui/MainWindow.glade:748
+msgid "TÜBİTAK ULAKBİM | 2020"
+msgstr ""
+
+#: ui/MainWindow.glade:771
+msgid "Package Name"
+msgstr ""
+
+#: ui/MainWindow.glade:788
+msgid "version"
+msgstr ""
+
+#: ui/MainWindow.glade:814
+msgid "Info"
+msgstr ""
+
+#: ui/MainWindow.glade:815
+msgid "You cannot close the application while the process is continuing"
+msgstr ""
+
+#: ui/MainWindow.glade:841
+msgid "Select Software Package"
+msgstr ""
+
+#: ui/MainWindow.glade:861
+msgid "Select"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:174
+msgid "Version is not avaible"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:179
+msgid "Description is not avaible"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:184
+msgid "Maintainer is not avaible"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:189
+msgid "Priority is not avaible"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:194
+msgid "Section is not avaible"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:199
+msgid "Size is not avaible"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:204
+msgid "Architecture is not avaible"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:234
+msgid "Installing ..."
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:250
+msgid "Uninstalling ..."
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:264
+msgid "Reinstalling ..."
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:278
+msgid "Downgrading ..."
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:350
+#: parduspackageinstaller/MainWindow.py:373
 msgid "Downgrade"
 msgstr ""
 
-#: main.py:367 main.py:390
+#: parduspackageinstaller/MainWindow.py:355
+#: parduspackageinstaller/MainWindow.py:378
 msgid "Reinstall"
 msgstr ""
 
-#: main.py:372 main.py:395
+#: parduspackageinstaller/MainWindow.py:360
+#: parduspackageinstaller/MainWindow.py:383
 msgid "Upgrade"
 msgstr ""
 
-#: main.py:377
+#: parduspackageinstaller/MainWindow.py:365
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr ""
 
-#: main.py:407
+#: parduspackageinstaller/MainWindow.py:466
+msgid "Downloading dependencies : "
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:469
+msgid "Controlling dependencies : "
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:492
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
 msgstr ""
 
-#: main.py:409
+#: parduspackageinstaller/MainWindow.py:494
 msgid "<b>Completed !</b>"
 msgstr ""
 
-#: main.py:414
+#: parduspackageinstaller/MainWindow.py:499
 msgid "<b>Not Completed !</b>"
 msgstr ""
 
-#: main.py:416
+#: parduspackageinstaller/MainWindow.py:501
 msgid "<b><span color='red'>Connection Error !</span></b>"
-msgstr ""
-
-#: main.py:442
-msgid "Downloading dependencies : "
-msgstr ""
-
-#: main.py:445
-msgid "Controlling dependencies : "
-msgstr ""
-
-#: main.py:474 main.py:587 main.glade:705
-msgid "Not installed"
-msgstr ""
-
-#: main.py:526 main.glade:635
-msgid "Uninstall"
-msgstr ""
-
-#: main.py:583 main.py:586 main.glade:689
-msgid "Installed Version : "
-msgstr ""
-
-#: main.glade:9 main.glade:75
-msgid "Pardus Package Installer"
-msgstr ""
-
-#: main.glade:11
-msgid "© 2020 Pardus"
-msgstr ""
-
-#: main.glade:12
-msgid "Manage and view .deb packages"
-msgstr ""
-
-#: main.glade:14
-msgid "Website"
-msgstr ""
-
-#: main.glade:16
-msgid "Fatih Altun"
-msgstr ""
-
-#: main.glade:96
-msgid "_File"
-msgstr ""
-
-#: main.glade:136
-msgid "_Help"
-msgstr ""
-
-#: main.glade:244
-msgid "Processing Details"
-msgstr ""
-
-#: main.glade:333
-msgid "Architecture :"
-msgstr ""
-
-#: main.glade:352
-msgid "Size :"
-msgstr ""
-
-#: main.glade:371
-msgid "Section :"
-msgstr ""
-
-#: main.glade:390
-msgid "Priority :"
-msgstr ""
-
-#: main.glade:408
-msgid "Maintainer :"
-msgstr ""
-
-#: main.glade:427
-msgid "Package Details"
-msgstr ""
-
-#: main.glade:456
-msgid "Dependency List"
-msgstr ""
-
-#: main.glade:473
-msgid "Packages to install"
-msgstr ""
-
-#: main.glade:575
-msgid "Package Depends"
-msgstr ""
-
-#: main.glade:748
-msgid "TÜBİTAK ULAKBİM | 2020"
-msgstr ""
-
-#: main.glade:771
-msgid "Package Name"
-msgstr ""
-
-#: main.glade:788
-msgid "version"
-msgstr ""
-
-#: main.glade:814
-msgid "Info"
-msgstr ""
-
-#: main.glade:815
-msgid "You cannot close the application while the process is continuing"
-msgstr ""
-
-#: main.glade:841
-msgid "Select Software Package"
-msgstr ""
-
-#: main.glade:861
-msgid "Select"
 msgstr ""
