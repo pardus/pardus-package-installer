@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 12:38+0300\n"
+"POT-Creation-Date: 2020-06-01 11:20+0300\n"
 "PO-Revision-Date: 2020-04-28 17:46+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
@@ -88,8 +88,8 @@ msgid "Package Depends"
 msgstr "Paket Bağımlılıkları"
 
 #: ui/MainWindow.glade:608 parduspackageinstaller/MainWindow.py:89
-#: parduspackageinstaller/MainWindow.py:345
-#: parduspackageinstaller/MainWindow.py:368
+#: parduspackageinstaller/MainWindow.py:346
+#: parduspackageinstaller/MainWindow.py:369
 msgid "Install"
 msgstr "Yükle"
 
@@ -97,13 +97,13 @@ msgstr "Yükle"
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: ui/MainWindow.glade:689 parduspackageinstaller/MainWindow.py:427
-#: parduspackageinstaller/MainWindow.py:430
+#: ui/MainWindow.glade:689 parduspackageinstaller/MainWindow.py:428
+#: parduspackageinstaller/MainWindow.py:431
 msgid "Installed Version : "
 msgstr "Yüklü Versiyon : "
 
-#: ui/MainWindow.glade:705 parduspackageinstaller/MainWindow.py:394
-#: parduspackageinstaller/MainWindow.py:431
+#: ui/MainWindow.glade:705 parduspackageinstaller/MainWindow.py:395
+#: parduspackageinstaller/MainWindow.py:432
 msgid "Not installed"
 msgstr "Yüklü değil"
 
@@ -167,46 +167,46 @@ msgstr "Mimari bilgisi eksik"
 msgid "Installing ..."
 msgstr "Yükleniyor ..."
 
-#: parduspackageinstaller/MainWindow.py:250
+#: parduspackageinstaller/MainWindow.py:251
 msgid "Uninstalling ..."
 msgstr "Kaldırılıyor ..."
 
-#: parduspackageinstaller/MainWindow.py:264
+#: parduspackageinstaller/MainWindow.py:265
 msgid "Reinstalling ..."
 msgstr "Tekrar Yükleniyor ..."
 
-#: parduspackageinstaller/MainWindow.py:278
+#: parduspackageinstaller/MainWindow.py:279
 msgid "Downgrading ..."
 msgstr "Versiyon düşürülüyor ..."
 
-#: parduspackageinstaller/MainWindow.py:350
-#: parduspackageinstaller/MainWindow.py:373
+#: parduspackageinstaller/MainWindow.py:351
+#: parduspackageinstaller/MainWindow.py:374
 msgid "Downgrade"
 msgstr "Versiyon Düşür"
 
-#: parduspackageinstaller/MainWindow.py:355
-#: parduspackageinstaller/MainWindow.py:378
+#: parduspackageinstaller/MainWindow.py:356
+#: parduspackageinstaller/MainWindow.py:379
 msgid "Reinstall"
 msgstr "Tekrar Yükle"
 
-#: parduspackageinstaller/MainWindow.py:360
-#: parduspackageinstaller/MainWindow.py:383
+#: parduspackageinstaller/MainWindow.py:361
+#: parduspackageinstaller/MainWindow.py:384
 msgid "Upgrade"
 msgstr "Versiyon Yükselt"
 
-#: parduspackageinstaller/MainWindow.py:365
+#: parduspackageinstaller/MainWindow.py:366
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr "<b><span color='red'>Hata ! </span></b>"
 
-#: parduspackageinstaller/MainWindow.py:466
+#: parduspackageinstaller/MainWindow.py:467
 msgid "Downloading dependencies : "
 msgstr "Bağımlılıklar indiriliyor : "
 
-#: parduspackageinstaller/MainWindow.py:469
+#: parduspackageinstaller/MainWindow.py:470
 msgid "Controlling dependencies : "
 msgstr "Bağımlılıklar kontrol ediliyor : "
 
-#: parduspackageinstaller/MainWindow.py:492
+#: parduspackageinstaller/MainWindow.py:493
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
@@ -214,15 +214,15 @@ msgstr ""
 "İşlem Başarıyla Tamamlandı ! \n"
 " \n"
 
-#: parduspackageinstaller/MainWindow.py:494
+#: parduspackageinstaller/MainWindow.py:495
 msgid "<b>Completed !</b>"
 msgstr "<b>Tamamlandı !</b>"
 
-#: parduspackageinstaller/MainWindow.py:499
+#: parduspackageinstaller/MainWindow.py:500
 msgid "<b>Not Completed !</b>"
 msgstr "<b>Tamamlanamadı !</b>"
 
-#: parduspackageinstaller/MainWindow.py:501
+#: parduspackageinstaller/MainWindow.py:502
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr "<b><span color='red'>Bağlantı Hatası !</span></b>"
 

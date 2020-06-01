@@ -18,8 +18,8 @@ import apt.debfile as aptdeb
 import locale
 from locale import gettext as _
 
-locale.bindtextdomain('pdebi', '/usr/share/locale')
-locale.textdomain('pdebi')
+locale.bindtextdomain('pardus-package-installer', '/usr/share/locale')
+locale.textdomain('pardus-package-installer')
 
 
 class MainWindow:

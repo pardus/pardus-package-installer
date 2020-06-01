@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 data_files = [
     ("/usr/share/applications", ["tr.org.pardus.package-installer.desktop"]),
-    ("/usr/share/locale/tr/LC_MESSAGES", ["po/tr/pdebi.mo"]),
+    ("/usr/share/locale/tr/LC_MESSAGES", ["po/tr/pardus-package-installer.mo"]),
     ("/usr/share/pardus/pardus-package-installer", ["ui/MainWindow.glade", "icon.svg", "actions.py"]),
     ("/usr/bin", ["pardus-package-installer-action"]),
     ("/usr/share/polkit-1/actions", ["tr.org.pardus.pkexec.pardus-package-installer.policy"])
