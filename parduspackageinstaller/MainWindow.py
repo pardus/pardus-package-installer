@@ -9,10 +9,12 @@ Created on Fri Jan 24 14:58:17 2020
 import gi, apt, os, sys
 
 gi.require_version('Gtk', '3.0')
+gi.require_version("Notify", "0.7")
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gdk
+from gi.repository import Notify
 import apt.debfile as aptdeb
 
 import locale
@@ -32,6 +34,7 @@ class MainWindow:
         self.packagename = ""
         self.packagefailure = ""
         self.file = file
+        self.notificationstate = True
 
         # Gtk Builder
         self.builder = Gtk.Builder()
@@ -225,7 +228,7 @@ class MainWindow:
     def failureControl(self):
         return aptdeb.DebPackage(self.debianpackage)._failure_string
 
-    def installPackage(self):
+    def installPackage(self, isupgrading):
 
         if self.installable:
             self.progressbar.set_show_text(False)
@@ -237,6 +240,10 @@ class MainWindow:
             self.openbutton.set_sensitive(False)
             self.quitbutton.set_sensitive(False)
             self.closestatus = True
+            if isupgrading:
+                self.notification = Notify.Notification.new(self.packagename + _(" upgraded"))
+            else:
+                self.notification = Notify.Notification.new(self.packagename + _(" installed"))
             self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "install",
                             self.debianpackage]
             self.pid = self.startProcess(self.command)
@@ -254,6 +261,7 @@ class MainWindow:
             self.openbutton.set_sensitive(False)
             self.quitbutton.set_sensitive(False)
             self.closestatus = True
+            self.notification = Notify.Notification.new(self.packagename + _(" uninstalled"))
             self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "remove", self.packagename]
             self.pid = self.startProcess(self.command)
             print(self.pid)
@@ -268,6 +276,7 @@ class MainWindow:
         self.openbutton.set_sensitive(False)
         self.quitbutton.set_sensitive(False)
         self.closestatus = True
+        self.notification = Notify.Notification.new(self.packagename + _(" reinstalled"))
         self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "reinstall", self.debianpackage]
         self.pid = self.startProcess(self.command)
         print(self.pid)
@@ -282,6 +291,7 @@ class MainWindow:
         self.openbutton.set_sensitive(False)
         self.quitbutton.set_sensitive(False)
         self.closestatus = True
+        self.notification = Notify.Notification.new(self.packagename + _(" downgraded"))
         self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "downgrade", self.debianpackage]
         self.pid = self.startProcess(self.command)
         print(self.pid)
@@ -295,7 +305,7 @@ class MainWindow:
 
         if packagestatus == 0:
             print("Installing Button Clicked")
-            self.installPackage()
+            self.installPackage(False)
 
         elif packagestatus == 1:
             print("Downgrading Button Clicked")
@@ -307,7 +317,7 @@ class MainWindow:
 
         elif packagestatus == 3:
             print("Upgrading Button Clicked")
-            self.installPackage()
+            self.installPackage(True)
 
     def onButton2Clicked(self, button):
         print("Uninstalling Button Clicked")
@@ -493,13 +503,16 @@ class MainWindow:
                                                   (_("Operation was successfully completed ! \n \n")))
                 self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
                 self.progress.set_markup(_("<b>Completed !</b>"))
+                self.notificationstate = True
                 if self.progressbar.get_show_text():
                     self.progressbar.set_text("100 %")
                     self.progressbar.set_fraction(1)
             else:
                 self.progress.set_markup(_("<b>Not Completed !</b>"))
+                self.notificationstate = False
         else:
             self.progress.set_markup(_("<b><span color='red'>Connection Error !</span></b>"))
+            self.notificationstate = False
             if self.progressbar.get_show_text():
                 self.progressbar.set_show_text(False)
                 self.progressbar.set_fraction(0)
@@ -512,3 +525,30 @@ class MainWindow:
         self.openbutton.set_sensitive(True)
         self.quitbutton.set_sensitive(True)
         self.closestatus = False
+        self.notify()
+
+    def notify(self):
+        if self.notificationstate:
+            if Notify.is_initted():
+                Notify.uninit()
+
+            Notify.init(self.packagename)
+            try:
+                pixbuf = Gtk.IconTheme.get_default().load_icon(self.packagename, 64, Gtk.IconLookupFlags(16))
+            except:
+                try:
+                    parduspixbuf = Gtk.IconTheme.new()
+                    parduspixbuf.set_custom_theme("pardus")
+                    pixbuf = parduspixbuf.load_icon(self.packagename, 64, Gtk.IconLookupFlags(16))
+                except:
+                    try:
+                        pixbuf = Gtk.IconTheme.get_default().load_icon("pardus-package-installer", 64,
+                                                                       Gtk.IconLookupFlags(16))
+                    except:
+                        try:
+                            pixbuf = parduspixbuf.load_icon("pardus-package-installer", 64, Gtk.IconLookupFlags(16))
+                        except:
+                            pixbuf = Gtk.IconTheme.get_default().load_icon("gtk-dialog-info", 64,
+                                                                           Gtk.IconLookupFlags(16))
+            self.notification.set_icon_from_pixbuf(pixbuf)
+            self.notification.show()
