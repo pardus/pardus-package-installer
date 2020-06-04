@@ -46,6 +46,7 @@ class MainWindow:
         self.defineComponents()
         self.controlDisplay()
         self.initialize()
+        self.donebutton.get_style_context().add_class("suggested-action")
         self.window.connect('delete_event', self.onClose)
         self.window.show_all()
 
@@ -147,6 +148,8 @@ class MainWindow:
 
         self.textview = self.builder.get_object("textview")
         self.descriptionscrolledwindow = self.builder.get_object("descriptionscrolledwindow")
+        self.stack1 = self.builder.get_object("stack1")
+        self.donebutton = self.builder.get_object("donebutton")
 
         self.installicon = self.builder.get_object("install_icon")
         self.upgradeicon = self.builder.get_object("upgrade_icon")
@@ -300,6 +303,7 @@ class MainWindow:
         self.window.get_application().quit()
 
     def onButton1Clicked(self, button):
+        self.stack1.set_visible_child_name("page0")
         print("debianpackage = " + self.debianpackage)
         packagestatus = self.compareVersion()
 
@@ -320,8 +324,12 @@ class MainWindow:
             self.installPackage(True)
 
     def onButton2Clicked(self, button):
+        self.stack1.set_visible_child_name("page0")
         print("Uninstalling Button Clicked")
         self.removePackage()
+
+    def onDoneButtonClicked(self, button):
+        self.window.get_application().quit()
 
     def onOpenClicked(self, button):
         self.filechooser.run()
@@ -406,6 +414,7 @@ class MainWindow:
 
     def fromFile(self, path):
 
+        self.stack1.set_visible_child_name("page0")
         self.debianpackage = path
         self.start(self.debianpackage)
         self.depends.get_buffer().delete(self.depends.get_buffer().get_start_iter(),
@@ -504,6 +513,7 @@ class MainWindow:
                 self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
                 self.progress.set_markup(_("<b>Completed !</b>"))
                 self.notificationstate = True
+                self.stack1.set_visible_child_name("page1")
                 if self.progressbar.get_show_text():
                     self.progressbar.set_text("100 %")
                     self.progressbar.set_fraction(1)
