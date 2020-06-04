@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-04 16:47+0300\n"
+"POT-Creation-Date: 2020-06-04 20:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,13 +85,13 @@ msgstr ""
 msgid "Package Depends"
 msgstr ""
 
-#: ui/MainWindow.glade:614 parduspackageinstaller/MainWindow.py:93
-#: parduspackageinstaller/MainWindow.py:364
-#: parduspackageinstaller/MainWindow.py:387
+#: ui/MainWindow.glade:614 parduspackageinstaller/MainWindow.py:94
+#: parduspackageinstaller/MainWindow.py:368
+#: parduspackageinstaller/MainWindow.py:391
 msgid "Install"
 msgstr ""
 
-#: ui/MainWindow.glade:630 parduspackageinstaller/MainWindow.py:94
+#: ui/MainWindow.glade:630 parduspackageinstaller/MainWindow.py:95
 msgid "Uninstall"
 msgstr ""
 
@@ -107,13 +107,13 @@ msgstr ""
 msgid "page1"
 msgstr ""
 
-#: ui/MainWindow.glade:755 parduspackageinstaller/MainWindow.py:447
-#: parduspackageinstaller/MainWindow.py:450
+#: ui/MainWindow.glade:755 parduspackageinstaller/MainWindow.py:451
+#: parduspackageinstaller/MainWindow.py:454
 msgid "Installed Version : "
 msgstr ""
 
-#: ui/MainWindow.glade:771 parduspackageinstaller/MainWindow.py:413
-#: parduspackageinstaller/MainWindow.py:451
+#: ui/MainWindow.glade:771 parduspackageinstaller/MainWindow.py:417
+#: parduspackageinstaller/MainWindow.py:455
 msgid "Not installed"
 msgstr ""
 
@@ -145,111 +145,112 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:180
+#: parduspackageinstaller/MainWindow.py:181
 msgid "Version is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:185
+#: parduspackageinstaller/MainWindow.py:186
 msgid "Description is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:190
+#: parduspackageinstaller/MainWindow.py:191
 msgid "Maintainer is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:195
+#: parduspackageinstaller/MainWindow.py:196
 msgid "Priority is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:200
+#: parduspackageinstaller/MainWindow.py:201
 msgid "Section is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:205
+#: parduspackageinstaller/MainWindow.py:206
 msgid "Size is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:210
+#: parduspackageinstaller/MainWindow.py:211
 msgid "Architecture is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:240
+#: parduspackageinstaller/MainWindow.py:242
 msgid "Installing ..."
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:247
+#: parduspackageinstaller/MainWindow.py:249
 msgid " upgraded"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:249
+#: parduspackageinstaller/MainWindow.py:251
 msgid " installed"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:261
+#: parduspackageinstaller/MainWindow.py:265
 msgid "Uninstalling ..."
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:267
+#: parduspackageinstaller/MainWindow.py:271
 msgid " uninstalled"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:276
+#: parduspackageinstaller/MainWindow.py:280
 msgid "Reinstalling ..."
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:282
+#: parduspackageinstaller/MainWindow.py:286
 msgid " reinstalled"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:291
+#: parduspackageinstaller/MainWindow.py:295
 msgid "Downgrading ..."
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:297
+#: parduspackageinstaller/MainWindow.py:301
 msgid " downgraded"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:369
-#: parduspackageinstaller/MainWindow.py:392
+#: parduspackageinstaller/MainWindow.py:373
+#: parduspackageinstaller/MainWindow.py:396
 msgid "Downgrade"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:374
-#: parduspackageinstaller/MainWindow.py:397
+#: parduspackageinstaller/MainWindow.py:378
+#: parduspackageinstaller/MainWindow.py:401
 msgid "Reinstall"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:379
-#: parduspackageinstaller/MainWindow.py:402
+#: parduspackageinstaller/MainWindow.py:383
+#: parduspackageinstaller/MainWindow.py:406
 msgid "Upgrade"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:384
+#: parduspackageinstaller/MainWindow.py:388
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:486
+#: parduspackageinstaller/MainWindow.py:490
 msgid "Downloading dependencies : "
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:489
+#: parduspackageinstaller/MainWindow.py:493
 msgid "Controlling dependencies : "
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:512
+#: parduspackageinstaller/MainWindow.py:516
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:514
+#: parduspackageinstaller/MainWindow.py:518
 msgid "<b>Completed !</b>"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:521
+#: parduspackageinstaller/MainWindow.py:525
 msgid "<b>Not Completed !</b>"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:524
+#: parduspackageinstaller/MainWindow.py:528
+#: parduspackageinstaller/MainWindow.py:545
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr ""
