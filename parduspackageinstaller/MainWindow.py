@@ -35,6 +35,7 @@ class MainWindow:
         self.packagefailure = ""
         self.file = file
         self.notificationstate = True
+        self.isinstalling = False
 
         # Gtk Builder
         self.builder = Gtk.Builder()
@@ -234,6 +235,7 @@ class MainWindow:
     def installPackage(self, isupgrading):
 
         if self.installable:
+            self.isinstalling = True
             self.progressbar.set_show_text(False)
             self.progressbar.set_fraction(0)
             self.spinner.start()
@@ -251,6 +253,8 @@ class MainWindow:
                             self.debianpackage]
             self.pid = self.startProcess(self.command)
             print(self.pid)
+        else:
+            print("package is not installable")
 
     def removePackage(self):
 
@@ -535,6 +539,15 @@ class MainWindow:
         self.openbutton.set_sensitive(True)
         self.quitbutton.set_sensitive(True)
         self.closestatus = False
+        if self.isinstalling and self.status == 0:
+            print("connection lost")
+            self.stack1.set_visible_child_name("page0")
+            self.progress.set_markup(_("<b><span color='red'>Connection Error !</span></b>"))
+            if self.progressbar.get_show_text():
+                self.progressbar.set_show_text(False)
+                self.progressbar.set_fraction(0)
+            self.notificationstate = False
+        self.isinstalling = False
         self.notify()
 
     def notify(self):
