@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-01 11:20+0300\n"
-"PO-Revision-Date: 2020-04-28 17:46+0300\n"
+"POT-Creation-Date: 2020-06-04 16:47+0300\n"
+"PO-Revision-Date: 2020-06-04 16:53+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: ui/MainWindow.glade:9 ui/MainWindow.glade:75
+#: ui/MainWindow.glade:9 ui/MainWindow.glade:81
 msgid "Pardus Package Installer"
 msgstr "Pardus Paket Kurucu"
 
@@ -39,174 +39,206 @@ msgstr "Web sitesi"
 msgid "Fatih Altun"
 msgstr "Fatih Altun"
 
-#: ui/MainWindow.glade:96
+#: ui/MainWindow.glade:102
 msgid "_File"
 msgstr "_Dosya"
 
-#: ui/MainWindow.glade:136
+#: ui/MainWindow.glade:142
 msgid "_Help"
 msgstr "_Yardım"
 
-#: ui/MainWindow.glade:244
+#: ui/MainWindow.glade:250
 msgid "Processing Details"
 msgstr "İşleme Detayları"
 
-#: ui/MainWindow.glade:333
+#: ui/MainWindow.glade:339
 msgid "Architecture :"
 msgstr "Mimari :"
 
-#: ui/MainWindow.glade:352
+#: ui/MainWindow.glade:358
 msgid "Size :"
 msgstr "Boyut :"
 
-#: ui/MainWindow.glade:371
+#: ui/MainWindow.glade:377
 msgid "Section :"
 msgstr "Bölüm :"
 
-#: ui/MainWindow.glade:390
+#: ui/MainWindow.glade:396
 msgid "Priority :"
 msgstr "Öncelik :"
 
-#: ui/MainWindow.glade:408
+#: ui/MainWindow.glade:414
 msgid "Maintainer :"
 msgstr "Bakımcı :"
 
-#: ui/MainWindow.glade:427
+#: ui/MainWindow.glade:433
 msgid "Package Details"
 msgstr "Paket Ayrıntıları"
 
-#: ui/MainWindow.glade:456
+#: ui/MainWindow.glade:462
 msgid "Dependency List"
 msgstr "Bağımlılık Listesi"
 
-#: ui/MainWindow.glade:473
+#: ui/MainWindow.glade:479
 msgid "Packages to install"
 msgstr "Yüklenecek Bağımlılıklar"
 
-#: ui/MainWindow.glade:575
+#: ui/MainWindow.glade:581
 msgid "Package Depends"
 msgstr "Paket Bağımlılıkları"
 
-#: ui/MainWindow.glade:608 parduspackageinstaller/MainWindow.py:89
-#: parduspackageinstaller/MainWindow.py:346
-#: parduspackageinstaller/MainWindow.py:369
+#: ui/MainWindow.glade:614 parduspackageinstaller/MainWindow.py:93
+#: parduspackageinstaller/MainWindow.py:364
+#: parduspackageinstaller/MainWindow.py:387
 msgid "Install"
 msgstr "Yükle"
 
-#: ui/MainWindow.glade:635 parduspackageinstaller/MainWindow.py:90
+#: ui/MainWindow.glade:630 parduspackageinstaller/MainWindow.py:94
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: ui/MainWindow.glade:689 parduspackageinstaller/MainWindow.py:428
-#: parduspackageinstaller/MainWindow.py:431
+#: ui/MainWindow.glade:669
+msgid "page0"
+msgstr "page0"
+
+#: ui/MainWindow.glade:678
+msgid "Done"
+msgstr "Kapat"
+
+#: ui/MainWindow.glade:716
+msgid "page1"
+msgstr "page1"
+
+#: ui/MainWindow.glade:755 parduspackageinstaller/MainWindow.py:447
+#: parduspackageinstaller/MainWindow.py:450
 msgid "Installed Version : "
 msgstr "Yüklü Versiyon : "
 
-#: ui/MainWindow.glade:705 parduspackageinstaller/MainWindow.py:395
-#: parduspackageinstaller/MainWindow.py:432
+#: ui/MainWindow.glade:771 parduspackageinstaller/MainWindow.py:413
+#: parduspackageinstaller/MainWindow.py:451
 msgid "Not installed"
 msgstr "Yüklü değil"
 
-#: ui/MainWindow.glade:748
+#: ui/MainWindow.glade:814
 msgid "TÜBİTAK ULAKBİM | 2020"
 msgstr "TÜBİTAK ULAKBİM | 2020"
 
-#: ui/MainWindow.glade:771
+#: ui/MainWindow.glade:837
 msgid "Package Name"
 msgstr "Paket Adı"
 
-#: ui/MainWindow.glade:788
+#: ui/MainWindow.glade:854
 msgid "version"
 msgstr "versiyon"
 
-#: ui/MainWindow.glade:814
+#: ui/MainWindow.glade:880
 msgid "Info"
 msgstr "Bilgi"
 
-#: ui/MainWindow.glade:815
+#: ui/MainWindow.glade:881
 msgid "You cannot close the application while the process is continuing"
 msgstr "İşlem devam ederken uygulamayı kapatamazsınız"
 
-#: ui/MainWindow.glade:841
+#: ui/MainWindow.glade:907
 msgid "Select Software Package"
 msgstr "Bir Yazılım Paketi Seçiniz"
 
-#: ui/MainWindow.glade:861
+#: ui/MainWindow.glade:927
 msgid "Select"
 msgstr "Seç"
 
-#: parduspackageinstaller/MainWindow.py:174
+#: parduspackageinstaller/MainWindow.py:180
 msgid "Version is not avaible"
 msgstr "Versiyon bilgisi eksik"
 
-#: parduspackageinstaller/MainWindow.py:179
+#: parduspackageinstaller/MainWindow.py:185
 msgid "Description is not avaible"
 msgstr "Açıklama bilgisi eksik"
 
-#: parduspackageinstaller/MainWindow.py:184
+#: parduspackageinstaller/MainWindow.py:190
 msgid "Maintainer is not avaible"
 msgstr "Bakımcı bilgisi eksik"
 
-#: parduspackageinstaller/MainWindow.py:189
+#: parduspackageinstaller/MainWindow.py:195
 msgid "Priority is not avaible"
 msgstr "Öncelik bilgisi eksik"
 
-#: parduspackageinstaller/MainWindow.py:194
+#: parduspackageinstaller/MainWindow.py:200
 msgid "Section is not avaible"
 msgstr "Bölüm bilgisi eksik"
 
-#: parduspackageinstaller/MainWindow.py:199
+#: parduspackageinstaller/MainWindow.py:205
 msgid "Size is not avaible"
 msgstr "Boyut bilgisi eksik"
 
-#: parduspackageinstaller/MainWindow.py:204
+#: parduspackageinstaller/MainWindow.py:210
 msgid "Architecture is not avaible"
 msgstr "Mimari bilgisi eksik"
 
-#: parduspackageinstaller/MainWindow.py:234
+#: parduspackageinstaller/MainWindow.py:240
 msgid "Installing ..."
 msgstr "Yükleniyor ..."
 
-#: parduspackageinstaller/MainWindow.py:251
+#: parduspackageinstaller/MainWindow.py:247
+msgid " upgraded"
+msgstr " versiyon yükseltildi"
+
+#: parduspackageinstaller/MainWindow.py:249
+msgid " installed"
+msgstr " yüklendi"
+
+#: parduspackageinstaller/MainWindow.py:261
 msgid "Uninstalling ..."
 msgstr "Kaldırılıyor ..."
 
-#: parduspackageinstaller/MainWindow.py:265
+#: parduspackageinstaller/MainWindow.py:267
+msgid " uninstalled"
+msgstr " kaldırıldı"
+
+#: parduspackageinstaller/MainWindow.py:276
 msgid "Reinstalling ..."
 msgstr "Tekrar Yükleniyor ..."
 
-#: parduspackageinstaller/MainWindow.py:279
+#: parduspackageinstaller/MainWindow.py:282
+msgid " reinstalled"
+msgstr " tekrar yüklendi"
+
+#: parduspackageinstaller/MainWindow.py:291
 msgid "Downgrading ..."
 msgstr "Versiyon düşürülüyor ..."
 
-#: parduspackageinstaller/MainWindow.py:351
-#: parduspackageinstaller/MainWindow.py:374
+#: parduspackageinstaller/MainWindow.py:297
+msgid " downgraded"
+msgstr " versiyon düşürüldü"
+
+#: parduspackageinstaller/MainWindow.py:369
+#: parduspackageinstaller/MainWindow.py:392
 msgid "Downgrade"
 msgstr "Versiyon Düşür"
 
-#: parduspackageinstaller/MainWindow.py:356
-#: parduspackageinstaller/MainWindow.py:379
+#: parduspackageinstaller/MainWindow.py:374
+#: parduspackageinstaller/MainWindow.py:397
 msgid "Reinstall"
 msgstr "Tekrar Yükle"
 
-#: parduspackageinstaller/MainWindow.py:361
-#: parduspackageinstaller/MainWindow.py:384
+#: parduspackageinstaller/MainWindow.py:379
+#: parduspackageinstaller/MainWindow.py:402
 msgid "Upgrade"
 msgstr "Versiyon Yükselt"
 
-#: parduspackageinstaller/MainWindow.py:366
+#: parduspackageinstaller/MainWindow.py:384
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr "<b><span color='red'>Hata ! </span></b>"
 
-#: parduspackageinstaller/MainWindow.py:467
+#: parduspackageinstaller/MainWindow.py:486
 msgid "Downloading dependencies : "
 msgstr "Bağımlılıklar indiriliyor : "
 
-#: parduspackageinstaller/MainWindow.py:470
+#: parduspackageinstaller/MainWindow.py:489
 msgid "Controlling dependencies : "
 msgstr "Bağımlılıklar kontrol ediliyor : "
 
-#: parduspackageinstaller/MainWindow.py:493
+#: parduspackageinstaller/MainWindow.py:512
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
@@ -214,15 +246,15 @@ msgstr ""
 "İşlem Başarıyla Tamamlandı ! \n"
 " \n"
 
-#: parduspackageinstaller/MainWindow.py:495
+#: parduspackageinstaller/MainWindow.py:514
 msgid "<b>Completed !</b>"
 msgstr "<b>Tamamlandı !</b>"
 
-#: parduspackageinstaller/MainWindow.py:500
+#: parduspackageinstaller/MainWindow.py:521
 msgid "<b>Not Completed !</b>"
 msgstr "<b>Tamamlanamadı !</b>"
 
-#: parduspackageinstaller/MainWindow.py:502
+#: parduspackageinstaller/MainWindow.py:524
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr "<b><span color='red'>Bağlantı Hatası !</span></b>"
 
