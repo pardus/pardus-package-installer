@@ -539,7 +539,7 @@ class MainWindow:
         self.openbutton.set_sensitive(True)
         self.quitbutton.set_sensitive(True)
         self.closestatus = False
-        if self.isinstalling and self.status == 0:
+        if self.isinstalling and self.status == 0 and retval == 0:
             print("connection lost")
             self.stack1.set_visible_child_name("page0")
             self.progress.set_markup(_("<b><span color='red'>Connection Error !</span></b>"))
