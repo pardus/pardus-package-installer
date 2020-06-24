@@ -5,21 +5,25 @@ Created on Fri Jan 24 14:58:17 2020
 
 @author: fatih
 """
-import subprocess, sys
+import subprocess, sys, os
 
 
 def main():
     def install(debianpackage):
-        subprocess.call(["apt", "install", debianpackage, "-yq", "-o", "APT::Status-Fd=2"])
+        subprocess.call(["apt", "install", debianpackage, "-yq", "-o", "APT::Status-Fd=2"],
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def reinstall(debianpackage):
-        subprocess.call(["apt", "install", "--reinstall", debianpackage, "-yq", "-o", "APT::Status-Fd=2"])
+        subprocess.call(["apt", "install", "--reinstall", debianpackage, "-yq", "-o", "APT::Status-Fd=2"],
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def remove(packagename):
-        subprocess.call(["apt", "purge", packagename, "-yq", "-o", "APT::Status-Fd=2"])
+        subprocess.call(["apt", "purge", packagename, "-yq", "-o", "APT::Status-Fd=2"],
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def downgrade(packagename):
-        subprocess.call(["apt", "install", "--allow-downgrades", packagename, "-yq", "-o", "APT::Status-Fd=2"])
+        subprocess.call(["apt", "install", "--allow-downgrades", packagename, "-yq", "-o", "APT::Status-Fd=2"],
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     if len(sys.argv) > 1:
         if (sys.argv[1] == "install"):
