@@ -1,3 +1,19 @@
+pardus-package-installer (0.2.0~Beta1) unstable; urgency=medium
+
+  * Update package structure as pythonic
+  * Update translations
+  * Update .gitignore
+  * Add notification for successful processes
+  * Add done button
+  * Update translations
+  * Update connection control
+  * Update translations
+  * Add status code to connection control
+  * Add DEBIAN_FRONTEND=noninteractive for actions
+  * Fix double instance bug
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Thu, 02 Jul 2020 11:38:49 +0300
+
 pdebi (0.1.0~Beta4) unstable; urgency=medium
 
   * Add status to apt
