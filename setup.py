@@ -2,7 +2,19 @@
 # -*- coding: utf-8 -*-
 
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, os
+
+changelog = "debian/changelog"
+if os.path.exists(changelog):
+    head = open(changelog).readline()
+    try:
+        version = head.split("(")[1].split(")")[0]
+    except:
+        print("debian/changelog format is wrong for get version")
+        version = ""
+    f = open("parduspackageinstaller/Version.py", "w")
+    f.write('version = "%s"\n' % version)
+    f.close()
 
 data_files = [
     ("/usr/share/applications", ["tr.org.pardus.package-installer.desktop"]),
@@ -14,7 +26,7 @@ data_files = [
 
 setup(
     name="Pardus Package Installer",
-    version="0.2.0~Beta1",
+    version=version,
     packages=find_packages(),
     scripts=["pardus-package-installer"],
     install_requires=["PyGObject"],

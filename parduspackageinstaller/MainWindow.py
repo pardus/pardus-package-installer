@@ -49,6 +49,15 @@ class MainWindow:
         self.initialize()
         self.donebutton.get_style_context().add_class("suggested-action")
         self.window.connect('delete_event', self.onClose)
+
+        # Set version
+        # If not getted from Version.py file then accept version in MainWindow.glade file
+        try:
+            from parduspackageinstaller.Version import version
+            self.about_dialog.set_version(version)
+        except:
+            pass
+
         self.window.show_all()
 
     def onClose(self, *args):
