@@ -30,6 +30,8 @@ class MainWindow:
 
         self.closestatus = False
         self.error = False
+        self.dpkglockerror = False
+        self.dpkgconferror = False
         self.debianpackage = ""
         self.installable = False
         self.packagename = ""
@@ -300,7 +302,8 @@ class MainWindow:
                 self.button1.set_sensitive(False)
                 self.button2.set_sensitive(False)
                 self.progress.set_markup(_("<b><span color='red'>Error :</span> Package Architecture = ")
-                                           + self.packagearchitecture + _(", System Architecture = ") + self.systemarchitecture + "</b>")
+                                         + self.packagearchitecture + _(", System Architecture = ")
+                                         + self.systemarchitecture + "</b>")
 
     def removePackage(self):
 
@@ -572,7 +575,18 @@ class MainWindow:
                 self.error = True
                 self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
                 self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
-
+            elif "E:" in line and "dpkg --configure -a" in line:
+                print("dpkg --configure -a error")
+                self.error = True
+                self.dpkgconferror = True
+                self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
+                self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
+            elif "E:" in line and "/var/lib/dpkg/lock-frontend" in line:
+                print("/var/lib/dpkg/lock-frontend error")
+                self.error = True
+                self.dpkglockerror = True
+                self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
+                self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
         return True
 
     def onProcessExit(self, pid, retval):
@@ -594,12 +608,19 @@ class MainWindow:
                 self.progress.set_markup(_("<b>Not Completed !</b>"))
                 self.notificationstate = False
         else:
-            self.progress.set_markup(_("<b><span color='red'>Connection Error !</span></b>"))
+            errormessage = _("<b><span color='red'>Connection Error !</span></b>")
+            if self.dpkglockerror:
+                errormessage = _("<b><span color='red'>Dpkg Lock Error !</span></b>")
+            elif self.dpkgconferror:
+                errormessage = _("<b><span color='red'>Dpkg Interrupt Error !</span></b>")
+            self.progress.set_markup(errormessage)
             self.notificationstate = False
             if self.progressbar.get_show_text():
                 self.progressbar.set_show_text(False)
                 self.progressbar.set_fraction(0)
             self.error = False
+            self.dpkglockerror = False
+            self.dpkgconferror = False
         self.updateCache()
         self.status = self.compareVersion()
         self.packagefailure = self.failureControl()
