@@ -297,10 +297,10 @@ class MainWindow:
             if self.packagearchitecture != self.systemarchitecture:
                 print("Error : Package Architecture = " + self.packagearchitecture
                       + ", System Architecture = " + self.systemarchitecture)
-            self.button1.set_sensitive(False)
-            self.button2.set_sensitive(False)
-            self.progress.set_markup(_("<b><span color='red'>Error :</span> Package Architecture = "
-                                       + self.packagearchitecture + ", System Architecture = " + self.systemarchitecture + "</b>"))
+                self.button1.set_sensitive(False)
+                self.button2.set_sensitive(False)
+                self.progress.set_markup(_("<b><span color='red'>Error :</span> Package Architecture = "
+                                           + self.packagearchitecture + ", System Architecture = " + self.systemarchitecture + "</b>"))
 
     def removePackage(self):
 
