@@ -251,7 +251,11 @@ class MainWindow:
         return False
 
     def updateCache(self):
-        self.cache = apt.Cache()
+        try:
+            self.cache = apt.Cache()
+        except:
+            self.isbroken = True
+            return False
         if self.cache.broken_count > 0:
             self.isbroken = True
             return False
