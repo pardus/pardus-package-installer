@@ -1,3 +1,13 @@
+pardus-package-installer (0.2.0~Beta3) unstable; urgency=medium
+
+  * Added control for is there broken dependency on system
+  * Added architecture control if package is not installable
+  * Fix indent
+  * Fix error message as translatable
+  * Update translations
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Thu, 22 Oct 2020 20:30:45 +0300
+
 pardus-package-installer (0.2.0~Beta2) unstable; urgency=medium
 
   * Add get version dynamically from debian/changelog
