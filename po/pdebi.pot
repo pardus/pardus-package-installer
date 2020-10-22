@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-22 20:19+0300\n"
+"POT-Creation-Date: 2020-10-22 22:49+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,17 +85,17 @@ msgstr ""
 msgid "Package Depends"
 msgstr ""
 
-#: ui/MainWindow.glade:614 parduspackageinstaller/MainWindow.py:106
-#: parduspackageinstaller/MainWindow.py:117
-#: parduspackageinstaller/MainWindow.py:427
-#: parduspackageinstaller/MainWindow.py:450
-#: parduspackageinstaller/MainWindow.py:523
+#: ui/MainWindow.glade:614 parduspackageinstaller/MainWindow.py:108
+#: parduspackageinstaller/MainWindow.py:119
+#: parduspackageinstaller/MainWindow.py:430
+#: parduspackageinstaller/MainWindow.py:453
+#: parduspackageinstaller/MainWindow.py:526
 msgid "Install"
 msgstr ""
 
-#: ui/MainWindow.glade:630 parduspackageinstaller/MainWindow.py:107
-#: parduspackageinstaller/MainWindow.py:118
-#: parduspackageinstaller/MainWindow.py:524
+#: ui/MainWindow.glade:630 parduspackageinstaller/MainWindow.py:109
+#: parduspackageinstaller/MainWindow.py:120
+#: parduspackageinstaller/MainWindow.py:527
 msgid "Uninstall"
 msgstr ""
 
@@ -111,13 +111,13 @@ msgstr ""
 msgid "page1"
 msgstr ""
 
-#: ui/MainWindow.glade:755 parduspackageinstaller/MainWindow.py:510
-#: parduspackageinstaller/MainWindow.py:513
+#: ui/MainWindow.glade:755 parduspackageinstaller/MainWindow.py:513
+#: parduspackageinstaller/MainWindow.py:516
 msgid "Installed Version : "
 msgstr ""
 
-#: ui/MainWindow.glade:771 parduspackageinstaller/MainWindow.py:476
-#: parduspackageinstaller/MainWindow.py:514
+#: ui/MainWindow.glade:771 parduspackageinstaller/MainWindow.py:479
+#: parduspackageinstaller/MainWindow.py:517
 msgid "Not installed"
 msgstr ""
 
@@ -160,120 +160,128 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:206
+#: parduspackageinstaller/MainWindow.py:208
 msgid "Version is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:211
+#: parduspackageinstaller/MainWindow.py:213
 msgid "Description is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:216
+#: parduspackageinstaller/MainWindow.py:218
 msgid "Maintainer is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:221
+#: parduspackageinstaller/MainWindow.py:223
 msgid "Priority is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:226
+#: parduspackageinstaller/MainWindow.py:228
 msgid "Section is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:231
+#: parduspackageinstaller/MainWindow.py:233
 msgid "Size is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:236
+#: parduspackageinstaller/MainWindow.py:238
 msgid "Architecture is not avaible"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:276
+#: parduspackageinstaller/MainWindow.py:278
 msgid "Installing ..."
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:283
+#: parduspackageinstaller/MainWindow.py:285
 msgid " upgraded"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:285
+#: parduspackageinstaller/MainWindow.py:287
 msgid " installed"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:302
+#: parduspackageinstaller/MainWindow.py:304
 msgid "<b><span color='red'>Error :</span> Package Architecture = "
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:303
+#: parduspackageinstaller/MainWindow.py:305
 msgid ", System Architecture = "
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:311
+#: parduspackageinstaller/MainWindow.py:314
 msgid "Uninstalling ..."
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:317
+#: parduspackageinstaller/MainWindow.py:320
 msgid " uninstalled"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:326
+#: parduspackageinstaller/MainWindow.py:329
 msgid "Reinstalling ..."
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:332
+#: parduspackageinstaller/MainWindow.py:335
 msgid " reinstalled"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:341
+#: parduspackageinstaller/MainWindow.py:344
 msgid "Downgrading ..."
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:347
+#: parduspackageinstaller/MainWindow.py:350
 msgid " downgraded"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:432
-#: parduspackageinstaller/MainWindow.py:455
+#: parduspackageinstaller/MainWindow.py:435
+#: parduspackageinstaller/MainWindow.py:458
 msgid "Downgrade"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:437
-#: parduspackageinstaller/MainWindow.py:460
+#: parduspackageinstaller/MainWindow.py:440
+#: parduspackageinstaller/MainWindow.py:463
 msgid "Reinstall"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:442
-#: parduspackageinstaller/MainWindow.py:465
+#: parduspackageinstaller/MainWindow.py:445
+#: parduspackageinstaller/MainWindow.py:468
 msgid "Upgrade"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:447
+#: parduspackageinstaller/MainWindow.py:450
 msgid "<b><span color='red'>Error ! </span></b>"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:559
+#: parduspackageinstaller/MainWindow.py:562
 msgid "Downloading dependencies : "
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:562
+#: parduspackageinstaller/MainWindow.py:565
 msgid "Controlling dependencies : "
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:585
+#: parduspackageinstaller/MainWindow.py:599
 msgid ""
 "Operation was successfully completed ! \n"
 " \n"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:587
+#: parduspackageinstaller/MainWindow.py:601
 msgid "<b>Completed !</b>"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:594
+#: parduspackageinstaller/MainWindow.py:608
 msgid "<b>Not Completed !</b>"
 msgstr ""
 
-#: parduspackageinstaller/MainWindow.py:597
-#: parduspackageinstaller/MainWindow.py:614
+#: parduspackageinstaller/MainWindow.py:611
+#: parduspackageinstaller/MainWindow.py:635
 msgid "<b><span color='red'>Connection Error !</span></b>"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:613
+msgid "<b><span color='red'>Dpkg Lock Error !</span></b>"
+msgstr ""
+
+#: parduspackageinstaller/MainWindow.py:615
+msgid "<b><span color='red'>Dpkg Interrupt Error !</span></b>"
 msgstr ""
