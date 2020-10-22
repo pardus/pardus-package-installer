@@ -36,6 +36,7 @@ class MainWindow:
         self.file = file
         self.notificationstate = True
         self.isinstalling = False
+        self.isbroken = False
 
         # Gtk Builder
         self.builder = Gtk.Builder()
@@ -60,6 +61,9 @@ class MainWindow:
 
         self.window.show_all()
 
+        if self.isbroken:
+            self.openBrokenDialog()
+
     def onClose(self, *args):
         if self.closestatus:
             self.cannotclose_dialog.run()
@@ -70,31 +74,40 @@ class MainWindow:
     def initialize(self):
         if self.file:
             self.debianpackage = os.path.abspath(sys.argv[1])
-            self.start(self.debianpackage)
-            self.label1.set_text(self.packagename)
-            self.versionlabel.set_text(" | " + self.packageversion)
-            self.label2.set_text(self.packagedescription)
-            self.maintainer.set_text(self.packagemaintainer)
-            self.priority.set_text(self.packagepriority)
-            self.section.set_text(self.packagesection)
-            self.size.set_text(self.packagesize + " KiB")
-            self.architecture.set_text(self.packagearchitecture)
+            if self.start(self.debianpackage):
+                self.label1.set_text(self.packagename)
+                self.versionlabel.set_text(" | " + self.packageversion)
+                self.label2.set_text(self.packagedescription)
+                self.maintainer.set_text(self.packagemaintainer)
+                self.priority.set_text(self.packagepriority)
+                self.section.set_text(self.packagesection)
+                self.size.set_text(self.packagesize + " KiB")
+                self.architecture.set_text(self.packagearchitecture)
 
-            if self.packagedepends != "":
-                pd = self.packagedepends.split(", ")
-                for p in pd:
-                    self.depends.get_buffer().insert(self.depends.get_buffer().get_end_iter(), p + "\n")
+                if self.packagedepends != "":
+                    pd = self.packagedepends.split(", ")
+                    for p in pd:
+                        self.depends.get_buffer().insert(self.depends.get_buffer().get_end_iter(), p + "\n")
 
-            if self.packagemissingdeps:
-                for pmd in self.packagemissingdeps:
-                    self.missingdeps.get_buffer().insert(self.missingdeps.get_buffer().get_end_iter(), pmd + "\n")
+                if self.packagemissingdeps:
+                    for pmd in self.packagemissingdeps:
+                        self.missingdeps.get_buffer().insert(self.missingdeps.get_buffer().get_end_iter(), pmd + "\n")
 
-            if self.firststatus != 0:
-                pkg = self.cache[self.packagename]
-                systemversion = str(pkg.installed).split("=")[1]
-                self.installed_version.set_text(systemversion)
+                if self.firststatus != 0:
+                    pkg = self.cache[self.packagename]
+                    systemversion = str(pkg.installed).split("=")[1]
+                    self.installed_version.set_text(systemversion)
 
-            self.packageMain(False, self.firststatus, self.packagefailure)
+                self.packageMain(False, self.firststatus, self.packagefailure)
+            else:
+                self.button1.set_sensitive(False)
+                self.button2.set_sensitive(False)
+                self.button1.set_label(_("Install"))
+                self.button2.set_label(_("Uninstall"))
+                self.label1.set_text("")
+                self.versionlabel.set_text("")
+                self.installed_version_title.set_text("")
+                self.installed_version.set_text("")
 
         else:
 
@@ -135,6 +148,7 @@ class MainWindow:
         self.selectbutton = self.builder.get_object("selectbutton")
         self.quitbutton = self.builder.get_object("quitbutton")
         self.aboutbutton = self.builder.get_object("aboutbutton")
+        self.broken_close_button = self.builder.get_object("broken_close_button")
 
         self.label1 = self.builder.get_object("label1")
         self.label2 = self.builder.get_object("label2")
@@ -171,65 +185,75 @@ class MainWindow:
 
         self.cannotclose_dialog = self.builder.get_object("cannotclose_dialog")
         self.about_dialog = self.builder.get_object("about_dialog")
+        self.broken_dialog = self.builder.get_object("broken_dialog")
 
     def start(self, debpackage):
 
-        self.updateCache()
+        if self.updateCache():
 
-        self.package = aptdeb.DebPackage(debpackage)
+            self.package = aptdeb.DebPackage(debpackage)
 
-        self.packagename = self.package.pkgname
+            self.packagename = self.package.pkgname
 
-        self.firststatus = self.package.compare_to_version_in_cache()
+            self.firststatus = self.package.compare_to_version_in_cache()
 
-        self.installable = self.package.check()
+            self.installable = self.package.check()
 
-        try:
-            self.packageversion = self.package._sections["Version"]
-        except:
-            self.packageversion = _("Version is not avaible")
+            try:
+                self.packageversion = self.package._sections["Version"]
+            except:
+                self.packageversion = _("Version is not avaible")
 
-        try:
-            self.packagedescription = self.package._sections["Description"]
-        except:
-            self.packagedescription = _("Description is not avaible")
+            try:
+                self.packagedescription = self.package._sections["Description"]
+            except:
+                self.packagedescription = _("Description is not avaible")
 
-        try:
-            self.packagemaintainer = self.package._sections["Maintainer"]
-        except:
-            self.packagemaintainer = _("Maintainer is not avaible")
+            try:
+                self.packagemaintainer = self.package._sections["Maintainer"]
+            except:
+                self.packagemaintainer = _("Maintainer is not avaible")
 
-        try:
-            self.packagepriority = self.package._sections["Priority"]
-        except:
-            self.packagepriority = _("Priority is not avaible")
+            try:
+                self.packagepriority = self.package._sections["Priority"]
+            except:
+                self.packagepriority = _("Priority is not avaible")
 
-        try:
-            self.packagesection = self.package._sections["Section"]
-        except:
-            self.packagesection = _("Section is not avaible")
+            try:
+                self.packagesection = self.package._sections["Section"]
+            except:
+                self.packagesection = _("Section is not avaible")
 
-        try:
-            self.packagesize = self.package._sections["Installed-Size"]
-        except:
-            self.packagesize = _("Size is not avaible")
+            try:
+                self.packagesize = self.package._sections["Installed-Size"]
+            except:
+                self.packagesize = _("Size is not avaible")
 
-        try:
-            self.packagearchitecture = self.package._sections["Architecture"]
-        except:
-            self.packagearchitecture = _("Architecture is not avaible")
+            try:
+                self.packagearchitecture = self.package._sections["Architecture"]
+            except:
+                self.packagearchitecture = _("Architecture is not avaible")
 
-        try:
-            self.packagedepends = self.package._sections["Depends"]
-        except:
-            self.packagedepends = ""
+            try:
+                self.packagedepends = self.package._sections["Depends"]
+            except:
+                self.packagedepends = ""
 
-        self.packagemissingdeps = self.package.missing_deps
+            self.packagemissingdeps = self.package.missing_deps
 
-        self.packagefailure = self.package._failure_string
+            self.packagefailure = self.package._failure_string
+
+            return True
+
+        return False
 
     def updateCache(self):
         self.cache = apt.Cache()
+        if self.cache.broken_count > 0:
+            self.isbroken = True
+            return False
+        self.isbroken = False
+        return True
 
     def compareVersion(self):
         # VERSION_NEWER = 3
@@ -368,6 +392,19 @@ class MainWindow:
         self.about_dialog.run()
         self.about_dialog.hide()
 
+    def on_broken_close_button_clicked(self, button):
+        self.broken_dialog.hide()
+        self.window.get_application().quit()
+
+    def on_broken_dialog_delete_event(self, widget, event):
+        print("on_broken_dialog_delete_event")
+        self.broken_dialog.hide()
+        self.window.get_application().quit()
+
+    def openBrokenDialog(self):
+        self.broken_dialog.run()
+        self.broken_dialog.hide()
+
     def packageMain(self, actioned, status, packagefailure):
 
         if not "satisfiable" in packagefailure:
@@ -429,44 +466,54 @@ class MainWindow:
 
         self.stack1.set_visible_child_name("page0")
         self.debianpackage = path
-        self.start(self.debianpackage)
-        self.depends.get_buffer().delete(self.depends.get_buffer().get_start_iter(),
-                                         self.depends.get_buffer().get_end_iter())
-        self.missingdeps.get_buffer().delete(self.missingdeps.get_buffer().get_start_iter(),
-                                             self.missingdeps.get_buffer().get_end_iter())
+        if self.start(self.debianpackage):
+            self.depends.get_buffer().delete(self.depends.get_buffer().get_start_iter(),
+                                             self.depends.get_buffer().get_end_iter())
+            self.missingdeps.get_buffer().delete(self.missingdeps.get_buffer().get_start_iter(),
+                                                 self.missingdeps.get_buffer().get_end_iter())
 
-        if self.packagedepends != "":
-            pd = self.packagedepends.split(", ")
-            for p in pd:
-                self.depends.get_buffer().insert(self.depends.get_buffer().get_end_iter(), p + "\n")
+            if self.packagedepends != "":
+                pd = self.packagedepends.split(", ")
+                for p in pd:
+                    self.depends.get_buffer().insert(self.depends.get_buffer().get_end_iter(), p + "\n")
 
-        if self.packagemissingdeps:
-            for pmd in self.packagemissingdeps:
-                self.missingdeps.get_buffer().insert(self.missingdeps.get_buffer().get_end_iter(), pmd + "\n")
+            if self.packagemissingdeps:
+                for pmd in self.packagemissingdeps:
+                    self.missingdeps.get_buffer().insert(self.missingdeps.get_buffer().get_end_iter(), pmd + "\n")
 
-        self.label1.set_text(self.packagename)
-        self.versionlabel.set_text(" | " + self.packageversion)
-        self.label2.set_text(self.packagedescription)
-        self.progress.set_text("")
-        self.maintainer.set_text(self.packagemaintainer)
-        self.priority.set_text(self.packagepriority)
-        self.section.set_text(self.packagesection)
-        self.size.set_text(self.packagesize + " KiB")
-        self.architecture.set_text(self.packagearchitecture)
+            self.label1.set_text(self.packagename)
+            self.versionlabel.set_text(" | " + self.packageversion)
+            self.label2.set_text(self.packagedescription)
+            self.progress.set_text("")
+            self.maintainer.set_text(self.packagemaintainer)
+            self.priority.set_text(self.packagepriority)
+            self.section.set_text(self.packagesection)
+            self.size.set_text(self.packagesize + " KiB")
+            self.architecture.set_text(self.packagearchitecture)
 
-        if self.firststatus != 0:
-            pkg = self.cache[self.packagename]
-            systemversion = pkg.versions[0].version
-            self.installed_version_title.set_text(_("Installed Version : "))
-            self.installed_version.set_text(systemversion)
+            if self.firststatus != 0:
+                pkg = self.cache[self.packagename]
+                systemversion = pkg.versions[0].version
+                self.installed_version_title.set_text(_("Installed Version : "))
+                self.installed_version.set_text(systemversion)
+            else:
+                self.installed_version_title.set_text(_("Installed Version : "))
+                self.installed_version.set_text(_("Not installed"))
+
+            self.progressbar.set_show_text(False)
+            self.progressbar.set_fraction(0)
+
+            self.packageMain(False, self.firststatus, self.packagefailure)
         else:
-            self.installed_version_title.set_text(_("Installed Version : "))
-            self.installed_version.set_text(_("Not installed"))
-
-        self.progressbar.set_show_text(False)
-        self.progressbar.set_fraction(0)
-
-        self.packageMain(False, self.firststatus, self.packagefailure)
+            self.button1.set_sensitive(False)
+            self.button2.set_sensitive(False)
+            self.button1.set_label(_("Install"))
+            self.button2.set_label(_("Uninstall"))
+            self.label1.set_text("")
+            self.versionlabel.set_text("")
+            self.installed_version_title.set_text("")
+            self.installed_version.set_text("")
+            self.openBrokenDialog()
 
     def startProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
