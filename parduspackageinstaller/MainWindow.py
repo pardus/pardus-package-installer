@@ -636,7 +636,12 @@ class MainWindow:
         if self.isinstalling and self.status == 0 and retval == 0:
             print("connection lost")
             self.stack1.set_visible_child_name("page0")
-            self.progress.set_markup(_("<b><span color='red'>Connection Error !</span></b>"))
+            errormessage = _("<b><span color='red'>Connection Error !</span></b>")
+            if self.dpkglockerror:
+                errormessage = _("<b><span color='red'>Dpkg Lock Error !</span></b>")
+            elif self.dpkgconferror:
+                errormessage = _("<b><span color='red'>Dpkg Interrupt Error !</span></b>")
+            self.progress.set_markup(errormessage)
             if self.progressbar.get_show_text():
                 self.progressbar.set_show_text(False)
                 self.progressbar.set_fraction(0)
