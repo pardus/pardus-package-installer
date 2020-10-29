@@ -622,9 +622,6 @@ class MainWindow:
             if self.progressbar.get_show_text():
                 self.progressbar.set_show_text(False)
                 self.progressbar.set_fraction(0)
-            self.error = False
-            self.dpkglockerror = False
-            self.dpkgconferror = False
         self.updateCache()
         self.status = self.compareVersion()
         self.packagefailure = self.failureControl()
@@ -646,6 +643,9 @@ class MainWindow:
                 self.progressbar.set_show_text(False)
                 self.progressbar.set_fraction(0)
             self.notificationstate = False
+        self.error = False
+        self.dpkglockerror = False
+        self.dpkgconferror = False
         self.isinstalling = False
         self.notify()
 
