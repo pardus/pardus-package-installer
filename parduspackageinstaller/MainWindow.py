@@ -427,7 +427,7 @@ class MainWindow:
 
     def packageMain(self, actioned, status, packagefailure):
 
-        if not "satisfiable" in packagefailure:
+        if not packagefailure:
 
             if status == 0:
                 self.button1.set_sensitive(True)
