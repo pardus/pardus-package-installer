@@ -427,7 +427,7 @@ class MainWindow:
 
     def packageMain(self, actioned, status, packagefailure):
 
-        if not packagefailure:
+        if not packagefailure or "A later version is already installed" in packagefailure:
 
             if status == 0:
                 self.button1.set_sensitive(True)
