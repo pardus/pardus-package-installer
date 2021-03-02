@@ -21,7 +21,8 @@ data_files = [
     ("/usr/share/locale/tr/LC_MESSAGES", ["po/tr/pardus-package-installer.mo"]),
     ("/usr/share/pardus/pardus-package-installer", ["ui/MainWindow.glade", "icon.svg", "actions.py"]),
     ("/usr/bin", ["pardus-package-installer-action"]),
-    ("/usr/share/polkit-1/actions", ["tr.org.pardus.pkexec.pardus-package-installer.policy"])
+    ("/usr/share/polkit-1/actions", ["tr.org.pardus.pkexec.pardus-package-installer.policy"]),
+    ("/usr/share/icons/hicolor/scalable/apps/", ["pardus-package-installer.svg"])
 ]
 
 setup(

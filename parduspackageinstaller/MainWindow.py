@@ -149,7 +149,6 @@ class MainWindow:
         self.openbutton = self.builder.get_object("openbutton")
         self.filechooser = self.builder.get_object("filechooser")
         self.selectbutton = self.builder.get_object("selectbutton")
-        self.quitbutton = self.builder.get_object("quitbutton")
         self.aboutbutton = self.builder.get_object("aboutbutton")
         self.broken_close_button = self.builder.get_object("broken_close_button")
 
@@ -283,7 +282,6 @@ class MainWindow:
             self.button1.set_sensitive(False)
             self.button2.set_sensitive(False)
             self.openbutton.set_sensitive(False)
-            self.quitbutton.set_sensitive(False)
             self.closestatus = True
             if isupgrading:
                 self.notification = Notify.Notification.new(self.packagename + _(" upgraded"))
@@ -319,7 +317,6 @@ class MainWindow:
             self.button1.set_sensitive(False)
             self.button2.set_sensitive(False)
             self.openbutton.set_sensitive(False)
-            self.quitbutton.set_sensitive(False)
             self.closestatus = True
             self.notification = Notify.Notification.new(self.packagename + _(" uninstalled"))
             self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "remove", self.packagename]
@@ -334,7 +331,6 @@ class MainWindow:
         self.button1.set_sensitive(False)
         self.button2.set_sensitive(False)
         self.openbutton.set_sensitive(False)
-        self.quitbutton.set_sensitive(False)
         self.closestatus = True
         self.notification = Notify.Notification.new(self.packagename + _(" reinstalled"))
         self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "reinstall", self.debianpackage]
@@ -349,7 +345,6 @@ class MainWindow:
         self.button1.set_sensitive(False)
         self.button2.set_sensitive(False)
         self.openbutton.set_sensitive(False)
-        self.quitbutton.set_sensitive(False)
         self.closestatus = True
         self.notification = Notify.Notification.new(self.packagename + _(" downgraded"))
         self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "downgrade", self.debianpackage]
@@ -404,9 +399,6 @@ class MainWindow:
         self.filechooser.hide()
         self.fromFile(self.filename)
         print("Active Button Clicked")
-
-    def onQuitClicked(self, button):
-        self.window.get_application().quit()
 
     def onAboutClicked(self, button):
         self.about_dialog.run()
@@ -628,7 +620,6 @@ class MainWindow:
         self.packageMain(True, self.status, self.packagefailure)
         self.getInstalledVersion(self.status)
         self.openbutton.set_sensitive(True)
-        self.quitbutton.set_sensitive(True)
         self.closestatus = False
         if self.isinstalling and self.status == 0 and retval == 0:
             print("connection lost")
