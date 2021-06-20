@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 from setuptools import setup, find_packages, os
+from shutil import copyfile
 
 changelog = "debian/changelog"
 if os.path.exists(changelog):
@@ -15,6 +15,8 @@ if os.path.exists(changelog):
     f = open("parduspackageinstaller/Version.py", "w")
     f.write('version = "%s"\n' % version)
     f.close()
+
+copyfile("icon.svg", "pardus-package-installer.svg")
 
 data_files = [
     ("/usr/share/applications", ["tr.org.pardus.package-installer.desktop"]),
