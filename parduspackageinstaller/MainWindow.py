@@ -49,7 +49,7 @@ class MainWindow:
         self.window = self.builder.get_object("mainwindow")
         self.window.set_application(application)
         self.defineComponents()
-        self.controlDisplay()
+        # self.controlDisplay()
         self.initialize()
         self.donebutton.get_style_context().add_class("suggested-action")
         self.window.connect('delete_event', self.onClose)
