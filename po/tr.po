@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-13 18:51+0300\n"
-"PO-Revision-Date: 2021-12-13 18:52+0300\n"
+"POT-Creation-Date: 2021-12-14 01:46+0300\n"
+"PO-Revision-Date: 2021-12-14 01:47+0300\n"
 "Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
 "Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 3.38.0\n"
 
 #: ui/MainWindow.glade:11
@@ -31,7 +31,7 @@ msgstr "Deb paketlerini yönetin ve görüntüleyin"
 msgid "Fatih Altun"
 msgstr "Fatih Altun"
 
-#: ui/MainWindow.glade:52 ui/MainWindow.glade:933
+#: ui/MainWindow.glade:52 ui/MainWindow.glade:899
 msgid "Info"
 msgstr "Bilgi"
 
@@ -47,57 +47,57 @@ msgstr "Dosya Seç"
 msgid "Select"
 msgstr "Seç"
 
-#: ui/MainWindow.glade:191
+#: ui/MainWindow.glade:192
 msgid "Select a deb package to view. "
 msgstr "Görüntülemek için bir deb paketi seçin."
 
-#: ui/MainWindow.glade:201 ui/MainWindow.glade:1124
+#: ui/MainWindow.glade:202 ui/MainWindow.glade:1087
 msgid "Open"
 msgstr "Aç"
 
-#: ui/MainWindow.glade:247
+#: ui/MainWindow.glade:249
 msgid "Package Name"
 msgstr "Paket Adı"
 
-#: ui/MainWindow.glade:271
+#: ui/MainWindow.glade:273
 msgid "version"
 msgstr "versiyon"
 
-#: ui/MainWindow.glade:292
+#: ui/MainWindow.glade:294
 msgid "short description"
 msgstr "kısa açıklama"
 
-#: ui/MainWindow.glade:320
+#: ui/MainWindow.glade:322
 msgid "<small><span weight='light'>Installed Version :</span></small>"
 msgstr "<small><span weight='light'>Yüklü Versiyon :</span></small>"
 
-#: ui/MainWindow.glade:335
+#: ui/MainWindow.glade:337
 msgid "<small><span weight='light'>Not installed</span></small>"
 msgstr "<small><span weight='light'>Yüklü değil</span></small>"
 
-#: ui/MainWindow.glade:375 src/MainWindow.py:175 src/MainWindow.py:185
-#: src/MainWindow.py:531 src/MainWindow.py:556 src/MainWindow.py:600
+#: ui/MainWindow.glade:377 src/MainWindow.py:174 src/MainWindow.py:184
+#: src/MainWindow.py:534 src/MainWindow.py:559 src/MainWindow.py:602
 msgid "Install"
 msgstr "Yükle"
 
-#: ui/MainWindow.glade:392 src/MainWindow.py:176 src/MainWindow.py:186
-#: src/MainWindow.py:601
+#: ui/MainWindow.glade:394 src/MainWindow.py:175 src/MainWindow.py:185
+#: src/MainWindow.py:603
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: ui/MainWindow.glade:409
+#: ui/MainWindow.glade:411
 msgid "Details"
 msgstr "Detaylar"
 
-#: ui/MainWindow.glade:447
+#: ui/MainWindow.glade:450
 msgid "Done"
 msgstr "Kapat"
 
-#: ui/MainWindow.glade:514
+#: ui/MainWindow.glade:522
 msgid "Your system has broken dependencies."
 msgstr "Sisteminizde bozuk bağımlılıklar var."
 
-#: ui/MainWindow.glade:533
+#: ui/MainWindow.glade:541
 msgid ""
 "This application can not continue until this is fixed.\n"
 "To fix it run\n"
@@ -109,132 +109,132 @@ msgstr ""
 "<b>sudo apt install --fix-broken</b>\n"
 "komutunu deneyebilirsiniz."
 
-#: ui/MainWindow.glade:646 ui/MainWindow.glade:698 ui/MainWindow.glade:750
-#: ui/MainWindow.glade:804 ui/MainWindow.glade:856 ui/MainWindow.glade:908
+#: ui/MainWindow.glade:667 ui/MainWindow.glade:708 ui/MainWindow.glade:749
+#: ui/MainWindow.glade:792 ui/MainWindow.glade:833 ui/MainWindow.glade:874
 msgid "-"
 msgstr "-"
 
-#: ui/MainWindow.glade:964
+#: ui/MainWindow.glade:930
 msgid "Dependency List"
 msgstr "Bağımlılık Listesi"
 
-#: ui/MainWindow.glade:1003
+#: ui/MainWindow.glade:969
 msgid "Packages to install"
-msgstr "Yüklenecek Bağımlılıklar"
+msgstr "Yüklenecek Paketler"
 
-#: ui/MainWindow.glade:1047
+#: ui/MainWindow.glade:1010
 msgid "Dependencies"
 msgstr "Bağımlılıklar"
 
-#: ui/MainWindow.glade:1091
+#: ui/MainWindow.glade:1054
 msgid "TÜBİTAK ULAKBİM | 2021"
 msgstr "TÜBİTAK ULAKBİM | 2021"
 
-#: ui/MainWindow.glade:1115
+#: ui/MainWindow.glade:1078 src/MainWindow.py:67
 msgid "Pardus Package Installer"
 msgstr "Pardus Paket Kurucu"
 
-#: src/MainWindow.py:148 src/MainWindow.py:152
+#: src/MainWindow.py:149 src/MainWindow.py:153
 msgid "Installed Version :"
 msgstr "Yüklü Versiyon :"
 
-#: src/MainWindow.py:154 src/MainWindow.py:583
+#: src/MainWindow.py:155 src/MainWindow.py:586
 msgid "Not installed"
 msgstr "Yüklü değil"
 
-#: src/MainWindow.py:383
+#: src/MainWindow.py:388
 msgid " upgraded"
 msgstr " versiyon yükseltildi"
 
-#: src/MainWindow.py:385
+#: src/MainWindow.py:390
 msgid " installed"
 msgstr " yüklendi"
 
-#: src/MainWindow.py:405
+#: src/MainWindow.py:409
 msgid "Package Architecture Error"
 msgstr "Paket Mimarisi Hatası"
 
-#: src/MainWindow.py:405
+#: src/MainWindow.py:409
 msgid "System"
 msgstr "Sistem"
 
-#: src/MainWindow.py:405
+#: src/MainWindow.py:409
 msgid "Package"
 msgstr "Paket"
 
-#: src/MainWindow.py:417
+#: src/MainWindow.py:421
 msgid " uninstalled"
 msgstr " kaldırıldı"
 
-#: src/MainWindow.py:429
+#: src/MainWindow.py:433
 msgid " reinstalled"
 msgstr " tekrar yüklendi"
 
-#: src/MainWindow.py:441
+#: src/MainWindow.py:445
 msgid " downgraded"
 msgstr " versiyon düşürüldü"
 
-#: src/MainWindow.py:457
+#: src/MainWindow.py:461
 msgid "Installing"
 msgstr "Yükleniyor"
 
-#: src/MainWindow.py:461
+#: src/MainWindow.py:465
 msgid "Downgrading"
 msgstr "Versiyon Düşürülüyor"
 
-#: src/MainWindow.py:466
+#: src/MainWindow.py:470
 msgid "Reinstalling"
 msgstr "Tekrar Yükleniyor"
 
-#: src/MainWindow.py:471
+#: src/MainWindow.py:475
 msgid "Upgrading"
 msgstr "Versiyon Yükseltiliyor"
 
-#: src/MainWindow.py:477
+#: src/MainWindow.py:480
 msgid "Uninstalling"
 msgstr "Kaldırılıyor"
 
-#: src/MainWindow.py:520
+#: src/MainWindow.py:523
 msgid "Show Details"
 msgstr "Detayları Göster"
 
-#: src/MainWindow.py:523
+#: src/MainWindow.py:526
 msgid "Hide Details"
 msgstr "Detayları Gizle"
 
-#: src/MainWindow.py:536 src/MainWindow.py:561
+#: src/MainWindow.py:539 src/MainWindow.py:564
 msgid "Downgrade"
 msgstr "Versiyon Düşür"
 
-#: src/MainWindow.py:541 src/MainWindow.py:566
+#: src/MainWindow.py:544 src/MainWindow.py:569
 msgid "Reinstall"
 msgstr "Tekrar Yükle"
 
-#: src/MainWindow.py:546 src/MainWindow.py:571
+#: src/MainWindow.py:549 src/MainWindow.py:574
 msgid "Upgrade"
 msgstr "Versiyon Yükselt"
 
-#: src/MainWindow.py:553
+#: src/MainWindow.py:556
 msgid "Error !"
 msgstr "Hata !"
 
-#: src/MainWindow.py:666
+#: src/MainWindow.py:668
 msgid "Not Completed !"
 msgstr "Tamamlanamadı !"
 
-#: src/MainWindow.py:669 src/MainWindow.py:689
+#: src/MainWindow.py:671 src/MainWindow.py:691
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr "<b><span color='red'>Bağlantı Hatası !</span></b>"
 
-#: src/MainWindow.py:671 src/MainWindow.py:691
+#: src/MainWindow.py:673 src/MainWindow.py:693
 msgid "<b><span color='red'>Dpkg Lock Error !</span></b>"
 msgstr "<b><span color='red'>Dpkg Kilitleme Hatası !</span></b>"
 
-#: src/MainWindow.py:673 src/MainWindow.py:693
+#: src/MainWindow.py:675 src/MainWindow.py:695
 msgid "<b><span color='red'>Dpkg Interrupt Error !</span></b>"
 msgstr "<b><span color='red'>Dpkg Kesinti Hatası !</span></b>"
 
-#: src/MainWindow.py:701
+#: src/MainWindow.py:703
 msgid ""
 "Only one software management tool is allowed to run at the same time.\n"
 "Please close the other application\n"
