@@ -2,100 +2,98 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# Fatih Altun <fatih.altun@pardus.org.tr>, 2020-2021.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-13 18:51+0300\n"
-"PO-Revision-Date: 2021-12-13 18:52+0300\n"
-"Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
-"Language-Team: Turkish <gelistirici@pardus.org.tr>\n"
-"Language: tr\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Gtranslator 3.38.0\n"
 
 #: ui/MainWindow.glade:11
 msgid "© 2021 Pardus"
-msgstr "© 2021 Pardus"
+msgstr ""
 
 #: ui/MainWindow.glade:12
 msgid "Manage and view .deb packages"
-msgstr "Deb paketlerini yönetin ve görüntüleyin"
+msgstr ""
 
 #: ui/MainWindow.glade:15
 msgid "Fatih Altun"
-msgstr "Fatih Altun"
+msgstr ""
 
 #: ui/MainWindow.glade:52 ui/MainWindow.glade:933
 msgid "Info"
-msgstr "Bilgi"
+msgstr ""
 
 #: ui/MainWindow.glade:53
 msgid "You cannot close the application while the process is continuing."
-msgstr "İşlem devam ederken uygulamayı kapatamazsınız."
+msgstr ""
 
 #: ui/MainWindow.glade:122
 msgid "Select File"
-msgstr "Dosya Seç"
+msgstr ""
 
 #: ui/MainWindow.glade:126
 msgid "Select"
-msgstr "Seç"
+msgstr ""
 
 #: ui/MainWindow.glade:191
 msgid "Select a deb package to view. "
-msgstr "Görüntülemek için bir deb paketi seçin."
+msgstr ""
 
 #: ui/MainWindow.glade:201 ui/MainWindow.glade:1124
 msgid "Open"
-msgstr "Aç"
+msgstr ""
 
 #: ui/MainWindow.glade:247
 msgid "Package Name"
-msgstr "Paket Adı"
+msgstr ""
 
 #: ui/MainWindow.glade:271
 msgid "version"
-msgstr "versiyon"
+msgstr ""
 
 #: ui/MainWindow.glade:292
 msgid "short description"
-msgstr "kısa açıklama"
+msgstr ""
 
 #: ui/MainWindow.glade:320
 msgid "<small><span weight='light'>Installed Version :</span></small>"
-msgstr "<small><span weight='light'>Yüklü Versiyon :</span></small>"
+msgstr ""
 
 #: ui/MainWindow.glade:335
 msgid "<small><span weight='light'>Not installed</span></small>"
-msgstr "<small><span weight='light'>Yüklü değil</span></small>"
+msgstr ""
 
 #: ui/MainWindow.glade:375 src/MainWindow.py:175 src/MainWindow.py:185
 #: src/MainWindow.py:531 src/MainWindow.py:556 src/MainWindow.py:600
 msgid "Install"
-msgstr "Yükle"
+msgstr ""
 
 #: ui/MainWindow.glade:392 src/MainWindow.py:176 src/MainWindow.py:186
 #: src/MainWindow.py:601
 msgid "Uninstall"
-msgstr "Kaldır"
+msgstr ""
 
 #: ui/MainWindow.glade:409
 msgid "Details"
-msgstr "Detaylar"
+msgstr ""
 
 #: ui/MainWindow.glade:447
 msgid "Done"
-msgstr "Kapat"
+msgstr ""
 
 #: ui/MainWindow.glade:514
 msgid "Your system has broken dependencies."
-msgstr "Sisteminizde bozuk bağımlılıklar var."
+msgstr ""
 
 #: ui/MainWindow.glade:533
 msgid ""
@@ -104,135 +102,131 @@ msgid ""
 "<b>sudo apt install --fix-broken</b>\n"
 "in a terminal window."
 msgstr ""
-"Bu uygulama bu sorun düzeltilinceye kadar devam edemez.\n"
-"Sorunu düzeltmek için uçbirim penceresinde\n"
-"<b>sudo apt install --fix-broken</b>\n"
-"komutunu deneyebilirsiniz."
 
 #: ui/MainWindow.glade:646 ui/MainWindow.glade:698 ui/MainWindow.glade:750
 #: ui/MainWindow.glade:804 ui/MainWindow.glade:856 ui/MainWindow.glade:908
 msgid "-"
-msgstr "-"
+msgstr ""
 
 #: ui/MainWindow.glade:964
 msgid "Dependency List"
-msgstr "Bağımlılık Listesi"
+msgstr ""
 
 #: ui/MainWindow.glade:1003
 msgid "Packages to install"
-msgstr "Yüklenecek Bağımlılıklar"
+msgstr ""
 
 #: ui/MainWindow.glade:1047
 msgid "Dependencies"
-msgstr "Bağımlılıklar"
+msgstr ""
 
 #: ui/MainWindow.glade:1091
 msgid "TÜBİTAK ULAKBİM | 2021"
-msgstr "TÜBİTAK ULAKBİM | 2021"
+msgstr ""
 
 #: ui/MainWindow.glade:1115
 msgid "Pardus Package Installer"
-msgstr "Pardus Paket Kurucu"
+msgstr ""
 
 #: src/MainWindow.py:148 src/MainWindow.py:152
 msgid "Installed Version :"
-msgstr "Yüklü Versiyon :"
+msgstr ""
 
 #: src/MainWindow.py:154 src/MainWindow.py:583
 msgid "Not installed"
-msgstr "Yüklü değil"
+msgstr ""
 
 #: src/MainWindow.py:383
 msgid " upgraded"
-msgstr " versiyon yükseltildi"
+msgstr ""
 
 #: src/MainWindow.py:385
 msgid " installed"
-msgstr " yüklendi"
+msgstr ""
 
 #: src/MainWindow.py:405
 msgid "Package Architecture Error"
-msgstr "Paket Mimarisi Hatası"
+msgstr ""
 
 #: src/MainWindow.py:405
 msgid "System"
-msgstr "Sistem"
+msgstr ""
 
 #: src/MainWindow.py:405
 msgid "Package"
-msgstr "Paket"
+msgstr ""
 
 #: src/MainWindow.py:417
 msgid " uninstalled"
-msgstr " kaldırıldı"
+msgstr ""
 
 #: src/MainWindow.py:429
 msgid " reinstalled"
-msgstr " tekrar yüklendi"
+msgstr ""
 
 #: src/MainWindow.py:441
 msgid " downgraded"
-msgstr " versiyon düşürüldü"
+msgstr ""
 
 #: src/MainWindow.py:457
 msgid "Installing"
-msgstr "Yükleniyor"
+msgstr ""
 
 #: src/MainWindow.py:461
 msgid "Downgrading"
-msgstr "Versiyon Düşürülüyor"
+msgstr ""
 
 #: src/MainWindow.py:466
 msgid "Reinstalling"
-msgstr "Tekrar Yükleniyor"
+msgstr ""
 
 #: src/MainWindow.py:471
 msgid "Upgrading"
-msgstr "Versiyon Yükseltiliyor"
+msgstr ""
 
 #: src/MainWindow.py:477
 msgid "Uninstalling"
-msgstr "Kaldırılıyor"
+msgstr ""
 
 #: src/MainWindow.py:520
 msgid "Show Details"
-msgstr "Detayları Göster"
+msgstr ""
 
 #: src/MainWindow.py:523
 msgid "Hide Details"
-msgstr "Detayları Gizle"
+msgstr ""
 
 #: src/MainWindow.py:536 src/MainWindow.py:561
 msgid "Downgrade"
-msgstr "Versiyon Düşür"
+msgstr ""
 
 #: src/MainWindow.py:541 src/MainWindow.py:566
 msgid "Reinstall"
-msgstr "Tekrar Yükle"
+msgstr ""
 
 #: src/MainWindow.py:546 src/MainWindow.py:571
 msgid "Upgrade"
-msgstr "Versiyon Yükselt"
+msgstr ""
 
 #: src/MainWindow.py:553
 msgid "Error !"
-msgstr "Hata !"
+msgstr ""
 
 #: src/MainWindow.py:666
 msgid "Not Completed !"
-msgstr "Tamamlanamadı !"
+msgstr ""
 
 #: src/MainWindow.py:669 src/MainWindow.py:689
 msgid "<b><span color='red'>Connection Error !</span></b>"
-msgstr "<b><span color='red'>Bağlantı Hatası !</span></b>"
+msgstr ""
 
 #: src/MainWindow.py:671 src/MainWindow.py:691
 msgid "<b><span color='red'>Dpkg Lock Error !</span></b>"
-msgstr "<b><span color='red'>Dpkg Kilitleme Hatası !</span></b>"
+msgstr ""
 
 #: src/MainWindow.py:673 src/MainWindow.py:693
 msgid "<b><span color='red'>Dpkg Interrupt Error !</span></b>"
-msgstr "<b><span color='red'>Dpkg Kesinti Hatası !</span></b>"
+msgstr ""
 
 #: src/MainWindow.py:701
 msgid ""
@@ -240,85 +234,3 @@ msgid ""
 "Please close the other application\n"
 "e.g. 'Update Manager', 'aptitude' or 'Synaptic' first."
 msgstr ""
-"Aynı anda yalnızca tek bir paket yöneticisi çalışabilir.\n"
-"Lütfen önce diğer uygulamayı,\n"
-"ör. 'Güncelleştirme Yöneticisi', 'aptitude' ya da 'Synaptic'i kapatın."
-
-#~ msgid "Website"
-#~ msgstr "Web sitesi"
-
-#~ msgid "Size :"
-#~ msgstr "Boyut :"
-
-#~ msgid "Section :"
-#~ msgstr "Bölüm :"
-
-#~ msgid "Priority :"
-#~ msgstr "Öncelik :"
-
-#~ msgid "Maintainer :"
-#~ msgstr "Bakımcı :"
-
-#~ msgid "Package Depends"
-#~ msgstr "Paket Bağımlılıkları"
-
-#~ msgid "page0"
-#~ msgstr "page0"
-
-#~ msgid "page1"
-#~ msgstr "page1"
-
-#~ msgid "Version is not avaible"
-#~ msgstr "Versiyon bilgisi eksik"
-
-#~ msgid "Description is not avaible"
-#~ msgstr "Açıklama bilgisi eksik"
-
-#~ msgid "Maintainer is not avaible"
-#~ msgstr "Bakımcı bilgisi eksik"
-
-#~ msgid "Priority is not avaible"
-#~ msgstr "Öncelik bilgisi eksik"
-
-#~ msgid "Section is not avaible"
-#~ msgstr "Bölüm bilgisi eksik"
-
-#~ msgid "Size is not avaible"
-#~ msgstr "Boyut bilgisi eksik"
-
-#~ msgid "Architecture is not avaible"
-#~ msgstr "Mimari bilgisi eksik"
-
-#~ msgid "<b><span color='red'>Error :</span> Package Architecture = "
-#~ msgstr "<b><span color='red'>Hata :</span> Paket Mimarisi = "
-
-#~ msgid ", System Architecture = "
-#~ msgstr ", Sistem Mimarisi = "
-
-#~ msgid "<b><span color='red'>Error ! </span></b>"
-#~ msgstr "<b><span color='red'>Hata ! </span></b>"
-
-#~ msgid "Downloading dependencies : "
-#~ msgstr "Bağımlılıklar indiriliyor : "
-
-#~ msgid "Controlling dependencies : "
-#~ msgstr "Bağımlılıklar kontrol ediliyor : "
-
-#~ msgid ""
-#~ "Operation was successfully completed ! \n"
-#~ " \n"
-#~ msgstr ""
-#~ "İşlem Başarıyla Tamamlandı ! \n"
-#~ " \n"
-
-#~ msgid "<b>Completed !</b>"
-#~ msgstr "<b>Tamamlandı !</b>"
-
-#~ msgid "_File"
-#~ msgstr "_Dosya"
-
-#~ msgid "_Help"
-#~ msgstr "_Yardım"
-
-#~ msgid "Package Progress"
-#~ msgstr "Paket İşleme Ayrıntıları"

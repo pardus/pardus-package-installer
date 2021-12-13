@@ -5,6 +5,8 @@ Created on Fri Jan 24 14:58:17 2020
 
 @author: fatih
 """
+import math
+import re
 
 import gi, apt, os, sys
 
@@ -24,8 +26,7 @@ from locale import gettext as _
 locale.bindtextdomain('pardus-package-installer', '/usr/share/locale')
 locale.textdomain('pardus-package-installer')
 
-
-class MainWindow:
+class MainWindow(object):
     def __init__(self, application, file):
 
         self.closestatus = False
@@ -42,16 +43,17 @@ class MainWindow:
         self.isbroken = False
 
         # Gtk Builder
-        self.builder = Gtk.Builder()
-        self.builder.add_from_file("/usr/share/pardus/pardus-package-installer/MainWindow.glade")
-        self.builder.connect_signals(self)
+        self.MainWindowUIFileName = os.path.dirname(os.path.abspath(__file__)) + "/../ui/MainWindow.glade"
+        try:
+            self.builder = Gtk.Builder.new_from_file(self.MainWindowUIFileName)
+            self.builder.connect_signals(self)
+        except GObject.GError:
+            print("Error reading GUI file: " + self.MainWindowUIFileName)
+            raise
 
         self.window = self.builder.get_object("mainwindow")
         self.window.set_application(application)
         self.defineComponents()
-        # self.controlDisplay()
-        self.initialize()
-        self.donebutton.get_style_context().add_class("suggested-action")
         self.window.connect('delete_event', self.onClose)
 
         # Set version
@@ -67,6 +69,14 @@ class MainWindow:
         if self.isbroken:
             self.openBrokenDialog()
 
+        self.openbutton.set_visible(False)
+        # self.headerseperator.set_visible(False)
+        self.progstack.set_visible(False)
+        self.errorlabel.set_visible(False)
+        self.BrokenBox.set_visible(False)
+
+        self.initialize()
+
     def onClose(self, *args):
         if self.closestatus:
             self.cannotclose_dialog.run()
@@ -74,32 +84,89 @@ class MainWindow:
             return True
         return self.closestatus
 
+    def setLabels(self):
+
+        self.depends.set_text("")
+        self.missingdeps.set_text("")
+        self.mainstack.set_visible_child_name("package")
+        self.progstack.set_visible(False)
+        self.doneinfolabel.set_text("")
+
+        self.pacname.set_markup("<span size='x-large'><b>{}</b></span>".format(self.packagename))
+        self.pacversion.set_markup("<small>{}</small>".format(GLib.markup_escape_text(self.packageversion, -1)))
+        self.shortdesc.set_markup("<small>{}</small>".format(GLib.markup_escape_text(self.packageshortdescription, -1)))
+        self.shortdesc.set_tooltip_text("{}".format(self.packagedescription))
+
+        self.maintainername.set_text(self.packagemaintainername)
+
+        if self.packagemaintainermail != "-":
+            self.maintainermail.set_markup("<a title='{}' href='mailto:{}'>{}</a>".format(
+                GLib.markup_escape_text(self.packagemaintainermail, -1),
+                GLib.markup_escape_text(self.packagemaintainermail, -1),
+                GLib.markup_escape_text(self.packagemaintainermail, -1)))
+        else:
+            self.maintainermail.set_text(self.packagemaintainermail)
+
+        if self.packagehomepage != "-":
+            self.homepage.set_markup("<a title='{}' href='{}'>{}</a>".format(
+                GLib.markup_escape_text(self.packagehomepage, -1),
+                GLib.markup_escape_text(self.packagehomepage, -1),
+                GLib.markup_escape_text(self.packagehomepage, -1)))
+        else:
+            self.homepage.set_text(self.packagehomepage)
+
+        self.section.set_text(self.packagesection)
+
+        if self.packagesize != "-":
+            self.size.set_text(self.packagesize + " KiB")
+        else:
+            self.size.set_text(self.packagesize)
+
+        self.architecture.set_text(self.packagearchitecture)
+
+        try:
+            pd = re.split('\||, ', self.packagedepends)
+            lenpd = len(pd)
+            for i in range(0, lenpd):
+                if pd[i][0] == " ":
+                    pd[i] = "|" + pd[i].strip()
+            pd = "\n\n".join(pd)
+
+        except Exception as e:
+            print("{}".format(e))
+            pd = ""
+        self.depends.set_markup("<small>{}</small>".format(GLib.markup_escape_text(pd, -1)))
+
+        if self.packagemissingdeps:
+            self.missingdeps.set_markup("<span size='smaller'>{}</span>".format(
+                GLib.markup_escape_text(self.packagemissingdeps, -1)))
+
+        if self.firststatus != 0:
+            pkg = self.cache[self.packagename]
+            systemversion = pkg.versions[0].version
+            self.installed_version_title.set_markup(
+                "<small><span weight='light'>{}</span></small>".format(_("Installed Version :")))
+            self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(systemversion))
+        else:
+            self.installed_version_title.set_markup(
+                "<small><span weight='light'>{}</span></small>".format(_("Installed Version :")))
+            self.installed_version.set_markup(
+                "<small><span weight='light'>{}</span></small>".format(_("Not installed")))
+
+        self.progressbar.set_show_text(False)
+        self.progressbar.set_fraction(0)
+
     def initialize(self):
         if self.file:
             self.debianpackage = os.path.abspath(sys.argv[1])
             if self.start(self.debianpackage):
-                self.label1.set_text(self.packagename)
-                self.versionlabel.set_text(" | " + self.packageversion)
-                self.label2.set_text(self.packagedescription)
-                self.maintainer.set_text(self.packagemaintainer)
-                self.priority.set_text(self.packagepriority)
-                self.section.set_text(self.packagesection)
-                self.size.set_text(self.packagesize + " KiB")
-                self.architecture.set_text(self.packagearchitecture)
+                self.openbutton.set_visible(True)
+                # self.headerseperator.set_visible(True)
+                self.mainstack.set_visible_child_name("package")
+                self.openbutton.set_visible(True)
+                # self.headerseperator.set_visible(True)
 
-                if self.packagedepends != "":
-                    pd = self.packagedepends.split(", ")
-                    for p in pd:
-                        self.depends.get_buffer().insert(self.depends.get_buffer().get_end_iter(), p + "\n")
-
-                if self.packagemissingdeps:
-                    for pmd in self.packagemissingdeps:
-                        self.missingdeps.get_buffer().insert(self.missingdeps.get_buffer().get_end_iter(), pmd + "\n")
-
-                if self.firststatus != 0:
-                    pkg = self.cache[self.packagename]
-                    systemversion = str(pkg.installed).split("=")[1]
-                    self.installed_version.set_text(systemversion)
+                self.setLabels()
 
                 self.packageMain(False, self.firststatus, self.packagefailure)
             else:
@@ -107,61 +174,43 @@ class MainWindow:
                 self.button2.set_sensitive(False)
                 self.button1.set_label(_("Install"))
                 self.button2.set_label(_("Uninstall"))
-                self.label1.set_text("")
-                self.versionlabel.set_text("")
+                self.pacname.set_text("")
+                self.pacversion.set_text("")
                 self.installed_version_title.set_text("")
                 self.installed_version.set_text("")
-
+                self.openBrokenDialog()
         else:
-
             self.button1.set_sensitive(False)
             self.button2.set_sensitive(False)
             self.button1.set_label(_("Install"))
             self.button2.set_label(_("Uninstall"))
-            self.label1.set_text("")
-            self.versionlabel.set_text("")
+            self.pacname.set_text("")
+            self.pacversion.set_text("")
             self.installed_version_title.set_text("")
             self.installed_version.set_text("")
-
-    def controlDisplay(self):
-        display = Gdk.Display.get_default()
-        monitor = display.get_primary_monitor()
-        geometry = monitor.get_geometry()
-        scale_factor = monitor.get_scale_factor()
-        width = scale_factor * geometry.width
-        height = scale_factor * geometry.height
-
-        if width <= 800 and height <= 600:
-            self.window.resize(400, 400)
-            self.descriptionscrolledwindow.set_min_content_height(50)
-            self.namegrid.set_margin_top(9)
-            self.namegrid.set_margin_bottom(9)
-            self.progress.set_margin_top(9)
-            self.progress.set_margin_bottom(9)
-            self.installedversiongrid.set_margin_top(9)
-            self.bottomseparator.set_margin_top(9)
-            self.bottomlabel.set_margin_top(5)
-            self.bottomlabel.set_margin_bottom(5)
 
     def defineComponents(self):
         self.button1 = self.builder.get_object("button1")
         self.button2 = self.builder.get_object("button2")
         self.openbutton = self.builder.get_object("openbutton")
+        self.headerseperator = self.builder.get_object("headerseperator")
         self.filechooser = self.builder.get_object("filechooser")
         self.selectbutton = self.builder.get_object("selectbutton")
         self.aboutbutton = self.builder.get_object("aboutbutton")
         self.broken_close_button = self.builder.get_object("broken_close_button")
 
-        self.label1 = self.builder.get_object("label1")
-        self.label2 = self.builder.get_object("label2")
-        self.versionlabel = self.builder.get_object("versionlabel")
+        self.pacname = self.builder.get_object("pacname")
+        self.shortdesc = self.builder.get_object("shortdesc")
+        self.pacversion = self.builder.get_object("pacversion")
         self.namegrid = self.builder.get_object("namegrid")
         self.installedversiongrid = self.builder.get_object("installedversiongrid")
         self.bottomseparator = self.builder.get_object("bottomseparator")
         self.bottomlabel = self.builder.get_object("bottomlabel")
+        self.errorlabel = self.builder.get_object("errorlabel")
 
-        self.maintainer = self.builder.get_object("maintainer")
-        self.priority = self.builder.get_object("priority")
+        self.maintainername = self.builder.get_object("maintainername")
+        self.maintainermail = self.builder.get_object("maintainermail")
+        self.homepage = self.builder.get_object("homepage")
         self.section = self.builder.get_object("section")
         self.size = self.builder.get_object("size")
         self.architecture = self.builder.get_object("architecture")
@@ -170,12 +219,19 @@ class MainWindow:
 
         self.spinner = self.builder.get_object("spinner")
         self.progress = self.builder.get_object("progress")
+
+        self.detailsbutton = self.builder.get_object("detailsbutton")
+        self.detailsrevealer = self.builder.get_object("detailsrevealer")
+
+        self.progstack = self.builder.get_object("progstack")
         self.progressbar = self.builder.get_object("progressbar")
+        self.donebutton = self.builder.get_object("donebutton")
+        self.doneinfolabel = self.builder.get_object("doneinfolabel")
 
         self.textview = self.builder.get_object("textview")
         self.descriptionscrolledwindow = self.builder.get_object("descriptionscrolledwindow")
         self.stack1 = self.builder.get_object("stack1")
-        self.donebutton = self.builder.get_object("donebutton")
+        self.mainstack = self.builder.get_object("mainstack")
 
         self.installicon = self.builder.get_object("install_icon")
         self.upgradeicon = self.builder.get_object("upgrade_icon")
@@ -185,11 +241,14 @@ class MainWindow:
         self.installed_version = self.builder.get_object("installed_version")
         self.installed_version_title = self.builder.get_object("installed_version_title")
 
+        self.BrokenBox = self.builder.get_object("BrokenBox")
         self.cannotclose_dialog = self.builder.get_object("cannotclose_dialog")
         self.about_dialog = self.builder.get_object("about_dialog")
-        self.broken_dialog = self.builder.get_object("broken_dialog")
 
     def start(self, debpackage):
+
+        self.errorlabel.set_visible(False)
+        self.errorlabel.set_text("")
 
         if self.updateCache():
 
@@ -204,46 +263,85 @@ class MainWindow:
             try:
                 self.packageversion = self.package._sections["Version"]
             except:
-                self.packageversion = _("Version is not avaible")
+                self.packageversion = "-"
 
             try:
                 self.packagedescription = self.package._sections["Description"]
             except:
-                self.packagedescription = _("Description is not avaible")
+                self.packagedescription = "-"
+
+            try:
+                self.packageshortdescription = self.package["Description"].split("\n")[0]
+                looplen = 0
+                pd = ""
+                if len(self.packageshortdescription) > 75:
+                    looplen = math.ceil(len(self.packageshortdescription) / 75)
+                    pd = "".join(self.packageshortdescription[:75])
+                    for ll in range(1, looplen):
+                        pd += "\n" + "".join(self.packageshortdescription[ll*75:(ll+1)*75])
+                    self.packageshortdescription = pd
+            except Exception as e:
+                print("{}".format(e))
+                self.packageshortdescription = ""
 
             try:
                 self.packagemaintainer = self.package._sections["Maintainer"]
             except:
-                self.packagemaintainer = _("Maintainer is not avaible")
+                self.packagemaintainer = "-"
 
             try:
-                self.packagepriority = self.package._sections["Priority"]
+                self.packagemaintainername = self.packagemaintainer.split(" <")[0]
             except:
-                self.packagepriority = _("Priority is not avaible")
+                self.packagemaintainername = "-"
+
+            try:
+                self.packagemaintainermail = self.packagemaintainer.split(" <")[1].replace(">", "")
+            except:
+                self.packagemaintainermail = "-"
+
+            try:
+                self.packagehomepage = self.package._sections["Homepage"]
+            except:
+                self.packagehomepage = "-"
 
             try:
                 self.packagesection = self.package._sections["Section"]
             except:
-                self.packagesection = _("Section is not avaible")
+                self.packagesection = "-"
 
             try:
                 self.packagesize = self.package._sections["Installed-Size"]
             except:
-                self.packagesize = _("Size is not avaible")
+                self.packagesize = "-"
 
             try:
                 self.packagearchitecture = self.package._sections["Architecture"]
             except:
-                self.packagearchitecture = _("Architecture is not avaible")
+                self.packagearchitecture = "-"
 
             try:
                 self.packagedepends = self.package._sections["Depends"]
             except:
                 self.packagedepends = ""
 
-            self.packagemissingdeps = self.package.missing_deps
+            try:
+                self.packagemissingdeps = "\n\n".join(self.package.missing_deps)
+            except:
+                self.packagemissingdeps = ""
 
             self.packagefailure = self.package._failure_string
+            try:
+                looplen = 0
+                pf = ""
+                if len(self.packagefailure) > 75:
+                    looplen = math.ceil(len(self.packagefailure) / 75)
+                    pf = "".join(self.packagefailure[:75])
+                    for pll in range(1, looplen):
+                        pf += "\n" + "".join(self.packagefailure[pll*75:(pll+1)*75])
+                    self.packagefailure = pf
+            except Exception as e:
+                print("{}".format(e))
+                self.packagefailure = self.package._failure_string
 
             return True
 
@@ -277,8 +375,6 @@ class MainWindow:
             self.isinstalling = True
             self.progressbar.set_show_text(False)
             self.progressbar.set_fraction(0)
-            self.spinner.start()
-            self.progress.set_text(_("Installing ..."))
             self.button1.set_sensitive(False)
             self.button2.set_sensitive(False)
             self.openbutton.set_sensitive(False)
@@ -287,7 +383,7 @@ class MainWindow:
                 self.notification = Notify.Notification.new(self.packagename + _(" upgraded"))
             else:
                 self.notification = Notify.Notification.new(self.packagename + _(" installed"))
-            self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "install",
+            self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "install",
                             self.debianpackage]
             self.pid = self.startProcess(self.command)
             print(self.pid)
@@ -303,92 +399,96 @@ class MainWindow:
                       + ", System Architecture = " + self.systemarchitecture)
                 self.button1.set_sensitive(False)
                 self.button2.set_sensitive(False)
-                self.progress.set_markup(_("<b><span color='red'>Error :</span> Package Architecture = ")
-                                         + self.packagearchitecture + _(", System Architecture = ")
-                                         + self.systemarchitecture + "</b>")
+                self.progstack.set_visible(True)
+                self.progstack.set_visible_child_name("doneinfo")
+                self.doneinfolabel.set_markup("<b><span color='red'>{}\n</span>{}:{}, {}:{}".format(
+                    _("Package Architecture Error"), _("System"), self.systemarchitecture, _("Package"),
+                    self.packagearchitecture ))
 
     def removePackage(self):
 
         if self.cache[self.packagename].is_installed:
             self.progressbar.set_show_text(False)
             self.progressbar.set_fraction(0)
-            self.spinner.start()
-            self.progress.set_text(_("Uninstalling ..."))
             self.button1.set_sensitive(False)
             self.button2.set_sensitive(False)
             self.openbutton.set_sensitive(False)
             self.closestatus = True
             self.notification = Notify.Notification.new(self.packagename + _(" uninstalled"))
-            self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "remove", self.packagename]
+            self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "remove", self.packagename]
             self.pid = self.startProcess(self.command)
             print(self.pid)
 
     def reinstallPackage(self):
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
-        self.spinner.start()
-        self.progress.set_text(_("Reinstalling ..."))
         self.button1.set_sensitive(False)
         self.button2.set_sensitive(False)
         self.openbutton.set_sensitive(False)
         self.closestatus = True
         self.notification = Notify.Notification.new(self.packagename + _(" reinstalled"))
-        self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "reinstall", self.debianpackage]
+        self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "reinstall", self.debianpackage]
         self.pid = self.startProcess(self.command)
         print(self.pid)
 
     def downgradePackage(self):
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
-        self.spinner.start()
-        self.progress.set_text(_("Downgrading ..."))
         self.button1.set_sensitive(False)
         self.button2.set_sensitive(False)
         self.openbutton.set_sensitive(False)
         self.closestatus = True
         self.notification = Notify.Notification.new(self.packagename + _(" downgraded"))
-        self.command = ["/usr/bin/pkexec", "/usr/bin/pardus-package-installer-action", "downgrade", self.debianpackage]
+        self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "downgrade", self.debianpackage]
         self.pid = self.startProcess(self.command)
         print(self.pid)
 
     def onDestroy(self, window):
         self.window.get_application().quit()
 
-    def onButton1Clicked(self, button):
-        self.stack1.set_visible_child_name("page0")
+    def on_button1_clicked(self, button):
         print("debianpackage = " + self.debianpackage)
         packagestatus = self.compareVersion()
+        self.progstack.set_visible(True)
+        self.progstack.set_visible_child_name("progress")
 
         if packagestatus == 0:
             print("Installing Button Clicked")
+            self.packageaction = _("Installing")
             self.installPackage(False)
 
         elif packagestatus == 1:
+            self.packageaction = _("Downgrading")
             print("Downgrading Button Clicked")
             self.downgradePackage()
 
         elif packagestatus == 2:
+            self.packageaction = _("Reinstalling")
             print("Reinstalling Button Clicked")
             self.reinstallPackage()
 
         elif packagestatus == 3:
+            self.packageaction = _("Upgrading")
             print("Upgrading Button Clicked")
             self.installPackage(True)
 
-    def onButton2Clicked(self, button):
-        self.stack1.set_visible_child_name("page0")
+    def on_button2_clicked(self, button):
+        # self.stack1.set_visible_child_name("page0")
+        self.packageaction = _("Uninstalling")
         print("Uninstalling Button Clicked")
+        self.progstack.set_visible(True)
+        self.progstack.set_visible_child_name("progress")
         self.removePackage()
 
-    def onDoneButtonClicked(self, button):
+    def on_donebutton_clicked(self, button):
         self.window.get_application().quit()
 
-    def onOpenClicked(self, button):
+    def on_openbutton_clicked(self, button):
         self.filechooser.run()
         self.filechooser.hide()
         print("Open Button Clicked")
 
-    def onSelectClicked(self, widget):
+    def on_selectbutton_clicked(self, widget):
         self.filename = self.filechooser.get_filename()
         self.filechooser.hide()
         self.fromFile(self.filename)
@@ -400,22 +500,27 @@ class MainWindow:
         self.fromFile(self.filename)
         print("Active Button Clicked")
 
-    def onAboutClicked(self, button):
+    def on_aboutbutton_clicked(self, button):
         self.about_dialog.run()
         self.about_dialog.hide()
 
-    def on_broken_close_button_clicked(self, button):
-        self.broken_dialog.hide()
-        self.window.get_application().quit()
-
-    def on_broken_dialog_delete_event(self, widget, event):
-        print("on_broken_dialog_delete_event")
-        self.broken_dialog.hide()
-        self.window.get_application().quit()
+    def on_detailsbutton_toggled(self, button):
+        if button.get_active():
+            self.detailsrevealer.set_reveal_child(True)
+        else:
+            self.detailsrevealer.set_reveal_child(False)
 
     def openBrokenDialog(self):
-        self.broken_dialog.run()
-        self.broken_dialog.hide()
+        self.BrokenBox.set_visible(True)
+        self.mainstack.set_visible_child_name("broken")
+
+    def on_detailsbutton_clicked(self, button):
+        if self.detailsrevealer.get_reveal_child():
+            self.detailsrevealer.set_reveal_child(False)
+            self.detailsbutton.set_label(_("Show Details"))
+        else:
+            self.detailsrevealer.set_reveal_child(True)
+            self.detailsbutton.set_label(_("Hide Details"))
 
     def packageMain(self, actioned, status, packagefailure):
 
@@ -443,7 +548,9 @@ class MainWindow:
                 self.button2.set_sensitive(True)
 
         else:
-            self.progress.set_markup(_("<b><span color='red'>Error ! </span></b>") + packagefailure)
+            self.errorlabel.set_visible(True)
+            self.errorlabel.set_markup("<b><span color='red'>{}</span></b>\n{}".format(
+                _("Error !"),  GLib.markup_escape_text(packagefailure, -1)))
             if status == 0:
                 self.button1.set_sensitive(False)
                 self.button1.set_label(_("Install"))
@@ -470,62 +577,35 @@ class MainWindow:
         if status != 0:
             pkg = self.cache[self.packagename]
             systemversion = str(pkg.installed).split("=")[1]
-            self.installed_version.set_text(systemversion)
+            self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(systemversion))
         else:
-            self.installed_version.set_text(_("Not installed"))
+            self.installed_version.set_markup(
+                "<small><span weight='light'>{}</span></small>".format(_("Not installed")))
 
     def fromFile(self, path):
 
-        self.stack1.set_visible_child_name("page0")
-        self.debianpackage = path
-        if self.start(self.debianpackage):
-            self.depends.get_buffer().delete(self.depends.get_buffer().get_start_iter(),
-                                             self.depends.get_buffer().get_end_iter())
-            self.missingdeps.get_buffer().delete(self.missingdeps.get_buffer().get_start_iter(),
-                                                 self.missingdeps.get_buffer().get_end_iter())
+        self.openbutton.set_visible(True)
+        # self.headerseperator.set_visible(True)
+        fileFormat = os.path.basename(path).split(".")[-1]
+        if fileFormat == "deb":
+            self.debianpackage = path
+            if self.start(self.debianpackage):
 
-            if self.packagedepends != "":
-                pd = self.packagedepends.split(", ")
-                for p in pd:
-                    self.depends.get_buffer().insert(self.depends.get_buffer().get_end_iter(), p + "\n")
+                self.setLabels()
 
-            if self.packagemissingdeps:
-                for pmd in self.packagemissingdeps:
-                    self.missingdeps.get_buffer().insert(self.missingdeps.get_buffer().get_end_iter(), pmd + "\n")
-
-            self.label1.set_text(self.packagename)
-            self.versionlabel.set_text(" | " + self.packageversion)
-            self.label2.set_text(self.packagedescription)
-            self.progress.set_text("")
-            self.maintainer.set_text(self.packagemaintainer)
-            self.priority.set_text(self.packagepriority)
-            self.section.set_text(self.packagesection)
-            self.size.set_text(self.packagesize + " KiB")
-            self.architecture.set_text(self.packagearchitecture)
-
-            if self.firststatus != 0:
-                pkg = self.cache[self.packagename]
-                systemversion = pkg.versions[0].version
-                self.installed_version_title.set_text(_("Installed Version : "))
-                self.installed_version.set_text(systemversion)
+                self.packageMain(False, self.firststatus, self.packagefailure)
             else:
-                self.installed_version_title.set_text(_("Installed Version : "))
-                self.installed_version.set_text(_("Not installed"))
-
-            self.progressbar.set_show_text(False)
-            self.progressbar.set_fraction(0)
-
-            self.packageMain(False, self.firststatus, self.packagefailure)
+                self.button1.set_sensitive(False)
+                self.button2.set_sensitive(False)
+                self.button1.set_label(_("Install"))
+                self.button2.set_label(_("Uninstall"))
+                self.pacname.set_text("")
+                self.pacversion.set_text("")
+                self.installed_version_title.set_text("")
+                self.installed_version.set_text("")
+                self.openBrokenDialog()
         else:
-            self.button1.set_sensitive(False)
-            self.button2.set_sensitive(False)
-            self.button1.set_label(_("Install"))
-            self.button2.set_label(_("Uninstall"))
-            self.label1.set_text("")
-            self.versionlabel.set_text("")
-            self.installed_version_title.set_text("")
-            self.installed_version.set_text("")
-            self.openBrokenDialog()
+            print("Only .deb files.")
 
     def startProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
@@ -539,9 +619,7 @@ class MainWindow:
     def onProcessStdout(self, source, condition):
         if condition == GLib.IO_HUP:
             return False
-        self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), source.readline())
-        self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
-
+        source.readline()
         return True
 
     def onProcessStderr(self, source, condition):
@@ -549,59 +627,43 @@ class MainWindow:
             return False
         line = source.readline()
         if line is not None:
-            print("Error : " + line)
+            print(line)
             if "dlstatus" in line:
                 percent = line.split(":")[2].split(".")[0]
                 self.progressbar.set_show_text(True)
-                if self.packagemissingdeps:
-                    print("Downloading dependencies " + percent + " %")
-                    self.progressbar.set_text(_("Downloading dependencies : ") + percent + " %")
-                else:
-                    print("Controlling dependencies : " + percent + " %")
-                    self.progressbar.set_text(_("Controlling dependencies : ") + percent + " %")
+                self.progressbar.set_text("{} %".format(percent))
                 self.progressbar.set_fraction(int(percent) / 100)
             elif "pmstatus" in line:
                 percent = line.split(":")[2].split(".")[0]
-                print("Processing : " + percent)
                 self.progressbar.set_show_text(True)
-                self.progressbar.set_text((self.progress.get_text()).split("...")[0] + ": " + percent + " %")
+                self.progressbar.set_text("{} {} %".format(self.packageaction, percent))
+                self.progressbar.set_text("{} {} %".format(self.packageaction, percent))
                 self.progressbar.set_fraction(int(percent) / 100)
             elif "E:" in line and ".deb" in line:
                 print("connection error")
                 self.error = True
-                self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
-                self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
             elif "E:" in line and "dpkg --configure -a" in line:
                 print("dpkg --configure -a error")
                 self.error = True
                 self.dpkgconferror = True
-                self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
-                self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
             elif "E:" in line and "/var/lib/dpkg/lock-frontend" in line:
                 print("/var/lib/dpkg/lock-frontend error")
                 self.error = True
                 self.dpkglockerror = True
-                self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
-                self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
         return True
 
     def onProcessExit(self, pid, retval):
-        self.spinner.stop()
-        self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
         print("Done. exit code: %s" % (retval))
         if self.error is False:
             if retval == 0:
-                self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(),
-                                                  (_("Operation was successfully completed ! \n \n")))
-                self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
-                self.progress.set_markup(_("<b>Completed !</b>"))
                 self.notificationstate = True
-                self.stack1.set_visible_child_name("page1")
                 if self.progressbar.get_show_text():
                     self.progressbar.set_text("100 %")
                     self.progressbar.set_fraction(1)
+                self.progstack.set_visible_child_name("done")
             else:
-                self.progress.set_markup(_("<b>Not Completed !</b>"))
+                self.progstack.set_visible_child_name("doneinfo")
+                self.doneinfolabel.set_markup("<b>{}</b>".format(_("Not Completed !")))
                 self.notificationstate = False
         else:
             errormessage = _("<b><span color='red'>Connection Error !</span></b>")
@@ -609,11 +671,12 @@ class MainWindow:
                 errormessage = _("<b><span color='red'>Dpkg Lock Error !</span></b>")
             elif self.dpkgconferror:
                 errormessage = _("<b><span color='red'>Dpkg Interrupt Error !</span></b>")
-            self.progress.set_markup(errormessage)
+            self.doneinfolabel.set_markup(errormessage)
             self.notificationstate = False
             if self.progressbar.get_show_text():
                 self.progressbar.set_show_text(False)
                 self.progressbar.set_fraction(0)
+            self.progstack.set_visible_child_name("doneinfo")
         self.updateCache()
         self.status = self.compareVersion()
         self.packagefailure = self.failureControl()
@@ -623,16 +686,25 @@ class MainWindow:
         self.closestatus = False
         if self.isinstalling and self.status == 0 and retval == 0:
             print("connection lost")
-            self.stack1.set_visible_child_name("page0")
             errormessage = _("<b><span color='red'>Connection Error !</span></b>")
             if self.dpkglockerror:
                 errormessage = _("<b><span color='red'>Dpkg Lock Error !</span></b>")
             elif self.dpkgconferror:
                 errormessage = _("<b><span color='red'>Dpkg Interrupt Error !</span></b>")
-            self.progress.set_markup(errormessage)
+            self.doneinfolabel.set_markup(errormessage)
             if self.progressbar.get_show_text():
                 self.progressbar.set_show_text(False)
                 self.progressbar.set_fraction(0)
+            self.progstack.set_visible_child_name("doneinfo")
+            self.notificationstate = False
+        if retval == 256:
+            errormessage = _("Only one software management tool is allowed to run at the same time.\n"
+                                  "Please close the other application\ne.g. 'Update Manager', 'aptitude' or 'Synaptic' first.")
+            self.doneinfolabel.set_markup(errormessage)
+            if self.progressbar.get_show_text():
+                self.progressbar.set_show_text(False)
+                self.progressbar.set_fraction(0)
+            self.progstack.set_visible_child_name("doneinfo")
             self.notificationstate = False
         self.error = False
         self.dpkglockerror = False

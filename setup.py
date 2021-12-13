@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages, os
-from shutil import copyfile
 
 changelog = "debian/changelog"
 if os.path.exists(changelog):
@@ -12,19 +11,19 @@ if os.path.exists(changelog):
     except:
         print("debian/changelog format is wrong for get version")
         version = ""
-    f = open("parduspackageinstaller/Version.py", "w")
-    f.write('version = "%s"\n' % version)
+    f = open("src/__version__", "w")
+    f.write(version)
     f.close()
-
-copyfile("icon.svg", "pardus-package-installer.svg")
 
 data_files = [
     ("/usr/share/applications", ["tr.org.pardus.package-installer.desktop"]),
     ("/usr/share/locale/tr/LC_MESSAGES", ["po/tr/pardus-package-installer.mo"]),
-    ("/usr/share/pardus/pardus-package-installer", ["ui/MainWindow.glade", "icon.svg", "actions.py"]),
-    ("/usr/bin", ["pardus-package-installer-action"]),
+    ("/usr/share/pardus/pardus-package-installer/ui", ["ui/MainWindow.glade"]),
+    ("/usr/share/pardus/pardus-package-installer/src",
+     ["src/Actions.py", "src/main.py", "src/MainWindow.py", "src/__version__"]),
+    ("/usr/bin", ["pardus-package-installer"]),
     ("/usr/share/polkit-1/actions", ["tr.org.pardus.pkexec.pardus-package-installer.policy"]),
-    ("/usr/share/icons/hicolor/scalable/apps/", ["pardus-package-installer.svg"])
+    ("/usr/share/icons/hicolor/scalable/apps/", ["images/pardus-package-installer.svg"])
 ]
 
 setup(
