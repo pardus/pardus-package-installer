@@ -139,7 +139,7 @@ class MainWindow(object):
         self.depends.set_markup("<small>{}</small>".format(GLib.markup_escape_text(pd, -1)))
 
         if self.packagemissingdeps:
-            self.missingdeps.set_markup("<span size='smaller'>{}</span>".format(
+            self.missingdeps.set_markup("<small>{}</small>".format(
                 GLib.markup_escape_text(self.packagemissingdeps, -1)))
 
         if self.firststatus != 0:
@@ -324,9 +324,15 @@ class MainWindow(object):
                 self.packagedepends = ""
 
             try:
-                self.packagemissingdeps = "\n\n".join(self.package.missing_deps)
+                self.packagemissingdeps = "\n\n".join(self.package.required_changes[0])
             except:
-                self.packagemissingdeps = ""
+                try:
+                    self.packagemissingdeps = "\n\n".join(self.package.missing_deps)
+                except:
+                    self.packagemissingdeps = ""
+
+            print(self.package.required_changes)
+            print(self.package.missing_deps)
 
             self.packagefailure = self.package._failure_string
             try:

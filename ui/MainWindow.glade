@@ -994,9 +994,6 @@ in a terminal window.</property>
                                     <property name="wrap">True</property>
                                     <property name="wrap-mode">word-char</property>
                                     <property name="selectable">True</property>
-                                    <attributes>
-                                      <attribute name="font-desc" value="Monospace 10"/>
-                                    </attributes>
                                   </object>
                                   <packing>
                                     <property name="left-attach">1</property>
