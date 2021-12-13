@@ -205,6 +205,7 @@
                     <property name="receives-default">True</property>
                     <property name="halign">center</property>
                     <property name="image">image2</property>
+                    <property name="always-show-image">True</property>
                     <signal name="clicked" handler="on_openbutton_clicked" swapped="no"/>
                   </object>
                   <packing>
