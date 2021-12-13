@@ -26,6 +26,7 @@ from locale import gettext as _
 locale.bindtextdomain('pardus-package-installer', '/usr/share/locale')
 locale.textdomain('pardus-package-installer')
 
+
 class MainWindow(object):
     def __init__(self, application, file):
 
@@ -71,7 +72,6 @@ class MainWindow(object):
             self.openBrokenDialog()
 
         self.openbutton.set_visible(False)
-        # self.headerseperator.set_visible(False)
         self.progstack.set_visible(False)
         self.errorlabel.set_visible(False)
         self.BrokenBox.set_visible(False)
@@ -162,10 +162,8 @@ class MainWindow(object):
             self.debianpackage = os.path.abspath(sys.argv[1])
             if self.start(self.debianpackage):
                 self.openbutton.set_visible(True)
-                # self.headerseperator.set_visible(True)
                 self.mainstack.set_visible_child_name("package")
                 self.openbutton.set_visible(True)
-                # self.headerseperator.set_visible(True)
 
                 self.setLabels()
 
@@ -279,7 +277,7 @@ class MainWindow(object):
                     looplen = math.ceil(len(self.packageshortdescription) / 75)
                     pd = "".join(self.packageshortdescription[:75])
                     for ll in range(1, looplen):
-                        pd += "\n" + "".join(self.packageshortdescription[ll*75:(ll+1)*75])
+                        pd += "\n" + "".join(self.packageshortdescription[ll * 75:(ll + 1) * 75])
                     self.packageshortdescription = pd
             except Exception as e:
                 print("{}".format(e))
@@ -338,7 +336,7 @@ class MainWindow(object):
                     looplen = math.ceil(len(self.packagefailure) / 75)
                     pf = "".join(self.packagefailure[:75])
                     for pll in range(1, looplen):
-                        pf += "\n" + "".join(self.packagefailure[pll*75:(pll+1)*75])
+                        pf += "\n" + "".join(self.packagefailure[pll * 75:(pll + 1) * 75])
                     self.packagefailure = pf
             except Exception as e:
                 print("{}".format(e))
@@ -387,7 +385,6 @@ class MainWindow(object):
             self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "install",
                             self.debianpackage]
             self.pid = self.startProcess(self.command)
-            print(self.pid)
         else:
             print("package is not installable")
             try:
@@ -404,7 +401,7 @@ class MainWindow(object):
                 self.progstack.set_visible_child_name("doneinfo")
                 self.doneinfolabel.set_markup("<b><span color='red'>{}\n</span>{}:{}, {}:{}".format(
                     _("Package Architecture Error"), _("System"), self.systemarchitecture, _("Package"),
-                    self.packagearchitecture ))
+                    self.packagearchitecture))
 
     def removePackage(self):
 
@@ -416,9 +413,9 @@ class MainWindow(object):
             self.openbutton.set_sensitive(False)
             self.closestatus = True
             self.notification = Notify.Notification.new(self.packagename + _(" uninstalled"))
-            self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "remove", self.packagename]
+            self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "remove",
+                            self.packagename]
             self.pid = self.startProcess(self.command)
-            print(self.pid)
 
     def reinstallPackage(self):
         self.progressbar.set_show_text(False)
@@ -428,9 +425,9 @@ class MainWindow(object):
         self.openbutton.set_sensitive(False)
         self.closestatus = True
         self.notification = Notify.Notification.new(self.packagename + _(" reinstalled"))
-        self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "reinstall", self.debianpackage]
+        self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "reinstall",
+                        self.debianpackage]
         self.pid = self.startProcess(self.command)
-        print(self.pid)
 
     def downgradePackage(self):
         self.progressbar.set_show_text(False)
@@ -440,9 +437,9 @@ class MainWindow(object):
         self.openbutton.set_sensitive(False)
         self.closestatus = True
         self.notification = Notify.Notification.new(self.packagename + _(" downgraded"))
-        self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "downgrade", self.debianpackage]
+        self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "downgrade",
+                        self.debianpackage]
         self.pid = self.startProcess(self.command)
-        print(self.pid)
 
     def onDestroy(self, window):
         self.window.get_application().quit()
@@ -474,7 +471,6 @@ class MainWindow(object):
             self.installPackage(True)
 
     def on_button2_clicked(self, button):
-        # self.stack1.set_visible_child_name("page0")
         self.packageaction = _("Uninstalling")
         print("Uninstalling Button Clicked")
         self.progstack.set_visible(True)
@@ -551,7 +547,7 @@ class MainWindow(object):
         else:
             self.errorlabel.set_visible(True)
             self.errorlabel.set_markup("<b><span color='red'>{}</span></b>\n{}".format(
-                _("Error !"),  GLib.markup_escape_text(packagefailure, -1)))
+                _("Error !"), GLib.markup_escape_text(packagefailure, -1)))
             if status == 0:
                 self.button1.set_sensitive(False)
                 self.button1.set_label(_("Install"))
@@ -586,7 +582,6 @@ class MainWindow(object):
     def fromFile(self, path):
 
         self.openbutton.set_visible(True)
-        # self.headerseperator.set_visible(True)
         fileFormat = os.path.basename(path).split(".")[-1]
         if fileFormat == "deb":
             self.debianpackage = path
@@ -700,7 +695,7 @@ class MainWindow(object):
             self.notificationstate = False
         if retval == 256:
             errormessage = _("Only one software management tool is allowed to run at the same time.\n"
-                                  "Please close the other application\ne.g. 'Update Manager', 'aptitude' or 'Synaptic' first.")
+                             "Please close the other application\ne.g. 'Update Manager', 'aptitude' or 'Synaptic' first.")
             self.doneinfolabel.set_markup(errormessage)
             if self.progressbar.get_show_text():
                 self.progressbar.set_show_text(False)

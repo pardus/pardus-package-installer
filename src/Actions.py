@@ -23,8 +23,9 @@ def main():
                         env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def reinstall(debianpackage):
-        subprocess.call(["apt", "install", "--reinstall", "--allow-downgrades", debianpackage, "-yq", "-o", "APT::Status-Fd=2"],
-                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+        subprocess.call(
+            ["apt", "install", "--reinstall", "--allow-downgrades", debianpackage, "-yq", "-o", "APT::Status-Fd=2"],
+            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def remove(packagename):
         subprocess.call(["apt", "remove", "--purge", packagename, "-yq", "-o", "APT::Status-Fd=2"],

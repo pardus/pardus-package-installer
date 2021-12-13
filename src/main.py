@@ -14,6 +14,7 @@ from MainWindow import MainWindow
 gi.require_version('Gtk', '3.0')
 from gi.repository import GLib, Gio, Gtk
 
+
 class Application(Gtk.Application):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, application_id="tr.org.pardus.package-installer",
