@@ -1,2 +1,0 @@
-pardus-package-installer: binary-without-manpage usr/bin/pardus-package-installer
-pardus-package-installer: binary-without-manpage usr/bin/pardus-package-installer-action
