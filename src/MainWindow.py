@@ -57,12 +57,13 @@ class MainWindow(object):
         self.window.connect('delete_event', self.onClose)
 
         # Set version
-        # If not getted from Version.py file then accept version in MainWindow.glade file
+        # If not getted from __version__ file then accept version in MainWindow.glade file
         try:
-            from parduspackageinstaller.Version import version
+            version = open(os.path.dirname(os.path.abspath(__file__)) + "/__version__").readline()
             self.about_dialog.set_version(version)
         except:
             pass
+        self.about_dialog.set_program_name(_("Pardus Package Installer"))
 
         self.window.show_all()
 
