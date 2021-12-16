@@ -19,6 +19,7 @@ from gi.repository import Gdk
 from gi.repository import Notify
 import apt.debfile as aptdeb
 from subprocess import PIPE, Popen
+import threading
 
 import locale
 from locale import gettext as _
@@ -57,6 +58,8 @@ class MainWindow(object):
         self.defineComponents()
         self.window.connect('delete_event', self.onClose)
 
+        self.mainstack.set_visible_child_name("splash")
+
         # Set version
         # If not getted from __version__ file then accept version in MainWindow.glade file
         try:
@@ -76,6 +79,11 @@ class MainWindow(object):
         self.errorlabel.set_visible(False)
         self.BrokenBox.set_visible(False)
 
+        p1 = threading.Thread(target=self.worker)
+        p1.daemon = True
+        p1.start()
+
+    def worker(self):
         self.initialize()
 
     def onClose(self, *args):
@@ -179,6 +187,7 @@ class MainWindow(object):
                 self.installed_version.set_text("")
                 self.openBrokenDialog()
         else:
+            self.mainstack.set_visible_child_name("empty")
             self.button1.set_sensitive(False)
             self.button2.set_sensitive(False)
             self.button1.set_label(_("Install"))
@@ -330,9 +339,6 @@ class MainWindow(object):
                     self.packagemissingdeps = "\n\n".join(self.package.missing_deps)
                 except:
                     self.packagemissingdeps = ""
-
-            print(self.package.required_changes)
-            print(self.package.missing_deps)
 
             self.packagefailure = self.package._failure_string
             try:
