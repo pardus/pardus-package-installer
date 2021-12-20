@@ -1,3 +1,19 @@
+pardus-package-installer (0.4.0~Beta1) unstable; urgency=medium
+
+  * Update ui and backend
+  * Update window position as center
+  * Fix get version method
+  * Add always-show-image to details and done button
+  * Add always-show-image to open button
+  * Cleanup code
+  * Update get missing deps method
+  * Update translations
+  * Update debian packaging files
+  * Add loading spinner with threading to splashpage
+  * Update app icon
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Mon, 20 Dec 2021 19:47:09 +0300
+
 pardus-package-installer (0.3.0~Beta4) unstable; urgency=medium
 
   * Disable controlDisplay func
