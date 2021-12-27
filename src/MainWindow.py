@@ -270,89 +270,85 @@ class MainWindow(object):
 
             try:
                 self.packageversion = self.package._sections["Version"]
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packageversion = "-"
 
             try:
                 self.packagedescription = self.package._sections["Description"]
-            except:
-                self.packagedescription = "-"
+            except Exception as e:
+                print("{}".format(e))
+                self.packagedescription = ""
 
             try:
                 self.packageshortdescription = self.package["Description"].split("\n")[0]
-                looplen = 0
-                pd = ""
-                if len(self.packageshortdescription) > 75:
-                    looplen = math.ceil(len(self.packageshortdescription) / 75)
-                    pd = "".join(self.packageshortdescription[:75])
-                    for ll in range(1, looplen):
-                        pd += "\n" + "".join(self.packageshortdescription[ll * 75:(ll + 1) * 75])
-                    self.packageshortdescription = pd
             except Exception as e:
                 print("{}".format(e))
                 self.packageshortdescription = ""
 
             try:
                 self.packagemaintainer = self.package._sections["Maintainer"]
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packagemaintainer = "-"
 
             try:
                 self.packagemaintainername = self.packagemaintainer.split(" <")[0]
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packagemaintainername = "-"
 
             try:
                 self.packagemaintainermail = self.packagemaintainer.split(" <")[1].replace(">", "")
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packagemaintainermail = "-"
 
             try:
                 self.packagehomepage = self.package._sections["Homepage"]
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packagehomepage = "-"
 
             try:
                 self.packagesection = self.package._sections["Section"]
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packagesection = "-"
 
             try:
                 self.packagesize = self.package._sections["Installed-Size"]
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packagesize = "-"
 
             try:
                 self.packagearchitecture = self.package._sections["Architecture"]
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packagearchitecture = "-"
 
             try:
                 self.packagedepends = self.package._sections["Depends"]
-            except:
+            except Exception as e:
+                print("{}".format(e))
                 self.packagedepends = ""
 
             try:
                 self.packagemissingdeps = "\n\n".join(self.package.required_changes[0])
-            except:
-                try:
-                    self.packagemissingdeps = "\n\n".join(self.package.missing_deps)
-                except:
-                    self.packagemissingdeps = ""
-
-            self.packagefailure = self.package._failure_string
-            try:
-                looplen = 0
-                pf = ""
-                if len(self.packagefailure) > 75:
-                    looplen = math.ceil(len(self.packagefailure) / 75)
-                    pf = "".join(self.packagefailure[:75])
-                    for pll in range(1, looplen):
-                        pf += "\n" + "".join(self.packagefailure[pll * 75:(pll + 1) * 75])
-                    self.packagefailure = pf
             except Exception as e:
                 print("{}".format(e))
+                try:
+                    self.packagemissingdeps = "\n\n".join(self.package.missing_deps)
+                except Exception as e:
+                    print("{}".format(e))
+                    self.packagemissingdeps = ""
+
+            try:
                 self.packagefailure = self.package._failure_string
+            except Exception as e:
+                print("{}".format(e))
+                self.packagefailure = ""
 
             return True
 
