@@ -360,7 +360,6 @@
                     <property name="valign">center</property>
                     <property name="justify">center</property>
                     <property name="wrap">True</property>
-                    <property name="wrap-mode">word-char</property>
                     <property name="selectable">True</property>
                     <property name="max-width-chars">65</property>
                   </object>
