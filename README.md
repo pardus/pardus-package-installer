@@ -4,21 +4,6 @@ Pardus Package Installer is a application for install, uninstall or view deb pac
 
 It is currently a work in progress. Maintenance is done by <a href="https://www.pardus.org.tr/">Pardus</a> team.
 
-## Screenshots
-
-![Pardus Package Installer 1](screenshots/pardus-package-installer-1.png)
-
-![Pardus Package Installer 2](screenshots/pardus-package-installer-2.png)
-
-![Pardus Package Installer 3](screenshots/pardus-package-installer-3.png)
-
-![Pardus Package Installer 4](screenshots/pardus-package-installer-4.png)
-
-![Pardus Package Installer 5](screenshots/pardus-package-installer-5.png)
-
-![Pardus Package Installer 6](screenshots/pardus-package-installer-6.png)
-
-
 ## Dependencies:
 
 * This application is developed based on Python3 and GTK+ 3. Dependencies:
@@ -38,3 +23,17 @@ It is currently a work in progress. Maintenance is done by <a href="https://www.
 * `sudo apt install devscripts git-buildpackage`
 * `sudo mk-build-deps -ir`
 * `gbp buildpackage --git-export-dir=/tmp/build/pardus-package-installer -us -uc`
+
+## Screenshots
+
+![Pardus Package Installer 1](screenshots/pardus-package-installer-1.png)
+
+![Pardus Package Installer 2](screenshots/pardus-package-installer-2.png)
+
+![Pardus Package Installer 3](screenshots/pardus-package-installer-3.png)
+
+![Pardus Package Installer 4](screenshots/pardus-package-installer-4.png)
+
+![Pardus Package Installer 5](screenshots/pardus-package-installer-5.png)
+
+![Pardus Package Installer 6](screenshots/pardus-package-installer-6.png)
