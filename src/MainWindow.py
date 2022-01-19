@@ -78,6 +78,7 @@ class MainWindow(object):
         self.progstack.set_visible(False)
         self.errorlabel.set_visible(False)
         self.BrokenBox.set_visible(False)
+        self.outputSW.set_visible(False)
 
         p1 = threading.Thread(target=self.worker)
         p1.daemon = True
@@ -248,6 +249,8 @@ class MainWindow(object):
 
         self.installed_version = self.builder.get_object("installed_version")
         self.installed_version_title = self.builder.get_object("installed_version_title")
+
+        self.outputSW = self.builder.get_object("outputSW")
 
         self.BrokenBox = self.builder.get_object("BrokenBox")
         self.cannotclose_dialog = self.builder.get_object("cannotclose_dialog")
@@ -457,6 +460,7 @@ class MainWindow(object):
         packagestatus = self.compareVersion()
         self.progstack.set_visible(True)
         self.progstack.set_visible_child_name("progress")
+        self.outputSW.set_visible(True)
 
         if packagestatus == 0:
             print("Installing Button Clicked")
@@ -483,6 +487,7 @@ class MainWindow(object):
         print("Uninstalling Button Clicked")
         self.progstack.set_visible(True)
         self.progstack.set_visible_child_name("progress")
+        self.outputSW.set_visible(True)
         self.removePackage()
 
     def on_donebutton_clicked(self, button):
@@ -590,6 +595,12 @@ class MainWindow(object):
     def fromFile(self, path):
 
         self.openbutton.set_visible(True)
+
+        # clear output textbuffer
+        self.outputSW.set_visible(False)
+        start, end = self.textview.get_buffer().get_bounds()
+        self.textview.get_buffer().delete(start, end)
+
         fileFormat = os.path.basename(path).split(".")[-1]
         if fileFormat == "deb":
             self.debianpackage = path
@@ -623,7 +634,10 @@ class MainWindow(object):
     def onProcessStdout(self, source, condition):
         if condition == GLib.IO_HUP:
             return False
-        source.readline()
+
+        self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), source.readline())
+        self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
+
         return True
 
     def onProcessStderr(self, source, condition):
@@ -654,6 +668,10 @@ class MainWindow(object):
                 print("/var/lib/dpkg/lock-frontend error")
                 self.error = True
                 self.dpkglockerror = True
+
+            self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
+            self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
+
         return True
 
     def onProcessExit(self, pid, retval):
@@ -715,6 +733,7 @@ class MainWindow(object):
         self.dpkgconferror = False
         self.isinstalling = False
         self.notify()
+        self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
     def notify(self):
         if self.notificationstate:

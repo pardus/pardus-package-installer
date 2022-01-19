@@ -128,6 +128,9 @@
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <signal name="clicked" handler="on_selectbutton_clicked" swapped="no"/>
+            <style>
+              <class name="suggested-action"/>
+            </style>
           </object>
         </child>
       </object>
@@ -1058,6 +1061,33 @@ in a terminal window.</property>
                         <property name="name">depends</property>
                         <property name="title" translatable="yes">Dependencies</property>
                         <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow" id="outputSW">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="margin-top">8</property>
+                        <property name="shadow-type">in</property>
+                        <property name="min-content-height">165</property>
+                        <child>
+                          <object class="GtkTextView" id="textview">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="pixels-below-lines">5</property>
+                            <property name="editable">False</property>
+                            <property name="wrap-mode">word</property>
+                            <property name="left-margin">5</property>
+                            <property name="right-margin">5</property>
+                            <property name="top-margin">5</property>
+                            <property name="bottom-margin">5</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="name">output</property>
+                        <property name="icon-name">utilities-terminal-symbolic</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </object>
