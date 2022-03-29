@@ -153,7 +153,11 @@ class MainWindow(object):
 
         if self.firststatus != 0:
             pkg = self.cache[self.packagename]
-            systemversion = pkg.versions[0].version
+            try:
+                systemversion = pkg.installed.version
+            except Exception as e:
+                print("{}".format(e))
+                systemversion = pkg.versions[0].version
             self.installed_version_title.set_markup(
                 "<small><span weight='light'>{}</span></small>".format(_("Installed Version :")))
             self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(systemversion))
@@ -586,7 +590,11 @@ class MainWindow(object):
 
         if status != 0:
             pkg = self.cache[self.packagename]
-            systemversion = str(pkg.installed).split("=")[1]
+            try:
+                systemversion = pkg.installed.version
+            except Exception as e:
+                print("{}".format(e))
+                systemversion = str(pkg.installed).split("=")[1]
             self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(systemversion))
         else:
             self.installed_version.set_markup(
