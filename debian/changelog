@@ -1,3 +1,11 @@
+pardus-package-installer (0.5.0~Beta2) unstable; urgency=medium
+
+  * Add force-confnew dpkg option to actions
+  * Fix typo on dpkg options
+  * Update Homepage
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Wed, 20 Jul 2022 21:54:09 +0300
+
 pardus-package-installer (0.5.0~Beta1) unstable; urgency=medium
 
   * Fix get installed version of package
