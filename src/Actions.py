@@ -19,23 +19,23 @@ def main():
         return True
 
     def install(debianpackage):
-        subprocess.call(["apt", "install", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
+        subprocess.call(["apt-get", "install", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
                         env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def reinstall(debianpackage):
         subprocess.call(
-            ["apt", "install", "--reinstall", "--allow-downgrades", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
+            ["apt-get", "install", "--reinstall", "--allow-downgrades", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
              "-o", "Dpkg::Options::=--force-confnew"],
             env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def remove(packagename):
-        subprocess.call(["apt", "remove", "--purge", packagename, "-yq", "-o", "APT::Status-Fd=2",
+        subprocess.call(["apt-get", "remove", "--purge", packagename, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
                         env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def downgrade(packagename):
-        subprocess.call(["apt", "install", "--allow-downgrades", packagename, "-yq", "-o", "APT::Status-Fd=2",
+        subprocess.call(["apt-get", "install", "--allow-downgrades", packagename, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
                         env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
