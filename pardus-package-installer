@@ -1,3 +1,6 @@
-#!/bin/sh
+#!/usr/bin/python3
 
-/usr/bin/python3 /usr/share/pardus/pardus-package-installer/src/main.py "$@"
+import sys
+
+sys.path.insert(0, '/usr/share/pardus/pardus-package-installer/src/')
+import Main

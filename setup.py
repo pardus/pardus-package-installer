@@ -20,7 +20,7 @@ data_files = [
     ("/usr/share/locale/tr/LC_MESSAGES", ["po/tr/pardus-package-installer.mo"]),
     ("/usr/share/pardus/pardus-package-installer/ui", ["ui/MainWindow.glade"]),
     ("/usr/share/pardus/pardus-package-installer/src",
-     ["src/Actions.py", "src/main.py", "src/MainWindow.py", "src/__version__"]),
+     ["src/Actions.py", "src/Main.py", "src/MainWindow.py", "src/__version__"]),
     ("/usr/bin", ["pardus-package-installer"]),
     ("/usr/share/polkit-1/actions", ["tr.org.pardus.pkexec.pardus-package-installer.policy"]),
     ("/usr/share/icons/hicolor/scalable/apps/", ["images/pardus-package-installer.svg"])

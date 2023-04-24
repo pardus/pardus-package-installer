@@ -6,13 +6,15 @@ Created on Wed May 13 01:20:31 2020
 @author: fatih
 """
 
-import sys
-import gi
 import os.path
+import sys
+
+import gi
+
 from MainWindow import MainWindow
 
 gi.require_version('Gtk', '3.0')
-from gi.repository import GLib, Gio, Gtk
+from gi.repository import Gio, Gtk
 
 
 class Application(Gtk.Application):
@@ -40,6 +42,5 @@ class Application(Gtk.Application):
             print("Only one file.")
 
 
-if __name__ == "__main__":
-    app = Application()
-    app.run(sys.argv)
+app = Application()
+app.run(sys.argv)
