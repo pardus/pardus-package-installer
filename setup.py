@@ -34,7 +34,6 @@ if os.path.exists(changelog):
 
 data_files = [
     ("/usr/share/applications", ["tr.org.pardus.package-installer.desktop"]),
-    ("/usr/share/locale/tr/LC_MESSAGES", ["po/tr/pardus-package-installer.mo"]),
     ("/usr/share/pardus/pardus-package-installer/ui", ["ui/MainWindow.glade"]),
     ("/usr/share/pardus/pardus-package-installer/src",
      ["src/Actions.py", "src/Main.py", "src/MainWindow.py", "src/__version__"]),
