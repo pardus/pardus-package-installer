@@ -4,27 +4,37 @@ Pardus Package Installer is a application for install, uninstall or view deb pac
 
 It is currently a work in progress. Maintenance is done by <a href="https://www.pardus.org.tr/">Pardus</a> team.
 
-## Dependencies:
+## **Dependencies**
 
-* This application is developed based on Python3 and GTK+ 3. Dependencies:
-   - ```gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-notify-0.7 python3-apt```
+This application is developed based on Python3 and GTK+ 3. Dependencies:
+```bash
+gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-notify-0.7 python3-apt
+```
 
-## Run Application from Source
+### **Run Application from Source**
 
-* Install dependencies :
-    * ```gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-notify-0.7 python3-apt```
-* Clone the repository :
-    * ```git clone https://github.com/pardus/pardus-package-installer.git ~/pardus-package-installer```
-* Run application :
-    * ```python3 ~/pardus-package-installer/src/main.py```
+Install dependencies
+```bash
+gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-notify-0.7 python3-apt
+```
+Clone the repository
+```bash
+git clone https://github.com/pardus/pardus-package-installer.git ~/pardus-package-installer
+```
+Run application
+```bash
+python3 ~/pardus-package-installer/src/Main.py
+```
 
-## Build deb package
+### **Build deb package**
 
-* `sudo apt install devscripts git-buildpackage`
-* `sudo mk-build-deps -ir`
-* `gbp buildpackage --git-export-dir=/tmp/build/pardus-package-installer -us -uc`
+```bash
+sudo apt install devscripts git-buildpackage
+sudo mk-build-deps -ir
+gbp buildpackage --git-export-dir=/tmp/build/pardus-package-installer -us -uc
+```
 
-## Screenshots
+### **Screenshots**
 
 ![Pardus Package Installer 1](screenshots/pardus-package-installer-1.png)
 
