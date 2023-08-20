@@ -43,6 +43,7 @@ class MainWindow(object):
         self.notificationstate = True
         self.isinstalling = False
         self.isbroken = False
+        self.debianpackage_errormsg = ""
 
         # Gtk Builder
         self.MainWindowUIFileName = os.path.dirname(os.path.abspath(__file__)) + "/../ui/MainWindow.glade"
@@ -173,24 +174,39 @@ class MainWindow(object):
     def initialize(self):
         if self.file:
             self.debianpackage = os.path.abspath(sys.argv[1])
-            if self.start(self.debianpackage):
-                self.openbutton.set_visible(True)
-                self.mainstack.set_visible_child_name("package")
-                self.openbutton.set_visible(True)
+            debianpackage_status = self.start(self.debianpackage)
+            if debianpackage_status is not None:
+                if debianpackage_status:
+                    self.openbutton.set_visible(True)
+                    self.mainstack.set_visible_child_name("package")
+                    self.openbutton.set_visible(True)
 
-                self.setLabels()
+                    self.setLabels()
 
-                self.packageMain(False, self.firststatus, self.packagefailure)
+                    self.packageMain(False, self.firststatus, self.packagefailure)
+                else:
+                    self.button1.set_sensitive(False)
+                    self.button2.set_sensitive(False)
+                    self.button1.set_label(_("Install"))
+                    self.button2.set_label(_("Uninstall"))
+                    self.pacname.set_text("")
+                    self.pacversion.set_text("")
+                    self.installed_version_title.set_text("")
+                    self.installed_version.set_text("")
+                    self.openBrokenDialog()
             else:
+                # deb package is broken
                 self.button1.set_sensitive(False)
                 self.button2.set_sensitive(False)
                 self.button1.set_label(_("Install"))
                 self.button2.set_label(_("Uninstall"))
                 self.pacname.set_text("")
                 self.pacversion.set_text("")
+                self.shortdesc.set_text("")
                 self.installed_version_title.set_text("")
                 self.installed_version.set_text("")
-                self.openBrokenDialog()
+                self.debpackage_brokenmsg.set_text(self.debianpackage_errormsg)
+                self.mainstack.set_visible_child_name("brokendeb")
         else:
             self.mainstack.set_visible_child_name("empty")
             self.button1.set_sensitive(False)
@@ -211,6 +227,7 @@ class MainWindow(object):
         self.selectbutton = self.builder.get_object("selectbutton")
         self.aboutbutton = self.builder.get_object("aboutbutton")
         self.broken_close_button = self.builder.get_object("broken_close_button")
+        self.debpackage_brokenmsg = self.builder.get_object("debpackage_brokenmsg")
 
         self.pacname = self.builder.get_object("pacname")
         self.shortdesc = self.builder.get_object("shortdesc")
@@ -267,8 +284,12 @@ class MainWindow(object):
 
         if self.updateCache():
 
-            self.package = aptdeb.DebPackage(debpackage)
-
+            try:
+                self.package = aptdeb.DebPackage(debpackage)
+            except Exception as e:
+                print("{}".format(e))
+                self.debianpackage_errormsg = "{}".format(e)
+                return None
             self.packagename = self.package.pkgname
 
             self.firststatus = self.package.compare_to_version_in_cache()
@@ -612,21 +633,36 @@ class MainWindow(object):
         fileFormat = os.path.basename(path).split(".")[-1]
         if fileFormat == "deb":
             self.debianpackage = path
-            if self.start(self.debianpackage):
+            debianpackage_status = self.start(self.debianpackage)
+            if debianpackage_status is not None:
+                if debianpackage_status:
 
-                self.setLabels()
+                    self.setLabels()
 
-                self.packageMain(False, self.firststatus, self.packagefailure)
+                    self.packageMain(False, self.firststatus, self.packagefailure)
+                else:
+                    self.button1.set_sensitive(False)
+                    self.button2.set_sensitive(False)
+                    self.button1.set_label(_("Install"))
+                    self.button2.set_label(_("Uninstall"))
+                    self.pacname.set_text("")
+                    self.pacversion.set_text("")
+                    self.installed_version_title.set_text("")
+                    self.installed_version.set_text("")
+                    self.openBrokenDialog()
             else:
+                # deb package is broken
                 self.button1.set_sensitive(False)
                 self.button2.set_sensitive(False)
                 self.button1.set_label(_("Install"))
                 self.button2.set_label(_("Uninstall"))
                 self.pacname.set_text("")
                 self.pacversion.set_text("")
+                self.shortdesc.set_text("")
                 self.installed_version_title.set_text("")
                 self.installed_version.set_text("")
-                self.openBrokenDialog()
+                self.debpackage_brokenmsg.set_text(self.debianpackage_errormsg)
+                self.mainstack.set_visible_child_name("brokendeb")
         else:
             print("Only .deb files.")
 
