@@ -10,7 +10,7 @@
     <property name="version">1.0</property>
     <property name="copyright">© 2023 Pardus</property>
     <property name="comments" translatable="yes">Manage and view .deb packages</property>
-    <property name="website">https://www.pardus.org.tr</property>
+    <property name="website">https://github.com/pardus/pardus-package-installer</property>
     <property name="authors">Fatih Altun</property>
     <property name="translator-credits" translatable="yes">Fatih Altun</property>
     <property name="logo-icon-name">pardus-package-installer</property>
