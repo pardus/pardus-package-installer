@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2022.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-29 12:27+0300\n"
-"PO-Revision-Date: 2022-11-21 14:45+0000\n"
+"POT-Creation-Date: 2023-08-20 19:31+0300\n"
+"PO-Revision-Date: 2023-08-26 17:22+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: \n"
 "Language: pt\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: ui/MainWindow.glade:12
 msgid "Manage and view .deb packages"
@@ -26,7 +26,7 @@ msgstr "Gerir e ver pacotes .deb"
 msgid "Fatih Altun"
 msgstr "Fatih Altun"
 
-#: ui/MainWindow.glade:52 ui/MainWindow.glade:951
+#: ui/MainWindow.glade:52 ui/MainWindow.glade:1000
 msgid "Info"
 msgstr "Informação"
 
@@ -46,7 +46,7 @@ msgstr "Selecionar"
 msgid "Select a deb package to view. "
 msgstr "Selecione um pacote deb para ver. "
 
-#: ui/MainWindow.glade:206 ui/MainWindow.glade:1166
+#: ui/MainWindow.glade:206 ui/MainWindow.glade:1215
 msgid "Open"
 msgstr "Abrir"
 
@@ -70,13 +70,14 @@ msgstr "<small><span weight='light'>Versão instalada :</span></small>"
 msgid "<small><span weight='light'>Not installed</span></small>"
 msgstr "<small><span weight='light'>Não instalado</span></small>"
 
-#: ui/MainWindow.glade:383 src/MainWindow.py:187 src/MainWindow.py:198
-#: src/MainWindow.py:545 src/MainWindow.py:570 src/MainWindow.py:623
+#: ui/MainWindow.glade:383 src/MainWindow.py:190 src/MainWindow.py:201
+#: src/MainWindow.py:214 src/MainWindow.py:566 src/MainWindow.py:591
+#: src/MainWindow.py:646 src/MainWindow.py:657
 msgid "Install"
 msgstr "Instalar"
 
-#: ui/MainWindow.glade:400 src/MainWindow.py:188 src/MainWindow.py:199
-#: src/MainWindow.py:624
+#: ui/MainWindow.glade:400 src/MainWindow.py:191 src/MainWindow.py:202
+#: src/MainWindow.py:215 src/MainWindow.py:647 src/MainWindow.py:658
 msgid "Uninstall"
 msgstr "Desinstalar"
 
@@ -104,133 +105,138 @@ msgstr ""
 "<b>sudo apt install --fix-broken</b>\n"
 "numa janela de terminal."
 
-#: ui/MainWindow.glade:719 ui/MainWindow.glade:760 ui/MainWindow.glade:801
-#: ui/MainWindow.glade:844 ui/MainWindow.glade:885 ui/MainWindow.glade:926
+#: ui/MainWindow.glade:639
+msgid "The .deb package is corrupt."
+msgstr "O pacote .deb está corrompido."
+
+#: ui/MainWindow.glade:768 ui/MainWindow.glade:809 ui/MainWindow.glade:850
+#: ui/MainWindow.glade:893 ui/MainWindow.glade:934 ui/MainWindow.glade:975
 msgid "-"
 msgstr "-"
 
-#: ui/MainWindow.glade:982
+#: ui/MainWindow.glade:1031
 msgid "Dependency List"
 msgstr "Lista de dependências"
 
-#: ui/MainWindow.glade:1021
+#: ui/MainWindow.glade:1070
 msgid "Packages to install"
 msgstr "Pacotes a instalar"
 
-#: ui/MainWindow.glade:1062
+#: ui/MainWindow.glade:1111
 msgid "Dependencies"
 msgstr "Dependências"
 
-#: ui/MainWindow.glade:1157 src/MainWindow.py:70
+#: ui/MainWindow.glade:1206 src/MainWindow.py:71
 msgid "Pardus Package Installer"
 msgstr "Instalador de Pacotes Pardus"
 
-#: src/MainWindow.py:162 src/MainWindow.py:166
+#: src/MainWindow.py:163 src/MainWindow.py:167
 msgid "Installed Version :"
 msgstr "Versão instalada :"
 
-#: src/MainWindow.py:168 src/MainWindow.py:601
+#: src/MainWindow.py:169 src/MainWindow.py:622
 msgid "Not installed"
 msgstr "Não instalado"
 
-#: src/MainWindow.py:397
+#: src/MainWindow.py:418
 msgid " upgraded"
 msgstr " atualizado"
 
-#: src/MainWindow.py:399
+#: src/MainWindow.py:420
 msgid " installed"
 msgstr " instalado"
 
-#: src/MainWindow.py:418
+#: src/MainWindow.py:439
 msgid "Package Architecture Error"
 msgstr "Erro de arquitetura de pacote"
 
-#: src/MainWindow.py:418
+#: src/MainWindow.py:439
 msgid "System"
 msgstr "Sistema"
 
-#: src/MainWindow.py:418
+#: src/MainWindow.py:439
 msgid "Package"
 msgstr "Pacote"
 
-#: src/MainWindow.py:430
+#: src/MainWindow.py:451
 msgid " uninstalled"
 msgstr " desinstalado"
 
-#: src/MainWindow.py:442
+#: src/MainWindow.py:463
 msgid " reinstalled"
 msgstr " reinstalado"
 
-#: src/MainWindow.py:454
+#: src/MainWindow.py:475
 msgid " downgraded"
 msgstr " desatualizado"
 
-#: src/MainWindow.py:471
+#: src/MainWindow.py:492
 msgid "Installing"
 msgstr "A instalar"
 
-#: src/MainWindow.py:475
+#: src/MainWindow.py:496
 msgid "Downgrading"
 msgstr "A desatualizar"
 
-#: src/MainWindow.py:480
+#: src/MainWindow.py:501
 msgid "Reinstalling"
 msgstr "A reinstalar"
 
-#: src/MainWindow.py:485
+#: src/MainWindow.py:506
 msgid "Upgrading"
 msgstr "A atualizar"
 
-#: src/MainWindow.py:490
+#: src/MainWindow.py:511
 msgid "Uninstalling"
 msgstr "A desinstalar"
 
-#: src/MainWindow.py:534
+#: src/MainWindow.py:555
 msgid "Show Details"
 msgstr "Ver detalhes"
 
-#: src/MainWindow.py:537
+#: src/MainWindow.py:558
 msgid "Hide Details"
 msgstr "Ocultar detalhes"
 
-#: src/MainWindow.py:550 src/MainWindow.py:575
+#: src/MainWindow.py:571 src/MainWindow.py:596
 msgid "Downgrade"
 msgstr "Desatualizar"
 
-#: src/MainWindow.py:555 src/MainWindow.py:580
+#: src/MainWindow.py:576 src/MainWindow.py:601
 msgid "Reinstall"
 msgstr "Reinstalar"
 
-#: src/MainWindow.py:560 src/MainWindow.py:585
+#: src/MainWindow.py:581 src/MainWindow.py:606
 msgid "Upgrade"
 msgstr "Atualizar"
 
-#: src/MainWindow.py:567
+#: src/MainWindow.py:588
 msgid "Error !"
 msgstr "Erro !"
 
-#: src/MainWindow.py:696
+#: src/MainWindow.py:732
 msgid "Not Completed !"
 msgstr "Não concluído !"
 
-#: src/MainWindow.py:699 src/MainWindow.py:719
+#: src/MainWindow.py:735 src/MainWindow.py:755
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr "<b><span color='red'>Erro de ligação !</span></b>"
 
-#: src/MainWindow.py:701 src/MainWindow.py:721
+#: src/MainWindow.py:737 src/MainWindow.py:757
 msgid "<b><span color='red'>Dpkg Lock Error !</span></b>"
 msgstr "<b><span color='red'>Erro de bloqueio Dpkg !</span></b>"
 
-#: src/MainWindow.py:703 src/MainWindow.py:723
+#: src/MainWindow.py:739 src/MainWindow.py:759
 msgid "<b><span color='red'>Dpkg Interrupt Error !</span></b>"
 msgstr "<b><span color='red'>Erro de interrupção Dpkg !</span></b>"
 
-#: src/MainWindow.py:731
+#: src/MainWindow.py:767
 msgid ""
 "Only one software management tool is allowed to run at the same time.\n"
 "Please close the other application\n"
 "e.g. 'Update Manager', 'aptitude' or 'Synaptic' first."
 msgstr ""
-"Apenas uma ferramenta de gestão de software é autorizada a funcionar ao mesmo tempo.\n"
+"Apenas uma ferramenta de gestão de software é autorizada a funcionar ao "
+"mesmo tempo.\n"
 "Primeiro feche a outra aplicação\n"
 "e.x. 'Gestor de atualizações', 'aptitude' ou 'Synaptic'."
