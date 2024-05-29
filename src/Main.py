@@ -14,7 +14,7 @@ import gi
 from MainWindow import MainWindow
 
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gio, Gtk
+from gi.repository import Gio, Gtk, GLib
 
 
 class Application(Gtk.Application):
@@ -23,6 +23,7 @@ class Application(Gtk.Application):
                          flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE, **kwargs)
         self.window = None
         self.emptyfile = None
+        GLib.set_prgname("tr.org.pardus.package-installer")
 
     def do_activate(self):
         self.window = MainWindow(self, self.emptyfile)
