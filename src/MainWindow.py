@@ -708,14 +708,14 @@ class MainWindow(object):
                 self.progressbar.set_text("{} {} %".format(self.packageaction, percent))
                 self.progressbar.set_text("{} {} %".format(self.packageaction, percent))
                 self.progressbar.set_fraction(int(percent) / 100)
-            elif "E:" in line and ".deb" in line:
+            elif (("Error:" in line) or ("E:" in line)) and ".deb" in line:
                 print("connection error")
                 self.error = True
-            elif "E:" in line and "dpkg --configure -a" in line:
+            elif (("Error:" in line) or ("E:" in line)) and "dpkg --configure -a" in line:
                 print("dpkg --configure -a error")
                 self.error = True
                 self.dpkgconferror = True
-            elif "E:" in line and "/var/lib/dpkg/lock-frontend" in line:
+            elif (("Error:" in line) or ("E:" in line)) and "/var/lib/dpkg/lock-frontend" in line:
                 print("/var/lib/dpkg/lock-frontend error")
                 self.error = True
                 self.dpkglockerror = True

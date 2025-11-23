@@ -21,23 +21,23 @@ def main():
     def install(debianpackage):
         subprocess.call(["apt", "install", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
-                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive', 'LC_ALL': 'C'})
 
     def reinstall(debianpackage):
         subprocess.call(
             ["apt", "install", "--reinstall", "--allow-downgrades", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
              "-o", "Dpkg::Options::=--force-confnew"],
-            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive', 'LC_ALL': 'C'})
 
     def remove(packagename):
         subprocess.call(["apt", "remove", "--purge", packagename, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
-                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive', 'LC_ALL': 'C'})
 
     def downgrade(packagename):
         subprocess.call(["apt", "install", "--allow-downgrades", packagename, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
-                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive', 'LC_ALL': 'C'})
 
     if len(sys.argv) > 1:
         if control_lock():
