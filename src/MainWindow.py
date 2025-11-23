@@ -143,10 +143,10 @@ class MainWindow(object):
         self.architecture.set_text(self.packagearchitecture)
 
         try:
-            pd = re.split('\||, ', self.packagedepends)
+            pd = re.split(r'\||, ', self.packagedepends)
             lenpd = len(pd)
-            for i in range(0, lenpd):
-                if pd[i][0] == " ":
+            for i in range(lenpd):
+                if pd[i].startswith(" "):
                     pd[i] = "|" + pd[i].strip()
             pd = "\n\n".join(pd)
 
