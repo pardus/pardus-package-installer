@@ -1,3 +1,9 @@
+pardus-package-installer (0.6.5) unstable; urgency=medium
+
+  * Add regex control to apt output error controls
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Sun, 23 Nov 2025 18:19:14 +0300
+
 pardus-package-installer (0.6.4) unstable; urgency=medium
 
   * Update apt output error controls
