@@ -130,6 +130,7 @@
     <property name="resizable">False</property>
     <property name="window-position">center</property>
     <property name="icon-name">pardus-package-installer</property>
+    <signal name="drag-data-received" handler="on_mainwindow_drag_data_received" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

@@ -17,6 +17,7 @@ from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gdk
 from gi.repository import Notify
+from gi.repository import Gio
 import apt.debfile as aptdeb
 from subprocess import PIPE, Popen
 import threading
@@ -44,6 +45,7 @@ class MainWindow(object):
         self.isinstalling = False
         self.isbroken = False
         self.debianpackage_errormsg = ""
+        self.pid = None
 
         # Gtk Builder
         self.MainWindowUIFileName = os.path.dirname(os.path.abspath(__file__)) + "/../ui/MainWindow.glade"
@@ -77,6 +79,12 @@ class MainWindow(object):
             about_headerbar.show_all()
             self.about_dialog.set_titlebar(about_headerbar)
 
+        self.window.drag_dest_set(
+            Gtk.DestDefaults.ALL,
+            [Gtk.TargetEntry.new("text/uri-list", 0, 0)],
+            Gdk.DragAction.COPY
+        )
+
         self.window.show_all()
 
         if self.isbroken:
@@ -101,6 +109,15 @@ class MainWindow(object):
             self.cannotclose_dialog.hide()
             return True
         return self.closestatus
+
+    def on_mainwindow_drag_data_received(self, treeview, context, posx, posy, selection, info, timestamp):
+        if self.pid:
+            print("There is a process currently running.")
+            return
+        for uri in selection.get_uris():
+            file = Gio.File.new_for_uri(uri)
+            path = file.get_path()
+            self.fromFile(path)
 
     def setLabels(self):
 
@@ -727,6 +744,7 @@ class MainWindow(object):
 
     def onProcessExit(self, pid, retval):
         print("Done. exit code: %s" % (retval))
+        self.pid = None
         if self.error is False:
             if retval == 0:
                 self.notificationstate = True
