@@ -5,19 +5,16 @@ Created on Fri Jan 24 14:58:17 2020
 
 @author: fatih
 """
-import math
+import os
 import re
+import sys
 
-import gi, apt, os, sys
+import apt
+import gi
 
 gi.require_version('Gtk', '3.0')
 gi.require_version("Notify", "0.7")
-from gi.repository import Gtk
-from gi.repository import GObject
-from gi.repository import GLib
-from gi.repository import Gdk
-from gi.repository import Notify
-from gi.repository import Gio
+from gi.repository import Gtk, GObject, GLib, Gdk, Gio, Notify
 import apt.debfile as aptdeb
 from subprocess import PIPE, Popen
 import threading
@@ -75,7 +72,8 @@ class MainWindow(object):
             about_headerbar = Gtk.HeaderBar.new()
             about_headerbar.set_show_close_button(True)
             about_headerbar.set_title(_("About Pardus Package Installer"))
-            about_headerbar.pack_start(Gtk.Image.new_from_icon_name("pardus-package-installer", Gtk.IconSize.LARGE_TOOLBAR))
+            about_headerbar.pack_start(
+                Gtk.Image.new_from_icon_name("pardus-package-installer", Gtk.IconSize.LARGE_TOOLBAR))
             about_headerbar.show_all()
             self.about_dialog.set_titlebar(about_headerbar)
 

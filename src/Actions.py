@@ -5,7 +5,10 @@ Created on Fri Jan 24 14:58:17 2020
 
 @author: fatih
 """
-import subprocess, sys, os, apt_pkg
+import apt_pkg
+import os
+import subprocess
+import sys
 
 
 def main():
