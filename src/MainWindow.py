@@ -86,7 +86,7 @@ class MainWindow(object):
         self.window.show_all()
 
         if self.isbroken:
-            self.openBrokenDialog()
+            self.open_broken_dialog()
 
         self.openbutton.set_visible(False)
         self.progstack.set_visible(False)
@@ -141,7 +141,7 @@ class MainWindow(object):
 
         elif state == "invalid":
             self._clear_package_labels()
-            self.openBrokenDialog()
+            self.open_broken_dialog()
 
         elif state == "ok":
             self.openbutton.set_visible(True)
@@ -236,7 +236,8 @@ class MainWindow(object):
             systemversion = pkg.installed.version
             self.installed_version.set_markup(f"<small><span weight='light'>{systemversion}</span></small>")
         else:
-            self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(_("Not installed")))
+            self.installed_version.set_markup(
+                "<small><span weight='light'>{}</span></small>".format(_("Not installed")))
 
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
@@ -272,13 +273,6 @@ class MainWindow(object):
 
         self.button2.set_sensitive(allow_remove and not has_error)
 
-    def on_close(self, *args):
-        if self.closestatus:
-            self.cannotclose_dialog.run()
-            self.cannotclose_dialog.hide()
-            return True
-        return self.closestatus
-
     def on_mainwindow_drag_data_received(self, treeview, context, posx, posy, selection, info, timestamp):
         if self.pid:
             print("There is a process currently running.")
@@ -310,7 +304,7 @@ class MainWindow(object):
                     self.pacversion.set_text("")
                     self.installed_version_title.set_text("")
                     self.installed_version.set_text("")
-                    self.openBrokenDialog()
+                    self.open_broken_dialog()
             else:
                 # deb package is broken
                 self.button1.set_sensitive(False)
@@ -544,7 +538,7 @@ class MainWindow(object):
                 self.notification = Notify.Notification.new(self.packagename + _(" installed"))
             self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "install",
                             self.debianpackage]
-            self.pid = self.startProcess(self.command)
+            self.pid = self.start_process(self.command)
         else:
             print("package is not installable")
             try:
@@ -575,7 +569,7 @@ class MainWindow(object):
             self.notification = Notify.Notification.new(self.packagename + _(" uninstalled"))
             self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "remove",
                             self.packagename]
-            self.pid = self.startProcess(self.command)
+            self.pid = self.start_process(self.command)
 
     def reinstall_package(self):
         self.progressbar.set_show_text(False)
@@ -587,7 +581,7 @@ class MainWindow(object):
         self.notification = Notify.Notification.new(self.packagename + _(" reinstalled"))
         self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "reinstall",
                         self.debianpackage]
-        self.pid = self.startProcess(self.command)
+        self.pid = self.start_process(self.command)
 
     def downgrade_package(self):
         self.progressbar.set_show_text(False)
@@ -599,10 +593,7 @@ class MainWindow(object):
         self.notification = Notify.Notification.new(self.packagename + _(" downgraded"))
         self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "downgrade",
                         self.debianpackage]
-        self.pid = self.startProcess(self.command)
-
-    def onDestroy(self, window):
-        self.window.get_application().quit()
+        self.pid = self.start_process(self.command)
 
     def on_button1_clicked(self, button):
         print("debianpackage = " + self.debianpackage)
@@ -653,7 +644,7 @@ class MainWindow(object):
         self.from_file(self.filename)
         print("Select Button Clicked")
 
-    def onActivated(self, widget):
+    def on_filechooser_file_activated(self, widget):
         self.filename = self.filechooser.get_filename()
         self.filechooser.hide()
         self.from_file(self.filename)
@@ -669,7 +660,7 @@ class MainWindow(object):
         else:
             self.detailsrevealer.set_reveal_child(False)
 
-    def openBrokenDialog(self):
+    def open_broken_dialog(self):
         self.BrokenBox.set_visible(True)
         self.mainstack.set_visible_child_name("broken")
 
@@ -709,7 +700,7 @@ class MainWindow(object):
                     self.pacversion.set_text("")
                     self.installed_version_title.set_text("")
                     self.installed_version.set_text("")
-                    self.openBrokenDialog()
+                    self.open_broken_dialog()
             else:
                 # deb package is broken
                 self.button1.set_sensitive(False)
@@ -726,16 +717,23 @@ class MainWindow(object):
         else:
             print("Only .deb files.")
 
-    def startProcess(self, params):
+    def on_close(self, *args):
+        if self.closestatus:
+            self.cannotclose_dialog.run()
+            self.cannotclose_dialog.hide()
+            return True
+        return self.closestatus
+
+    def start_process(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
                                                       standard_output=True, standard_error=True)
-        GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.onProcessStdout)
-        GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.onProcessStderr)
-        GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, self.onProcessExit)
+        GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.on_process_stdout)
+        GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.on_process_stderr)
+        GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, self.on_process_exit)
 
         return pid
 
-    def onProcessStdout(self, source, condition):
+    def on_process_stdout(self, source, condition):
         if condition == GLib.IO_HUP:
             return False
 
@@ -744,7 +742,7 @@ class MainWindow(object):
 
         return True
 
-    def onProcessStderr(self, source, condition):
+    def on_process_stderr(self, source, condition):
         if condition == GLib.IO_HUP:
             return False
         line = source.readline()
@@ -778,8 +776,8 @@ class MainWindow(object):
 
         return True
 
-    def onProcessExit(self, pid, retval):
-        print("Done. exit code: %s" % (retval))
+    def on_process_exit(self, pid, retval):
+        print(f"Done. exit code: {retval}")
         self.pid = None
         if self.error is False:
             if retval == 0:
@@ -815,7 +813,8 @@ class MainWindow(object):
             systemversion = pkg.installed.version
             self.installed_version.set_markup(f"<small><span weight='light'>{systemversion}</span></small>")
         else:
-            self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(_("Not installed")))
+            self.installed_version.set_markup(
+                "<small><span weight='light'>{}</span></small>".format(_("Not installed")))
 
         self.openbutton.set_sensitive(True)
         self.closestatus = False
