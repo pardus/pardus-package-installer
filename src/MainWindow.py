@@ -55,8 +55,8 @@ class MainWindow(object):
 
         self.window = self.builder.get_object("mainwindow")
         self.window.set_application(application)
-        self.defineComponents()
-        self.window.connect('delete_event', self.onClose)
+        self.define_components()
+        self.window.connect('delete_event', self.on_close)
 
         self.mainstack.set_visible_child_name("splash")
 
@@ -94,14 +94,185 @@ class MainWindow(object):
         self.BrokenBox.set_visible(False)
         self.outputSW.set_visible(False)
 
-        p1 = threading.Thread(target=self.worker)
-        p1.daemon = True
-        p1.start()
+        threading.Thread(target=self.worker, daemon=True).start()
 
     def worker(self):
-        self.initialize()
+        result = self.initialize_backend()
+        GLib.idle_add(self.initialize_ui, result)
 
-    def onClose(self, *args):
+    def initialize_backend(self):
+        if not self.file:
+            return {"state": "empty"}
+
+        self.debianpackage = os.path.abspath(sys.argv[1])
+        debianpackage_status = self.start(self.debianpackage)
+
+        if debianpackage_status is None:
+            return {
+                "state": "broken",
+                "error": self.debianpackage_errormsg
+            }
+
+        if debianpackage_status:
+            return {
+                "state": "ok",
+                "firststatus": self.firststatus,
+                "packagefailure": self.packagefailure
+            }
+
+        return {"state": "invalid"}
+
+    def initialize_ui(self, result):
+        state = result["state"]
+
+        self.button1.set_label(_("Install"))
+        self.button2.set_label(_("Uninstall"))
+
+        if state == "empty":
+            self.mainstack.set_visible_child_name("empty")
+            self.button1.set_sensitive(False)
+            self.button2.set_sensitive(False)
+            self._clear_package_labels()
+
+        elif state == "broken":
+            self._clear_package_labels()
+            self.debpackage_brokenmsg.set_text(result["error"])
+            self.mainstack.set_visible_child_name("brokendeb")
+
+        elif state == "invalid":
+            self._clear_package_labels()
+            self.openBrokenDialog()
+
+        elif state == "ok":
+            self.openbutton.set_visible(True)
+            self.mainstack.set_visible_child_name("package")
+
+            self.set_labels()
+            self.package_main(
+                False,
+                result["firststatus"],
+                result["packagefailure"]
+            )
+
+        return False
+
+    def _clear_package_labels(self):
+        self.pacname.set_text("")
+        self.pacversion.set_text("")
+        self.shortdesc.set_text("")
+        self.installed_version_title.set_text("")
+        self.installed_version.set_text("")
+
+    def set_labels(self):
+        self.depends.set_text("")
+        self.missingdeps.set_text("")
+        self.mainstack.set_visible_child_name("package")
+        self.progstack.set_visible(False)
+        self.doneinfolabel.set_text("")
+        self.errorlabel.set_visible(False)
+
+        self.pacname.set_markup(
+            "<span size='x-large'><b>{}</b></span>".format(
+                GLib.markup_escape_text(self.packagename, -1)
+            )
+        )
+
+        self.pacversion.set_markup(
+            "<small>{}</small>".format(
+                GLib.markup_escape_text(self.packageversion, -1)
+            )
+        )
+
+        self.shortdesc.set_markup(
+            "<small>{}</small>".format(
+                GLib.markup_escape_text(self.packageshortdescription, -1)
+            )
+        )
+        self.shortdesc.set_tooltip_text(self.packagedescription)
+
+        self.maintainername.set_text(self.packagemaintainername)
+
+        if self.packagemaintainermail != "-":
+            mail = GLib.markup_escape_text(self.packagemaintainermail, -1)
+            self.maintainermail.set_markup(
+                f"<a title='{mail}' href='mailto:{mail}'>{mail}</a>"
+            )
+        else:
+            self.maintainermail.set_text(self.packagemaintainermail)
+
+        if self.packagehomepage != "-":
+            homepage = GLib.markup_escape_text(self.packagehomepage, -1)
+            self.homepage.set_markup(
+                f"<a title='{homepage}' href='{homepage}'>{homepage}</a>"
+            )
+        else:
+            self.homepage.set_text(self.packagehomepage)
+
+        self.section.set_text(self.packagesection)
+        self.architecture.set_text(self.packagearchitecture)
+
+        if self.packagesize != "-":
+            self.size.set_text(f"{self.packagesize} KiB")
+        else:
+            self.size.set_text(self.packagesize)
+
+        pd = self.packagedepends or ""
+        items = [item.strip() for item in pd.split(",")]
+        formatted = []
+        for item in items:
+            formatted.append(item.replace("|", " | "))
+        pd = "\n\n".join(formatted)
+        self.depends.set_markup("<small>{}</small>".format(GLib.markup_escape_text(pd, -1)))
+
+        if self.packagemissingdeps:
+            self.missingdeps.set_markup("<small>{}</small>".format(
+                GLib.markup_escape_text(self.packagemissingdeps, -1)))
+
+        self.installed_version_title.set_markup(
+            "<small><span weight='light'>{}</span></small>".format(_("Installed Version :")))
+
+        pkg = self.cache.get(self.packagename)
+        if pkg and pkg.is_installed:
+            systemversion = pkg.installed.version
+            self.installed_version.set_markup(f"<small><span weight='light'>{systemversion}</span></small>")
+        else:
+            self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(_("Not installed")))
+
+        self.progressbar.set_show_text(False)
+        self.progressbar.set_fraction(0)
+
+    def package_main(self, actioned, status, packagefailure):
+        has_error = packagefailure and "A later version is already installed" not in packagefailure
+
+        if has_error:
+            self.errorlabel.set_visible(True)
+            self.errorlabel.set_markup(
+                "<b><span color='red'>{}</span></b>\n{}".format(
+                    _("Error !"),
+                    GLib.markup_escape_text(packagefailure, -1)
+                )
+            )
+
+        # VERSION_NONE = 0
+        # VERSION_OUTDATED = 1
+        # VERSION_SAME = 2
+        # VERSION_NEWER = 3
+        config = {
+            0: (_("Install"), self.installicon, False),
+            1: (_("Downgrade"), self.downgradeicon, True),
+            2: (_("Reinstall"), self.reinstallicon, True),
+            3: (_("Upgrade"), self.upgradeicon, True),
+        }
+
+        label, icon, allow_remove = config.get(status, config[0])
+
+        self.button1.set_label(label)
+        self.button1.set_image(icon)
+        self.button1.set_sensitive(not has_error)
+
+        self.button2.set_sensitive(allow_remove and not has_error)
+
+    def on_close(self, *args):
         if self.closestatus:
             self.cannotclose_dialog.run()
             self.cannotclose_dialog.hide()
@@ -115,83 +286,7 @@ class MainWindow(object):
         for uri in selection.get_uris():
             file = Gio.File.new_for_uri(uri)
             path = file.get_path()
-            self.fromFile(path)
-
-    def setLabels(self):
-
-        self.depends.set_text("")
-        self.missingdeps.set_text("")
-        self.mainstack.set_visible_child_name("package")
-        self.progstack.set_visible(False)
-        self.doneinfolabel.set_text("")
-
-        self.pacname.set_markup("<span size='x-large'><b>{}</b></span>".format(self.packagename))
-        self.pacversion.set_markup("<small>{}</small>".format(GLib.markup_escape_text(self.packageversion, -1)))
-        self.shortdesc.set_markup("<small>{}</small>".format(GLib.markup_escape_text(self.packageshortdescription, -1)))
-        self.shortdesc.set_tooltip_text("{}".format(self.packagedescription))
-
-        self.maintainername.set_text(self.packagemaintainername)
-
-        if self.packagemaintainermail != "-":
-            self.maintainermail.set_markup("<a title='{}' href='mailto:{}'>{}</a>".format(
-                GLib.markup_escape_text(self.packagemaintainermail, -1),
-                GLib.markup_escape_text(self.packagemaintainermail, -1),
-                GLib.markup_escape_text(self.packagemaintainermail, -1)))
-        else:
-            self.maintainermail.set_text(self.packagemaintainermail)
-
-        if self.packagehomepage != "-":
-            self.homepage.set_markup("<a title='{}' href='{}'>{}</a>".format(
-                GLib.markup_escape_text(self.packagehomepage, -1),
-                GLib.markup_escape_text(self.packagehomepage, -1),
-                GLib.markup_escape_text(self.packagehomepage, -1)))
-        else:
-            self.homepage.set_text(self.packagehomepage)
-
-        self.section.set_text(self.packagesection)
-
-        if self.packagesize != "-":
-            self.size.set_text(self.packagesize + " KiB")
-        else:
-            self.size.set_text(self.packagesize)
-
-        self.architecture.set_text(self.packagearchitecture)
-
-        try:
-            pd = re.split(r'\||, ', self.packagedepends)
-            lenpd = len(pd)
-            for i in range(lenpd):
-                if pd[i].startswith(" "):
-                    pd[i] = "|" + pd[i].strip()
-            pd = "\n\n".join(pd)
-
-        except Exception as e:
-            print("{}".format(e))
-            pd = ""
-        self.depends.set_markup("<small>{}</small>".format(GLib.markup_escape_text(pd, -1)))
-
-        if self.packagemissingdeps:
-            self.missingdeps.set_markup("<small>{}</small>".format(
-                GLib.markup_escape_text(self.packagemissingdeps, -1)))
-
-        if self.firststatus != 0:
-            pkg = self.cache[self.packagename]
-            try:
-                systemversion = pkg.installed.version
-            except Exception as e:
-                print("{}".format(e))
-                systemversion = pkg.versions[0].version
-            self.installed_version_title.set_markup(
-                "<small><span weight='light'>{}</span></small>".format(_("Installed Version :")))
-            self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(systemversion))
-        else:
-            self.installed_version_title.set_markup(
-                "<small><span weight='light'>{}</span></small>".format(_("Installed Version :")))
-            self.installed_version.set_markup(
-                "<small><span weight='light'>{}</span></small>".format(_("Not installed")))
-
-        self.progressbar.set_show_text(False)
-        self.progressbar.set_fraction(0)
+            self.from_file(path)
 
     def initialize(self):
         if self.file:
@@ -203,9 +298,9 @@ class MainWindow(object):
                     self.mainstack.set_visible_child_name("package")
                     self.openbutton.set_visible(True)
 
-                    self.setLabels()
+                    self.set_labels()
 
-                    self.packageMain(False, self.firststatus, self.packagefailure)
+                    self.package_main(False, self.firststatus, self.packagefailure)
                 else:
                     self.button1.set_sensitive(False)
                     self.button2.set_sensitive(False)
@@ -240,7 +335,7 @@ class MainWindow(object):
             self.installed_version_title.set_text("")
             self.installed_version.set_text("")
 
-    def defineComponents(self):
+    def define_components(self):
         self.button1 = self.builder.get_object("button1")
         self.button2 = self.builder.get_object("button2")
         self.openbutton = self.builder.get_object("openbutton")
@@ -304,7 +399,7 @@ class MainWindow(object):
         self.errorlabel.set_visible(False)
         self.errorlabel.set_text("")
 
-        if self.updateCache():
+        if self.update_cache():
 
             try:
                 self.package = aptdeb.DebPackage(debpackage)
@@ -378,21 +473,28 @@ class MainWindow(object):
                 print("{}".format(e))
                 self.packagearchitecture = "-"
 
-            try:
-                self.packagedepends = self.package._sections["Depends"]
-            except Exception as e:
-                print("{}".format(e))
-                self.packagedepends = ""
+            depends = self.package._sections.get("Depends", "")
+            recommends = self.package._sections.get("Recommends", "")
+            if depends and recommends:
+                self.packagedepends = f"{depends}, {recommends}"
+            else:
+                self.packagedepends = depends or recommends
 
+            missing = []
             try:
-                self.packagemissingdeps = "\n\n".join(self.package.required_changes[0])
-            except Exception as e:
-                print("{}".format(e))
+                missing = self.package.missing_deps or []
+            except Exception:
+                pass
+            if not missing:
                 try:
-                    self.packagemissingdeps = "\n\n".join(self.package.missing_deps)
-                except Exception as e:
-                    print("{}".format(e))
-                    self.packagemissingdeps = ""
+                    rc = self.package.required_changes
+                    if isinstance(rc, dict):
+                        missing = rc.get("missing", [])
+                    elif isinstance(rc, (list, tuple)) and rc:
+                        missing = rc[0]
+                except Exception:
+                    pass
+            self.packagemissingdeps = "\n\n".join(map(str, missing))
 
             try:
                 self.packagefailure = self.package._failure_string
@@ -404,7 +506,7 @@ class MainWindow(object):
 
         return False
 
-    def updateCache(self):
+    def update_cache(self):
         try:
             self.cache = apt.Cache()
         except:
@@ -416,17 +518,17 @@ class MainWindow(object):
         self.isbroken = False
         return True
 
-    def compareVersion(self):
+    def compare_version(self):
         # VERSION_NEWER = 3
         # VERSION_NONE = 0
         # VERSION_OUTDATED = 1
         # VERSION_SAME = 2
         return aptdeb.DebPackage(self.debianpackage).compare_to_version_in_cache()
 
-    def failureControl(self):
+    def failure_control(self):
         return aptdeb.DebPackage(self.debianpackage)._failure_string
 
-    def installPackage(self, isupgrading):
+    def install_package(self, isupgrading):
 
         if self.installable:
             self.isinstalling = True
@@ -461,7 +563,7 @@ class MainWindow(object):
                     _("Package Architecture Error"), _("System"), self.systemarchitecture, _("Package"),
                     self.packagearchitecture))
 
-    def removePackage(self):
+    def remove_package(self):
 
         if self.cache[self.packagename].is_installed:
             self.progressbar.set_show_text(False)
@@ -475,7 +577,7 @@ class MainWindow(object):
                             self.packagename]
             self.pid = self.startProcess(self.command)
 
-    def reinstallPackage(self):
+    def reinstall_package(self):
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
         self.button1.set_sensitive(False)
@@ -487,7 +589,7 @@ class MainWindow(object):
                         self.debianpackage]
         self.pid = self.startProcess(self.command)
 
-    def downgradePackage(self):
+    def downgrade_package(self):
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
         self.button1.set_sensitive(False)
@@ -504,7 +606,7 @@ class MainWindow(object):
 
     def on_button1_clicked(self, button):
         print("debianpackage = " + self.debianpackage)
-        packagestatus = self.compareVersion()
+        packagestatus = self.compare_version()
         self.progstack.set_visible(True)
         self.progstack.set_visible_child_name("progress")
         self.outputSW.set_visible(True)
@@ -512,22 +614,22 @@ class MainWindow(object):
         if packagestatus == 0:
             print("Installing Button Clicked")
             self.packageaction = _("Installing")
-            self.installPackage(False)
+            self.install_package(False)
 
         elif packagestatus == 1:
             self.packageaction = _("Downgrading")
             print("Downgrading Button Clicked")
-            self.downgradePackage()
+            self.downgrade_package()
 
         elif packagestatus == 2:
             self.packageaction = _("Reinstalling")
             print("Reinstalling Button Clicked")
-            self.reinstallPackage()
+            self.reinstall_package()
 
         elif packagestatus == 3:
             self.packageaction = _("Upgrading")
             print("Upgrading Button Clicked")
-            self.installPackage(True)
+            self.install_package(True)
 
     def on_button2_clicked(self, button):
         self.packageaction = _("Uninstalling")
@@ -535,7 +637,7 @@ class MainWindow(object):
         self.progstack.set_visible(True)
         self.progstack.set_visible_child_name("progress")
         self.outputSW.set_visible(True)
-        self.removePackage()
+        self.remove_package()
 
     def on_donebutton_clicked(self, button):
         self.window.get_application().quit()
@@ -548,13 +650,13 @@ class MainWindow(object):
     def on_selectbutton_clicked(self, widget):
         self.filename = self.filechooser.get_filename()
         self.filechooser.hide()
-        self.fromFile(self.filename)
+        self.from_file(self.filename)
         print("Select Button Clicked")
 
     def onActivated(self, widget):
         self.filename = self.filechooser.get_filename()
         self.filechooser.hide()
-        self.fromFile(self.filename)
+        self.from_file(self.filename)
         print("Active Button Clicked")
 
     def on_aboutbutton_clicked(self, button):
@@ -579,71 +681,7 @@ class MainWindow(object):
             self.detailsrevealer.set_reveal_child(True)
             self.detailsbutton.set_label(_("Hide Details"))
 
-    def packageMain(self, actioned, status, packagefailure):
-
-        if not packagefailure or "A later version is already installed" in packagefailure:
-
-            if status == 0:
-                self.button1.set_sensitive(True)
-                self.button1.set_label(_("Install"))
-                self.button1.set_image(self.installicon)
-                self.button2.set_sensitive(False)
-            elif status == 1:
-                self.button1.set_sensitive(True)
-                self.button1.set_label(_("Downgrade"))
-                self.button1.set_image(self.downgradeicon)
-                self.button2.set_sensitive(True)
-            elif status == 2:
-                self.button1.set_sensitive(True)
-                self.button1.set_label(_("Reinstall"))
-                self.button1.set_image(self.reinstallicon)
-                self.button2.set_sensitive(True)
-            elif status == 3:
-                self.button1.set_sensitive(True)
-                self.button1.set_label(_("Upgrade"))
-                self.button1.set_image(self.upgradeicon)
-                self.button2.set_sensitive(True)
-
-        else:
-            self.errorlabel.set_visible(True)
-            self.errorlabel.set_markup("<b><span color='red'>{}</span></b>\n{}".format(
-                _("Error !"), GLib.markup_escape_text(packagefailure, -1)))
-            if status == 0:
-                self.button1.set_sensitive(False)
-                self.button1.set_label(_("Install"))
-                self.button1.set_image(self.installicon)
-                self.button2.set_sensitive(False)
-            elif status == 1:
-                self.button1.set_sensitive(False)
-                self.button1.set_label(_("Downgrade"))
-                self.button1.set_image(self.downgradeicon)
-                self.button2.set_sensitive(False)
-            elif status == 2:
-                self.button1.set_sensitive(False)
-                self.button1.set_label(_("Reinstall"))
-                self.button1.set_image(self.reinstallicon)
-                self.button2.set_sensitive(False)
-            elif status == 3:
-                self.button1.set_sensitive(False)
-                self.button1.set_label(_("Upgrade"))
-                self.button1.set_image(self.upgradeicon)
-                self.button2.set_sensitive(False)
-
-    def getInstalledVersion(self, status):
-
-        if status != 0:
-            pkg = self.cache[self.packagename]
-            try:
-                systemversion = pkg.installed.version
-            except Exception as e:
-                print("{}".format(e))
-                systemversion = str(pkg.installed).split("=")[1]
-            self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(systemversion))
-        else:
-            self.installed_version.set_markup(
-                "<small><span weight='light'>{}</span></small>".format(_("Not installed")))
-
-    def fromFile(self, path):
+    def from_file(self, path):
 
         self.openbutton.set_visible(True)
 
@@ -659,9 +697,9 @@ class MainWindow(object):
             if debianpackage_status is not None:
                 if debianpackage_status:
 
-                    self.setLabels()
+                    self.set_labels()
 
-                    self.packageMain(False, self.firststatus, self.packagefailure)
+                    self.package_main(False, self.firststatus, self.packagefailure)
                 else:
                     self.button1.set_sensitive(False)
                     self.button2.set_sensitive(False)
@@ -766,11 +804,19 @@ class MainWindow(object):
                 self.progressbar.set_show_text(False)
                 self.progressbar.set_fraction(0)
             self.progstack.set_visible_child_name("doneinfo")
-        self.updateCache()
-        self.status = self.compareVersion()
-        self.packagefailure = self.failureControl()
-        self.packageMain(True, self.status, self.packagefailure)
-        self.getInstalledVersion(self.status)
+
+        self.update_cache()
+        self.status = self.compare_version()
+        self.packagefailure = self.failure_control()
+        self.package_main(True, self.status, self.packagefailure)
+
+        pkg = self.cache.get(self.packagename)
+        if pkg and pkg.is_installed:
+            systemversion = pkg.installed.version
+            self.installed_version.set_markup(f"<small><span weight='light'>{systemversion}</span></small>")
+        else:
+            self.installed_version.set_markup("<small><span weight='light'>{}</span></small>".format(_("Not installed")))
+
         self.openbutton.set_sensitive(True)
         self.closestatus = False
         if self.isinstalling and self.status == 0 and retval == 0:
