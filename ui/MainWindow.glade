@@ -155,7 +155,7 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Select a deb package to view or drag and drop it here.</property>
+                    <property name="label" translatable="yes">Select a deb package or drag and drop it here.</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
