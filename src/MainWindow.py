@@ -848,27 +848,25 @@ class MainWindow(object):
         self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
     def notify(self):
-        if self.notificationstate:
-            if Notify.is_initted():
-                Notify.uninit()
+        if not self.notificationstate:
+            return
 
-            Notify.init(self.packagename)
+        if not Notify.is_initted():
+            Notify.init("tr.org.pardus.package-installer")
+
+        icon_theme = Gtk.IconTheme.get_default()
+
+        icon_names = [self.packagename, "pardus-package-installer", "dialog-information", ]
+
+        pixbuf = None
+        for name in icon_names:
             try:
-                pixbuf = Gtk.IconTheme.get_default().load_icon(self.packagename, 64, Gtk.IconLookupFlags(16))
-            except:
-                try:
-                    parduspixbuf = Gtk.IconTheme.new()
-                    parduspixbuf.set_custom_theme("pardus")
-                    pixbuf = parduspixbuf.load_icon(self.packagename, 64, Gtk.IconLookupFlags(16))
-                except:
-                    try:
-                        pixbuf = Gtk.IconTheme.get_default().load_icon("pardus-package-installer", 64,
-                                                                       Gtk.IconLookupFlags(16))
-                    except:
-                        try:
-                            pixbuf = parduspixbuf.load_icon("pardus-package-installer", 64, Gtk.IconLookupFlags(16))
-                        except:
-                            pixbuf = Gtk.IconTheme.get_default().load_icon("gtk-dialog-info", 64,
-                                                                           Gtk.IconLookupFlags(16))
+                pixbuf = icon_theme.load_icon(name, 64, Gtk.IconLookupFlags.FORCE_SIZE)
+                break
+            except GLib.Error:
+                continue
+
+        if pixbuf:
             self.notification.set_icon_from_pixbuf(pixbuf)
-            self.notification.show()
+
+        self.notification.show()
