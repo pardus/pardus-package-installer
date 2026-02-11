@@ -242,6 +242,8 @@ class MainWindow(object):
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
 
+        self.window.set_focus(None)
+
     def package_main(self, actioned, status, packagefailure):
         has_error = packagefailure and "A later version is already installed" not in packagefailure
 
