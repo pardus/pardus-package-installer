@@ -39,6 +39,7 @@ class MainWindow(object):
         self.packagefailure = ""
         self.file = file
         self.notificationstate = True
+        self.packagedepcount = 0
         self.isinstalling = False
         self.isbroken = False
         self.debianpackage_errormsg = ""
@@ -166,6 +167,8 @@ class MainWindow(object):
     def set_labels(self):
         self.depends.set_text("")
         self.missingdeps.set_text("")
+        self.dependency_count_label.set_text("")
+        self.dependency_count_box.set_visible(False)
         self.mainstack.set_visible_child_name("package")
         self.progstack.set_visible(False)
         self.doneinfolabel.set_text("")
@@ -238,6 +241,17 @@ class MainWindow(object):
         else:
             self.installed_version.set_markup(
                 "<small><span weight='light'>{}</span></small>".format(_("Not installed")))
+
+        if self.packagedepcount > 0:
+            count_text = _("{} additional packages will be installed").format(self.packagedepcount)
+            self.dependency_count_label.set_markup(
+                "<small><span weight='light'>{}</span></small>".format(
+                    GLib.markup_escape_text(count_text, -1)
+                )
+            )
+            self.dependency_count_box.set_visible(True)
+        else:
+            self.dependency_count_box.set_visible(False)
 
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
@@ -359,6 +373,8 @@ class MainWindow(object):
         self.architecture = self.builder.get_object("architecture")
         self.depends = self.builder.get_object("depends")
         self.missingdeps = self.builder.get_object("missingdeps")
+        self.dependency_count_box = self.builder.get_object("dependency_count_box")
+        self.dependency_count_label = self.builder.get_object("dependency_count_label")
 
         self.spinner = self.builder.get_object("spinner")
         self.progress = self.builder.get_object("progress")
@@ -475,6 +491,11 @@ class MainWindow(object):
                 self.packagedepends = f"{depends}, {recommends}"
             else:
                 self.packagedepends = depends or recommends
+
+            self.packagedepcount = 0
+            if self.packagedepends:
+                deps_list = [item.strip() for item in self.packagedepends.split(",")]
+                self.packagedepcount = len(deps_list)
 
             missing = []
             try:
