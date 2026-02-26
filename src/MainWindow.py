@@ -871,4 +871,5 @@ class MainWindow(object):
         if pixbuf:
             self.notification.set_icon_from_pixbuf(pixbuf)
 
-        self.notification.show()
+        if not self.window.is_active():
+            self.notification.show()
