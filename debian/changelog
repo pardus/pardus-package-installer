@@ -1,3 +1,22 @@
+pardus-package-installer (0.7.0) unstable; urgency=medium
+
+  [ Fatih Altun ]
+  * Add drag_n_drop to mainwindow
+  * Reformat code
+  * Update worker thread as separate backend and frontend funcs
+  * Reformat code
+  * Update notify func
+  * Update package name, version labels as selectable
+  * Update initial app text
+  * Fix typo
+  * Update pot file
+  * Update Turkish translations
+
+  [ Büşra ÇAĞLIYAN ]
+  * prevent notification when app is active
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Fri, 06 Mar 2026 14:20:51 +0300
+
 pardus-package-installer (0.6.5) unstable; urgency=medium
 
   * Add regex control to apt output error controls
