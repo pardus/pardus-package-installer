@@ -10,6 +10,7 @@ import re
 import sys
 
 import apt
+import apt_pkg
 import gi
 
 gi.require_version('Gtk', '3.0')
@@ -404,16 +405,17 @@ class MainWindow(object):
                 self.debianpackage_errormsg = "{}".format(e)
                 return None
             self.packagename = self.package.pkgname
-
-            self.firststatus = self.package.compare_to_version_in_cache()
-
-            self.installable = self.package.check()
+            self.debianpackage = debpackage
 
             try:
                 self.packageversion = self.package._sections["Version"]
             except Exception as e:
                 print("{}".format(e))
                 self.packageversion = "-"
+
+            self.firststatus = self.compare_version()
+
+            self.installable = self.package.check()
 
             try:
                 self.packagedescription = self.package._sections["Description"]
@@ -519,7 +521,35 @@ class MainWindow(object):
         # VERSION_NONE = 0
         # VERSION_OUTDATED = 1
         # VERSION_SAME = 2
-        return aptdeb.DebPackage(self.debianpackage).compare_to_version_in_cache()
+        try:
+            status = aptdeb.DebPackage(self.debianpackage, cache=self.cache).compare_to_version_in_cache()
+        except Exception:
+            try:
+                status = aptdeb.DebPackage(self.debianpackage).compare_to_version_in_cache()
+            except Exception:
+                status = 0
+
+        # If cache comparison returns VERSION_NONE (0), it may be an external package
+        # or an Architecture: all package not indexed by repo cache. Fall back to
+        # checking the local system dpkg status in self.cache.
+        if status == 0 and self.packagename:
+            try:
+                pkg = self.cache.get(self.packagename)
+                if pkg and pkg.is_installed and pkg.installed is not None:
+                    target_ver = getattr(self, "packageversion", None)
+                    if not target_ver or target_ver == "-":
+                        target_ver = aptdeb.DebPackage(self.debianpackage, cache=self.cache)["Version"]
+                    cmp = apt_pkg.version_compare(pkg.installed.version, target_ver)
+                    if cmp == 0:
+                        return 2  # VERSION_SAME
+                    elif cmp < 0:
+                        return 3  # VERSION_NEWER
+                    elif cmp > 0:
+                        return 1  # VERSION_OUTDATED
+            except Exception:
+                pass
+
+        return status
 
     def failure_control(self):
         return aptdeb.DebPackage(self.debianpackage)._failure_string
@@ -759,19 +789,25 @@ class MainWindow(object):
                 percent = line.split(":")[2].split(".")[0]
                 self.progressbar.set_show_text(True)
                 self.progressbar.set_text("{} {} %".format(self.packageaction, percent))
-                self.progressbar.set_text("{} {} %".format(self.packageaction, percent))
                 self.progressbar.set_fraction(int(percent) / 100)
-            elif re.match(r"^[A-Za-zÇĞİÖŞÜçğıöşü]+:", line.strip()) and ".deb" in line:
-                print("connection error")
-                self.error = True
-            elif re.match(r"^[A-Za-zÇĞİÖŞÜçğıöşü]+:", line.strip()) and "dpkg --configure -a" in line:
-                print("dpkg --configure -a error")
-                self.error = True
-                self.dpkgconferror = True
-            elif re.match(r"^[A-Za-zÇĞİÖŞÜçğıöşü]+:", line.strip()) and "/var/lib/dpkg/lock-frontend" in line:
-                print("/var/lib/dpkg/lock-frontend error")
-                self.error = True
-                self.dpkglockerror = True
+            else:
+                is_error_line = bool(
+                    re.match(r"^(?:E|Error|Hata|Err)\s*:", line.strip(), re.IGNORECASE)
+                    or re.search(r"dpkg:\s*(?:error|hata):", line, re.IGNORECASE)
+                )
+                if is_error_line and "dpkg --configure -a" in line:
+                    print("dpkg --configure -a error")
+                    self.error = True
+                    self.dpkgconferror = True
+                elif is_error_line and ("/var/lib/dpkg/lock-frontend" in line or "lock" in line.lower()):
+                    print("/var/lib/dpkg/lock-frontend error")
+                    self.error = True
+                    self.dpkglockerror = True
+                elif is_error_line and (".deb" in line or "failed to fetch" in line.lower()):
+                    print("connection error")
+                    self.error = True
+                elif is_error_line:
+                    self.error = True
 
             self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
             self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
@@ -781,29 +817,6 @@ class MainWindow(object):
     def on_process_exit(self, pid, retval):
         print(f"Done. exit code: {retval}")
         self.pid = None
-        if self.error is False:
-            if retval == 0:
-                self.notificationstate = True
-                if self.progressbar.get_show_text():
-                    self.progressbar.set_text("100 %")
-                    self.progressbar.set_fraction(1)
-                self.progstack.set_visible_child_name("done")
-            else:
-                self.progstack.set_visible_child_name("doneinfo")
-                self.doneinfolabel.set_markup("<b>{}</b>".format(_("Not Completed !")))
-                self.notificationstate = False
-        else:
-            errormessage = _("<b><span color='red'>Connection Error !</span></b>")
-            if self.dpkglockerror:
-                errormessage = _("<b><span color='red'>Dpkg Lock Error !</span></b>")
-            elif self.dpkgconferror:
-                errormessage = _("<b><span color='red'>Dpkg Interrupt Error !</span></b>")
-            self.doneinfolabel.set_markup(errormessage)
-            self.notificationstate = False
-            if self.progressbar.get_show_text():
-                self.progressbar.set_show_text(False)
-                self.progressbar.set_fraction(0)
-            self.progstack.set_visible_child_name("doneinfo")
 
         self.update_cache()
         self.status = self.compare_version()
@@ -811,7 +824,8 @@ class MainWindow(object):
         self.package_main(True, self.status, self.packagefailure)
 
         pkg = self.cache.get(self.packagename)
-        if pkg and pkg.is_installed:
+        is_installed = bool(pkg and pkg.is_installed)
+        if is_installed:
             systemversion = pkg.installed.version
             self.installed_version.set_markup(f"<small><span weight='light'>{systemversion}</span></small>")
         else:
@@ -820,28 +834,40 @@ class MainWindow(object):
 
         self.openbutton.set_sensitive(True)
         self.closestatus = False
-        if self.isinstalling and self.status == 0 and retval == 0:
-            print("connection lost")
-            errormessage = _("<b><span color='red'>Connection Error !</span></b>")
-            if self.dpkglockerror:
-                errormessage = _("<b><span color='red'>Dpkg Lock Error !</span></b>")
+
+        # In GLib child_watch, retval == 0 indicates exit code 0.
+        success = False
+        if retval == 0:
+            if self.isinstalling:
+                success = is_installed
+            else:
+                success = not is_installed
+
+        if success:
+            self.notificationstate = True
+            if self.progressbar.get_show_text():
+                self.progressbar.set_text("100 %")
+                self.progressbar.set_fraction(1)
+            self.progstack.set_visible_child_name("done")
+        else:
+            self.notificationstate = False
+            if self.progressbar.get_show_text():
+                self.progressbar.set_show_text(False)
+                self.progressbar.set_fraction(0)
+            self.progstack.set_visible_child_name("doneinfo")
+
+            if retval == 256 or self.dpkglockerror:
+                errormessage = _("Only one software management tool is allowed to run at the same time.\n"
+                                 "Please close the other application\ne.g. 'Update Manager', 'aptitude' or 'Synaptic' first.")
             elif self.dpkgconferror:
                 errormessage = _("<b><span color='red'>Dpkg Interrupt Error !</span></b>")
+            elif self.error:
+                errormessage = _("<b><span color='red'>Connection Error !</span></b>")
+            else:
+                errormessage = "<b>{}</b>".format(_("Not Completed !"))
+
             self.doneinfolabel.set_markup(errormessage)
-            if self.progressbar.get_show_text():
-                self.progressbar.set_show_text(False)
-                self.progressbar.set_fraction(0)
-            self.progstack.set_visible_child_name("doneinfo")
-            self.notificationstate = False
-        if retval == 256:
-            errormessage = _("Only one software management tool is allowed to run at the same time.\n"
-                             "Please close the other application\ne.g. 'Update Manager', 'aptitude' or 'Synaptic' first.")
-            self.doneinfolabel.set_markup(errormessage)
-            if self.progressbar.get_show_text():
-                self.progressbar.set_show_text(False)
-                self.progressbar.set_fraction(0)
-            self.progstack.set_visible_child_name("doneinfo")
-            self.notificationstate = False
+
         self.error = False
         self.dpkglockerror = False
         self.dpkgconferror = False
