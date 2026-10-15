@@ -30,7 +30,6 @@ class MainWindow(object):
     def __init__(self, application, file):
 
         self.closestatus = False
-        self.error = False
         self.dpkglockerror = False
         self.dpkgconferror = False
         self.debianpackage = ""
@@ -39,7 +38,6 @@ class MainWindow(object):
         self.packagefailure = ""
         self.file = file
         self.notificationstate = True
-        self.isinstalling = False
         self.isbroken = False
         self.debianpackage_errormsg = ""
         self.pid = None
@@ -527,7 +525,6 @@ class MainWindow(object):
     def install_package(self, isupgrading):
 
         if self.installable:
-            self.isinstalling = True
             self.progressbar.set_show_text(False)
             self.progressbar.set_fraction(0)
             self.button1.set_sensitive(False)
@@ -729,25 +726,46 @@ class MainWindow(object):
     def start_process(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
                                                       standard_output=True, standard_error=True)
-        GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.on_process_stdout)
-        GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.on_process_stderr)
-        GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, self.on_process_exit)
+        self.process_status = None
+        self.process_streams = 2
+        for fd, callback in ((stdout, self.on_process_stdout), (stderr, self.on_process_stderr)):
+            channel = GLib.IOChannel(fd)
+            channel.set_close_on_unref(True)
+            GLib.io_add_watch(channel, GLib.PRIORITY_DEFAULT, GLib.IO_IN | GLib.IO_HUP, callback)
+        GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, self.on_process_child_exit)
 
         return pid
 
-    def on_process_stdout(self, source, condition):
-        if condition == GLib.IO_HUP:
-            return False
+    def on_process_child_exit(self, pid, status):
+        GLib.spawn_close_pid(pid)
+        self.process_status = status
+        self.finish_process_if_ready()
 
-        self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), source.readline())
+    def on_process_stream_closed(self):
+        self.process_streams -= 1
+        self.finish_process_if_ready()
+        return False
+
+    def finish_process_if_ready(self):
+        # Child exit and pipe EOF can arrive in either order. Keep diagnostics
+        # and output from this operation together before re-enabling the UI.
+        if self.process_status is not None and self.process_streams == 0:
+            self.on_process_exit(self.pid, self.process_status)
+
+    def on_process_stdout(self, source, condition):
+        line = source.readline()
+        if not line:
+            return self.on_process_stream_closed()
+
+        self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), line)
         self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
         return True
 
     def on_process_stderr(self, source, condition):
-        if condition == GLib.IO_HUP:
-            return False
         line = source.readline()
+        if not line:
+            return self.on_process_stream_closed()
         if line is not None:
             print(line)
             if "dlstatus" in line:
@@ -761,16 +779,11 @@ class MainWindow(object):
                 self.progressbar.set_text("{} {} %".format(self.packageaction, percent))
                 self.progressbar.set_text("{} {} %".format(self.packageaction, percent))
                 self.progressbar.set_fraction(int(percent) / 100)
-            elif re.match(r"^[A-Za-zÇĞİÖŞÜçğıöşü]+:", line.strip()) and ".deb" in line:
-                print("connection error")
-                self.error = True
             elif re.match(r"^[A-Za-zÇĞİÖŞÜçğıöşü]+:", line.strip()) and "dpkg --configure -a" in line:
                 print("dpkg --configure -a error")
-                self.error = True
                 self.dpkgconferror = True
             elif re.match(r"^[A-Za-zÇĞİÖŞÜçğıöşü]+:", line.strip()) and "/var/lib/dpkg/lock-frontend" in line:
                 print("/var/lib/dpkg/lock-frontend error")
-                self.error = True
                 self.dpkglockerror = True
 
             self.textview.get_buffer().insert(self.textview.get_buffer().get_end_iter(), (line))
@@ -781,19 +794,14 @@ class MainWindow(object):
     def on_process_exit(self, pid, retval):
         print(f"Done. exit code: {retval}")
         self.pid = None
-        if self.error is False:
-            if retval == 0:
-                self.notificationstate = True
-                if self.progressbar.get_show_text():
-                    self.progressbar.set_text("100 %")
-                    self.progressbar.set_fraction(1)
-                self.progstack.set_visible_child_name("done")
-            else:
-                self.progstack.set_visible_child_name("doneinfo")
-                self.doneinfolabel.set_markup("<b>{}</b>".format(_("Not Completed !")))
-                self.notificationstate = False
+        if retval == 0:
+            self.notificationstate = True
+            if self.progressbar.get_show_text():
+                self.progressbar.set_text("100 %")
+                self.progressbar.set_fraction(1)
+            self.progstack.set_visible_child_name("done")
         else:
-            errormessage = _("<b><span color='red'>Connection Error !</span></b>")
+            errormessage = "<b>{}</b>".format(_("Not Completed !"))
             if self.dpkglockerror:
                 errormessage = _("<b><span color='red'>Dpkg Lock Error !</span></b>")
             elif self.dpkgconferror:
@@ -820,19 +828,6 @@ class MainWindow(object):
 
         self.openbutton.set_sensitive(True)
         self.closestatus = False
-        if self.isinstalling and self.status == 0 and retval == 0:
-            print("connection lost")
-            errormessage = _("<b><span color='red'>Connection Error !</span></b>")
-            if self.dpkglockerror:
-                errormessage = _("<b><span color='red'>Dpkg Lock Error !</span></b>")
-            elif self.dpkgconferror:
-                errormessage = _("<b><span color='red'>Dpkg Interrupt Error !</span></b>")
-            self.doneinfolabel.set_markup(errormessage)
-            if self.progressbar.get_show_text():
-                self.progressbar.set_show_text(False)
-                self.progressbar.set_fraction(0)
-            self.progstack.set_visible_child_name("doneinfo")
-            self.notificationstate = False
         if retval == 256:
             errormessage = _("Only one software management tool is allowed to run at the same time.\n"
                              "Please close the other application\ne.g. 'Update Manager', 'aptitude' or 'Synaptic' first.")
@@ -842,10 +837,8 @@ class MainWindow(object):
                 self.progressbar.set_fraction(0)
             self.progstack.set_visible_child_name("doneinfo")
             self.notificationstate = False
-        self.error = False
         self.dpkglockerror = False
         self.dpkgconferror = False
-        self.isinstalling = False
         self.notify()
         self.textview.scroll_to_iter(self.textview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 

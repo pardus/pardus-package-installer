@@ -34,6 +34,20 @@ sudo mk-build-deps -ir
 gbp buildpackage --git-export-dir=/tmp/build/pardus-package-installer -us -uc
 ```
 
+### **Tests**
+
+With the application dependencies and `xvfb` installed, run as a regular user:
+
+```bash
+python3 tests/actions.py
+xvfb-run -a python3 tests/operation_result.py
+```
+
+These tests cover helper exit statuses and the GTK operation result, including
+warning messages, failed removal, authorization cancellation, and draining both
+output pipes before completion. APT and privilege escalation are mocked; the
+pipe tests run harmless Python children. No packages are installed or removed.
+
 ### **Screenshots**
 
 ![Pardus Package Installer 1](screenshots/pardus-package-installer-1.png)

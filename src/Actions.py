@@ -22,42 +22,36 @@ def main():
         return True
 
     def install(debianpackage):
-        subprocess.call(["apt", "install", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
+        return subprocess.call(["apt", "install", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
                         env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def reinstall(debianpackage):
-        subprocess.call(
+        return subprocess.call(
             ["apt", "install", "--reinstall", "--allow-downgrades", debianpackage, "-yq", "-o", "APT::Status-Fd=2",
              "-o", "Dpkg::Options::=--force-confnew"],
             env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def remove(packagename):
-        subprocess.call(["apt", "remove", "--purge", packagename, "-yq", "-o", "APT::Status-Fd=2",
+        return subprocess.call(["apt", "remove", "--purge", packagename, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
                         env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
     def downgrade(packagename):
-        subprocess.call(["apt", "install", "--allow-downgrades", packagename, "-yq", "-o", "APT::Status-Fd=2",
+        return subprocess.call(["apt", "install", "--allow-downgrades", packagename, "-yq", "-o", "APT::Status-Fd=2",
                          "-o", "Dpkg::Options::=--force-confnew"],
                         env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
-    if len(sys.argv) > 1:
-        if control_lock():
-            if (sys.argv[1] == "install"):
-                install(sys.argv[2])
-            elif (sys.argv[1] == "remove"):
-                remove(sys.argv[2])
-            elif (sys.argv[1] == "reinstall"):
-                reinstall(sys.argv[2])
-            elif (sys.argv[1] == "downgrade"):
-                downgrade(sys.argv[2])
-        else:
-            print("lock error")
-            sys.exit(1)
-    else:
-        print("no argument passed")
+    actions = {"install": install, "remove": remove,
+               "reinstall": reinstall, "downgrade": downgrade}
+    if len(sys.argv) != 3 or sys.argv[1] not in actions:
+        print("expected an action and a package", file=sys.stderr)
+        return 2
+    if not control_lock():
+        print("lock error")
+        return 1
+    return actions[sys.argv[1]](sys.argv[2])
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
