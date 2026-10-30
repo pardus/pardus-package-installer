@@ -398,7 +398,7 @@ class MainWindow(object):
         if self.update_cache():
 
             try:
-                self.package = aptdeb.DebPackage(debpackage)
+                self.package = aptdeb.DebPackage(debpackage, self.cache)
             except Exception as e:
                 print("{}".format(e))
                 self.debianpackage_errormsg = "{}".format(e)
@@ -519,10 +519,10 @@ class MainWindow(object):
         # VERSION_NONE = 0
         # VERSION_OUTDATED = 1
         # VERSION_SAME = 2
-        return aptdeb.DebPackage(self.debianpackage).compare_to_version_in_cache()
+        return aptdeb.DebPackage(self.debianpackage, self.cache).compare_to_version_in_cache()
 
     def failure_control(self):
-        return aptdeb.DebPackage(self.debianpackage)._failure_string
+        return aptdeb.DebPackage(self.debianpackage, self.cache)._failure_string
 
     def install_package(self, isupgrading):
 
