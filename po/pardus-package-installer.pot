@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-12 00:13+0300\n"
+"POT-Creation-Date: 2026-11-04 16:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,15 +61,15 @@ msgstr ""
 msgid "<small><span weight='light'>Not installed</span></small>"
 msgstr ""
 
-#: ui/MainWindow.glade:349 src/MainWindow.py:128 src/MainWindow.py:264
-#: src/MainWindow.py:303 src/MainWindow.py:314 src/MainWindow.py:327
-#: src/MainWindow.py:699 src/MainWindow.py:710
+#: ui/MainWindow.glade:349 src/MainWindow.py:136 src/MainWindow.py:332
+#: src/MainWindow.py:374 src/MainWindow.py:385 src/MainWindow.py:398
+#: src/MainWindow.py:802 src/MainWindow.py:813
 msgid "Install"
 msgstr ""
 
-#: ui/MainWindow.glade:366 src/MainWindow.py:129 src/MainWindow.py:304
-#: src/MainWindow.py:315 src/MainWindow.py:328 src/MainWindow.py:700
-#: src/MainWindow.py:711
+#: ui/MainWindow.glade:366 src/MainWindow.py:137 src/MainWindow.py:375
+#: src/MainWindow.py:386 src/MainWindow.py:399 src/MainWindow.py:803
+#: src/MainWindow.py:814
 msgid "Uninstall"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Dependencies"
 msgstr ""
 
-#: ui/MainWindow.glade:1172 src/MainWindow.py:70
+#: ui/MainWindow.glade:1172 src/MainWindow.py:75
 msgid "Pardus Package Installer"
 msgstr ""
 
@@ -127,113 +127,121 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 
-#: src/MainWindow.py:74
+#: src/MainWindow.py:79
 msgid "About Pardus Package Installer"
 msgstr ""
 
-#: src/MainWindow.py:232
+#: src/MainWindow.py:213 src/MainWindow.py:955
+msgid "The deb package file has been changed. Please open it again."
+msgstr ""
+
+#: src/MainWindow.py:300
 msgid "Installed Version :"
 msgstr ""
 
-#: src/MainWindow.py:240 src/MainWindow.py:819
+#: src/MainWindow.py:308 src/MainWindow.py:924
 msgid "Not installed"
 msgstr ""
 
-#: src/MainWindow.py:254
+#: src/MainWindow.py:322
 msgid "Error !"
 msgstr ""
 
-#: src/MainWindow.py:265
+#: src/MainWindow.py:333
 msgid "Downgrade"
 msgstr ""
 
-#: src/MainWindow.py:266
+#: src/MainWindow.py:334
 msgid "Reinstall"
 msgstr ""
 
-#: src/MainWindow.py:267
+#: src/MainWindow.py:335
 msgid "Upgrade"
 msgstr ""
 
-#: src/MainWindow.py:538
+#: src/MainWindow.py:615
 msgid " upgraded"
 msgstr ""
 
-#: src/MainWindow.py:540
+#: src/MainWindow.py:617
 msgid " installed"
 msgstr ""
 
-#: src/MainWindow.py:559
+#: src/MainWindow.py:636
 msgid "Package Architecture Error"
 msgstr ""
 
-#: src/MainWindow.py:559
+#: src/MainWindow.py:636
 msgid "System"
 msgstr ""
 
-#: src/MainWindow.py:559
+#: src/MainWindow.py:636
 msgid "Package"
 msgstr ""
 
-#: src/MainWindow.py:571
+#: src/MainWindow.py:648
 msgid " uninstalled"
 msgstr ""
 
-#: src/MainWindow.py:583
+#: src/MainWindow.py:665
 msgid " reinstalled"
 msgstr ""
 
-#: src/MainWindow.py:595
+#: src/MainWindow.py:682
 msgid " downgraded"
 msgstr ""
 
-#: src/MainWindow.py:609
+#: src/MainWindow.py:701
 msgid "Installing"
 msgstr ""
 
-#: src/MainWindow.py:613
+#: src/MainWindow.py:705
 msgid "Downgrading"
 msgstr ""
 
-#: src/MainWindow.py:618
+#: src/MainWindow.py:710
 msgid "Reinstalling"
 msgstr ""
 
-#: src/MainWindow.py:623
+#: src/MainWindow.py:715
 msgid "Upgrading"
 msgstr ""
 
-#: src/MainWindow.py:628
+#: src/MainWindow.py:720
 msgid "Uninstalling"
 msgstr ""
 
-#: src/MainWindow.py:672
+#: src/MainWindow.py:764
 msgid "Show Details"
 msgstr ""
 
-#: src/MainWindow.py:675
+#: src/MainWindow.py:767
 msgid "Hide Details"
 msgstr ""
 
-#: src/MainWindow.py:793
+#: src/MainWindow.py:898
 msgid "Not Completed !"
 msgstr ""
 
-#: src/MainWindow.py:796 src/MainWindow.py:825
+#: src/MainWindow.py:901 src/MainWindow.py:930
 msgid "<b><span color='red'>Connection Error !</span></b>"
 msgstr ""
 
-#: src/MainWindow.py:798 src/MainWindow.py:827
+#: src/MainWindow.py:903 src/MainWindow.py:932
 msgid "<b><span color='red'>Dpkg Lock Error !</span></b>"
 msgstr ""
 
-#: src/MainWindow.py:800 src/MainWindow.py:829
+#: src/MainWindow.py:905 src/MainWindow.py:934
 msgid "<b><span color='red'>Dpkg Interrupt Error !</span></b>"
 msgstr ""
 
-#: src/MainWindow.py:837
+#: src/MainWindow.py:942
 msgid ""
 "Only one software management tool is allowed to run at the same time.\n"
 "Please close the other application\n"
 "e.g. 'Update Manager', 'aptitude' or 'Synaptic' first."
+msgstr ""
+
+#: src/MainWindow.py:951
+msgid "Invalid operation arguments."
 msgstr ""
