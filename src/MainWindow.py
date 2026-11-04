@@ -632,9 +632,9 @@ class MainWindow(object):
                 self.button2.set_sensitive(False)
                 self.progstack.set_visible(True)
                 self.progstack.set_visible_child_name("doneinfo")
-                self.doneinfolabel.set_markup("<b><span color='red'>{}\n</span>{}:{}, {}:{}".format(
+                self.doneinfolabel.set_markup("<b><span color='red'>{}</span></b>\n{}:{}, {}:{}".format(
                     _("Package Architecture Error"), _("System"), self.systemarchitecture, _("Package"),
-                    self.packagearchitecture))
+                    GLib.markup_escape_text(self.packagearchitecture, -1)))
 
     def remove_package(self):
 
