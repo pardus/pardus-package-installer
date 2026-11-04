@@ -1,3 +1,20 @@
+pardus-package-installer (0.7.1) unstable; urgency=medium
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translations
+
+  [ vistydev ]
+  * Show the package architecture error
+
+  [ Fatih Altun ]
+  * Add package file validation and change detection before installation
+  * Update pot file
+  * Update Turkish translations
+  * Update screenshots
+  * Fix closestatus control
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Wed, 04 Nov 2026 17:06:33 +0300
+
 pardus-package-installer (0.7.0) unstable; urgency=medium
 
   [ Fatih Altun ]
