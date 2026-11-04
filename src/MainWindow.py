@@ -886,6 +886,7 @@ class MainWindow(object):
     def on_process_exit(self, pid, retval):
         print(f"Done. exit code: {retval}")
         self.pid = None
+        self.closestatus = False
         if self.error is False:
             if retval == 0:
                 self.notificationstate = True
@@ -924,7 +925,6 @@ class MainWindow(object):
                 "<small><span weight='light'>{}</span></small>".format(_("Not installed")))
 
         self.openbutton.set_sensitive(True)
-        self.closestatus = False
         if self.isinstalling and self.status == 0 and retval == 0:
             print("connection lost")
             errormessage = _("<b><span color='red'>Connection Error !</span></b>")
