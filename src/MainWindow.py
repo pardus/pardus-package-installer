@@ -44,6 +44,11 @@ class MainWindow(object):
         self.debianpackage_errormsg = ""
         self.pid = None
 
+        self.package_size = None
+        self.package_monitor = None
+        self.package_monitor_handler = None
+        self.package_changed = False
+
         # Gtk Builder
         self.MainWindowUIFileName = os.path.dirname(os.path.abspath(__file__)) + "/../ui/MainWindow.glade"
         try:
@@ -94,6 +99,10 @@ class MainWindow(object):
         self.BrokenBox.set_visible(False)
         self.outputSW.set_visible(False)
 
+        if self.file:
+            self.debianpackage = os.path.abspath(sys.argv[1])
+            self.watch_package_file(self.debianpackage)
+
         threading.Thread(target=self.worker, daemon=True).start()
 
     def worker(self):
@@ -104,7 +113,6 @@ class MainWindow(object):
         if not self.file:
             return {"state": "empty"}
 
-        self.debianpackage = os.path.abspath(sys.argv[1])
         debianpackage_status = self.start(self.debianpackage)
 
         if debianpackage_status is None:
@@ -155,6 +163,66 @@ class MainWindow(object):
             )
 
         return False
+
+    def watch_package_file(self, path):
+        self.stop_package_monitor()
+
+        self.debianpackage = os.path.abspath(path)
+        self.package_changed = False
+        self.package_size = None
+
+        try:
+            if not os.path.isfile(self.debianpackage):
+                raise OSError("Package file is not a regular file")
+
+            self.package_size = os.path.getsize(self.debianpackage)
+
+            file = Gio.File.new_for_path(self.debianpackage)
+            self.package_monitor = file.monitor_file(Gio.FileMonitorFlags.WATCH_MOVES, None)
+            self.package_monitor_handler = self.package_monitor.connect("changed", self.on_package_file_changed)
+
+        except (OSError, GLib.Error) as e:
+            print("Could not monitor package file: {}".format(e))
+            self.package_changed = True
+            self.package_size = None
+
+        return not self.package_changed
+
+    def stop_package_monitor(self):
+        if self.package_monitor is not None:
+            if self.package_monitor_handler is not None:
+                self.package_monitor.disconnect(self.package_monitor_handler)
+
+            self.package_monitor.cancel()
+
+        self.package_monitor = None
+        self.package_monitor_handler = None
+
+    def on_package_file_changed(self, monitor, file, other_file, event_type):
+        if monitor != self.package_monitor:
+            return
+
+        self.package_changed = True
+        self.button1.set_sensitive(False)
+
+        self.show_package_changed()
+
+    def show_package_changed(self):
+        self.errorlabel.set_visible(True)
+        self.errorlabel.set_markup("<b><span color='red'>{}</span></b>".format(
+                GLib.markup_escape_text(_("The deb package file has been changed. Please open it again."), -1))
+        )
+
+    def check_package_file(self):
+        if self.package_changed or self.package_size is None:
+            return False
+
+        try:
+            current_size = os.path.getsize(self.debianpackage)
+        except OSError:
+            return False
+
+        return current_size == self.package_size
 
     def _clear_package_labels(self):
         self.pacname.set_text("")
@@ -271,9 +339,12 @@ class MainWindow(object):
 
         self.button1.set_label(label)
         self.button1.set_image(icon)
-        self.button1.set_sensitive(not has_error)
+        self.button1.set_sensitive(not has_error and not self.package_changed)
 
         self.button2.set_sensitive(allow_remove and not has_error)
+
+        if self.package_changed:
+            self.show_package_changed()
 
     def on_mainwindow_drag_data_received(self, treeview, context, posx, posy, selection, info, timestamp):
         if self.pid:
@@ -526,6 +597,12 @@ class MainWindow(object):
 
     def install_package(self, isupgrading):
 
+        if not self.check_package_file():
+            self.package_changed = True
+            self.button1.set_sensitive(False)
+            self.show_package_changed()
+            return
+
         if self.installable:
             self.isinstalling = True
             self.progressbar.set_show_text(False)
@@ -539,7 +616,7 @@ class MainWindow(object):
             else:
                 self.notification = Notify.Notification.new(self.packagename + _(" installed"))
             self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "install",
-                            self.debianpackage]
+                            self.debianpackage, str(self.package_size)]
             self.pid = self.start_process(self.command)
         else:
             print("package is not installable")
@@ -574,6 +651,11 @@ class MainWindow(object):
             self.pid = self.start_process(self.command)
 
     def reinstall_package(self):
+        if not self.check_package_file():
+            self.package_changed = True
+            self.button1.set_sensitive(False)
+            self.show_package_changed()
+            return
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
         self.button1.set_sensitive(False)
@@ -582,10 +664,15 @@ class MainWindow(object):
         self.closestatus = True
         self.notification = Notify.Notification.new(self.packagename + _(" reinstalled"))
         self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "reinstall",
-                        self.debianpackage]
+                        self.debianpackage, str(self.package_size)]
         self.pid = self.start_process(self.command)
 
     def downgrade_package(self):
+        if not self.check_package_file():
+            self.package_changed = True
+            self.button1.set_sensitive(False)
+            self.show_package_changed()
+            return
         self.progressbar.set_show_text(False)
         self.progressbar.set_fraction(0)
         self.button1.set_sensitive(False)
@@ -594,11 +681,16 @@ class MainWindow(object):
         self.closestatus = True
         self.notification = Notify.Notification.new(self.packagename + _(" downgraded"))
         self.command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "downgrade",
-                        self.debianpackage]
+                        self.debianpackage, str(self.package_size)]
         self.pid = self.start_process(self.command)
 
     def on_button1_clicked(self, button):
         print("debianpackage = " + self.debianpackage)
+        if not self.check_package_file():
+            self.package_changed = True
+            self.button1.set_sensitive(False)
+            self.show_package_changed()
+            return
         packagestatus = self.compare_version()
         self.progstack.set_visible(True)
         self.progstack.set_visible_child_name("progress")
@@ -676,6 +768,13 @@ class MainWindow(object):
 
     def from_file(self, path):
 
+        if not path:
+            return
+
+        if not path.lower().endswith(".deb"):
+            print("Only .deb files.")
+            return
+
         self.openbutton.set_visible(True)
 
         # clear output textbuffer
@@ -683,9 +782,13 @@ class MainWindow(object):
         start, end = self.textview.get_buffer().get_bounds()
         self.textview.get_buffer().delete(start, end)
 
-        fileFormat = os.path.basename(path).split(".")[-1]
+        fileFormat = os.path.basename(path).split(".")[-1].lower()
         if fileFormat == "deb":
-            self.debianpackage = path
+            if not self.watch_package_file(path):
+                self.button1.set_sensitive(False)
+                self.button2.set_sensitive(False)
+                return
+
             debianpackage_status = self.start(self.debianpackage)
             if debianpackage_status is not None:
                 if debianpackage_status:
@@ -724,7 +827,9 @@ class MainWindow(object):
             self.cannotclose_dialog.run()
             self.cannotclose_dialog.hide()
             return True
-        return self.closestatus
+
+        self.stop_package_monitor()
+        return False
 
     def start_process(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
@@ -842,6 +947,14 @@ class MainWindow(object):
                 self.progressbar.set_fraction(0)
             self.progstack.set_visible_child_name("doneinfo")
             self.notificationstate = False
+        elif retval == 512:
+            self.doneinfolabel.set_markup(_("Invalid operation arguments."))
+            self.notificationstate = False
+            self.progstack.set_visible_child_name("doneinfo")
+        elif retval == 768:
+            self.doneinfolabel.set_markup(_("The deb package file has been changed. Please open it again."))
+            self.notificationstate = False
+            self.progstack.set_visible_child_name("doneinfo")
         self.error = False
         self.dpkglockerror = False
         self.dpkgconferror = False
