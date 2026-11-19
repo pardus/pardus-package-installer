@@ -1,11 +1,14 @@
 [Desktop Entry]
 Name=Pardus Package Installer
+Name[es]=Instalador de paquetes de Pardus
 Name[pt]=Instalador de Pacotes Pardus
 Name[tr]=Pardus Paket Kurucu
 GenericName=Package Installer
+GenericName[es]=Instalador de paquetes
 GenericName[pt]=Instalador de Pacotes
 GenericName[tr]=Paket Kurucu
 Comment=Install and view software packages
+Comment[es]=Instala y consulta paquetes de software
 Comment[pt]=Instalar e ver pacotes de software
 Comment[tr]=Yazılım paketlerini kur ve izle
 Exec=pardus-package-installer %f
